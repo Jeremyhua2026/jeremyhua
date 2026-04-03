@@ -32,7 +32,7 @@ export default function Hero() {
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
             {content.hero.currentStatus}
           </p>
-          <p className="text-sm text-muted-foreground italic mt-1 ml-3.5">
+          <p className="text-sm text-muted-foreground mt-1 ml-3.5">
             {content.hero.currentDetail}
           </p>
         </div>
