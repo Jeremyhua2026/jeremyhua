@@ -7,15 +7,14 @@ import band3 from "@/assets/band-3.jpg";
 import ultra1 from "@/assets/ultra-1.jpg";
 import hobbies1 from "@/assets/hobbies-1.jpg";
 import travel1 from "@/assets/travel-1.jpg";
-import travel2 from "@/assets/travel-2.jpg";
-import travel3 from "@/assets/travel-3.jpg";
-import travel4 from "@/assets/travel-4.jpg";
+import travel5 from "@/assets/travel-5.jpg";
+import travel6 from "@/assets/travel-6.jpg";
 
 const storyImages: Record<string, string[]> = {
   "proof-band": [band1, band2, band3],
-  "proof-ultra": [ultra1, travel1],
-  "proof-hobbies": [hobbies1, travel2],
-  "proof-travel": [travel3, travel4],
+  "proof-ultra": [ultra1],
+  "proof-hobbies": [hobbies1, travel1],
+  "proof-travel": [travel5, travel6],
 };
 
 function StoryBlock({
