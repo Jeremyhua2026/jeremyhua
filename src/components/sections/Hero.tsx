@@ -1,5 +1,6 @@
 import { content } from "@/data/content";
 import { useFadeIn } from "@/hooks/useFadeIn";
+import pixelRunner from "@/assets/options/runner-pixel.png";
 
 export default function Hero() {
   const { ref, visible } = useFadeIn();
@@ -22,6 +23,16 @@ export default function Hero() {
         <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
           <path d="M40 0 L40 40 L0 40" stroke="hsl(var(--highlight))" strokeWidth="1.5" opacity="0.4" />
         </svg>
+      </div>
+
+      {/* Pixel runner — bottom right decorative element */}
+      <div className="absolute bottom-20 right-16 pointer-events-none opacity-60 hidden sm:block">
+        <img
+          src={pixelRunner}
+          alt=""
+          className="w-20 h-auto"
+          loading="lazy"
+        />
       </div>
 
       <div
