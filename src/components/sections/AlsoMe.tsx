@@ -21,7 +21,7 @@ export default function AlsoMe() {
             <a
               key={chip.anchor}
               href={`#${chip.anchor}`}
-              className="inline-block text-sm font-heading px-4 py-1.5 rounded-full border hover:bg-foreground hover:text-background transition-colors"
+              className="inline-block text-sm font-heading px-4 py-1.5 rounded-full border border-border hover:border-highlight hover:text-highlight transition-colors"
             >
               {chip.label}
             </a>

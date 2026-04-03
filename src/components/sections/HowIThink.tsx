@@ -5,7 +5,7 @@ export default function HowIThink() {
   const { ref, visible } = useFadeIn();
 
   return (
-    <section id="thinking" className="px-6 py-16">
+    <section id="thinking" className="px-6 py-16 bg-surface-warm">
       <div
         ref={ref}
         className={`max-w-2xl mx-auto transition-all duration-700 ${
@@ -19,18 +19,27 @@ export default function HowIThink() {
           {content.howIThink.subhead}
         </p>
 
-        <ol className="space-y-6">
-          {content.howIThink.steps.map((step, i) => (
-            <li key={i} className="flex gap-4 items-start">
-              <span className="text-2xl font-heading font-light text-primary/60 leading-none mt-0.5">
-                {i + 1}
-              </span>
-              <p className="text-sm text-muted-foreground leading-relaxed pt-1">
-                {step}
-              </p>
-            </li>
-          ))}
-        </ol>
+        {/* Steps with connecting line */}
+        <div className="relative">
+          {/* Vertical connector */}
+          <div className="absolute left-[15px] top-2 bottom-2 w-px bg-gradient-to-b from-highlight/40 via-highlight/20 to-transparent" />
+
+          <ol className="space-y-6">
+            {content.howIThink.steps.map((step, i) => (
+              <li key={i} className="flex gap-5 items-start relative">
+                {/* Numbered circle */}
+                <div className="w-[31px] h-[31px] rounded-full border border-highlight/40 flex items-center justify-center flex-shrink-0 bg-background z-10">
+                  <span className="text-xs font-heading font-medium text-highlight">
+                    {i + 1}
+                  </span>
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed pt-1.5">
+                  {step}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   );
