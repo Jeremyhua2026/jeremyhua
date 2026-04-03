@@ -12,6 +12,7 @@ export const content = {
     headline: "Most friction lives behind the experience.",
     subhead:
       "I'm interested in how decisions get made—what creates momentum, and what quietly stalls it—especially in the systems companies use to move.",
+    currentStatus: "Currently: thinking about how rewards programs shape habit at Tim Hortons",
     signature: "The long run",
     signatureNote:
       "Distance rewards pacing; organizations reward the same kind of patience—if the system allows it.",

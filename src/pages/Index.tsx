@@ -8,6 +8,7 @@ import Proof from "@/components/sections/Proof";
 import HowIThink from "@/components/sections/HowIThink";
 import OffTheClock from "@/components/sections/OffTheClock";
 import Contact from "@/components/sections/Contact";
+import PullQuote from "@/components/PullQuote";
 
 const Index = () => {
   return (
@@ -16,10 +17,13 @@ const Index = () => {
       <main>
         <Hero />
         <About />
+        <PullQuote quote="Most friction doesn't actually exist in the customer experience. It exists behind the scenes—inside the systems that determine how companies make decisions." />
         <AlsoMe />
         <Notes />
+        <PullQuote quote="Alignment isn't a slide; it's what happens when dozens of people interpret the same beat." />
         <Experience />
         <Proof />
+        <PullQuote quote="Most 'performance problems' are feedback problems—just easier to ignore in an office than at mile 40." />
         <HowIThink />
         <OffTheClock />
         <Contact />

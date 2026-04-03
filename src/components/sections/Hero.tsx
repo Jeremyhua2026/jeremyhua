@@ -19,11 +19,18 @@ export default function Hero() {
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-6 font-body italic">
           {content.hero.headline}
         </h1>
-        <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-10 max-w-xl">
+        <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-4 max-w-xl">
           {content.hero.subhead}
         </p>
 
-        <div className="border-t pt-6 mb-10">
+        {/* Current status line */}
+        <p className="text-sm text-primary font-heading mb-10 flex items-center gap-2">
+          <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+          {content.hero.currentStatus}
+        </p>
+
+        <div className="divider-accent mb-6" />
+        <div className="pt-0 mb-10">
           <p className="text-sm font-heading font-medium mb-1">{content.hero.signature}</p>
           <p className="text-sm text-muted-foreground italic">{content.hero.signatureNote}</p>
         </div>

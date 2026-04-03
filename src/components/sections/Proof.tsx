@@ -3,40 +3,55 @@ import { useFadeIn } from "@/hooks/useFadeIn";
 
 function StoryBlock({
   story,
+  index,
 }: {
   story: (typeof content.proof.stories)[number];
+  index: number;
 }) {
   const { ref, visible } = useFadeIn();
+  const isReversed = index % 2 === 1;
 
   return (
     <div
       id={story.id}
       ref={ref}
-      className={`border-t pt-10 transition-all duration-700 ${
+      className={`transition-all duration-700 ${
         visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
       }`}
     >
+      <div className="divider-accent mb-10" />
+
       <span className="text-[10px] tracking-[0.2em] uppercase text-primary font-heading">
         {story.tag}
       </span>
       <h3 className="text-lg font-heading font-medium mt-2 mb-3">{story.title}</h3>
-      <p className="text-sm text-muted-foreground italic mb-4">{story.intro}</p>
-      {story.body.split("\n\n").map((p, i) => (
-        <p key={i} className="text-sm text-muted-foreground leading-relaxed mb-3">
-          {p}
-        </p>
-      ))}
+      <p className="text-sm text-muted-foreground italic mb-6">{story.intro}</p>
 
-      {/* Image placeholders */}
-      <div className="grid grid-cols-2 gap-3 mt-6">
-        {Array.from({ length: story.imageCount }).map((_, i) => (
-          <div
-            key={i}
-            className="aspect-[3/2] rounded-lg bg-muted flex items-center justify-center"
-          >
-            <span className="text-xs text-muted-foreground font-heading">Photo {i + 1}</span>
-          </div>
-        ))}
+      <div
+        className={`flex flex-col gap-6 ${
+          isReversed ? "md:flex-row-reverse" : "md:flex-row"
+        }`}
+      >
+        {/* Text */}
+        <div className="flex-1">
+          {story.body.split("\n\n").map((p, i) => (
+            <p key={i} className="text-sm text-muted-foreground leading-relaxed mb-3">
+              {p}
+            </p>
+          ))}
+        </div>
+
+        {/* Images stacked vertically on the side */}
+        <div className="md:w-56 shrink-0 flex flex-col gap-3">
+          {Array.from({ length: story.imageCount }).map((_, i) => (
+            <div
+              key={i}
+              className="aspect-[4/3] rounded-lg bg-muted flex items-center justify-center"
+            >
+              <span className="text-xs text-muted-foreground font-heading">Photo {i + 1}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -90,9 +105,9 @@ export default function Proof() {
         </div>
 
         {/* Stories */}
-        <div className="space-y-12">
-          {content.proof.stories.map((story) => (
-            <StoryBlock key={story.id} story={story} />
+        <div className="space-y-14">
+          {content.proof.stories.map((story, i) => (
+            <StoryBlock key={story.id} story={story} index={i} />
           ))}
         </div>
       </div>
