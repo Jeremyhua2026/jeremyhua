@@ -13,34 +13,27 @@ export default function Hero() {
           visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
         }`}
       >
-        <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground font-heading mb-6">
-          {content.hero.eyebrow}
+        <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground font-heading mb-8">
+          {content.meta.name}
         </p>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-2 font-body">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-6 font-body">
           {content.hero.headline}
+          <br />
+          <span className="text-muted-foreground">{content.hero.headlineLine2}</span>
         </h1>
-        <p className="text-xl sm:text-2xl md:text-3xl font-light leading-tight mb-6 font-body text-muted-foreground">
-          {content.hero.headlineLine2}
-        </p>
-        <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-4 max-w-xl whitespace-pre-line">
+        <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-8 max-w-xl whitespace-pre-line">
           {content.hero.subhead}
         </p>
 
         {/* Current status line */}
         <div className="mb-10">
-          <p className="text-sm text-primary font-heading flex items-center gap-2">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+          <p className="text-sm text-foreground font-heading flex items-center gap-2">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-secondary" />
             {content.hero.currentStatus}
           </p>
           <p className="text-sm text-muted-foreground mt-1 ml-3.5">
             {content.hero.currentDetail}
           </p>
-        </div>
-
-        <div className="divider-accent mb-6" />
-        <div className="pt-0 mb-10">
-          <p className="text-sm font-heading font-medium mb-1">{content.hero.signature}</p>
-          <p className="text-sm text-muted-foreground leading-relaxed">{content.hero.signatureNote}</p>
         </div>
 
         <div className="flex items-center gap-6">
