@@ -43,7 +43,7 @@ function StoryBlock({
 
       {/* Header row: tag + stat */}
       <div className="flex items-baseline justify-between mb-1">
-        <span className="text-[10px] tracking-[0.2em] uppercase text-secondary font-heading">
+        <span className="text-[10px] tracking-[0.2em] uppercase text-highlight font-heading">
           {story.tag}
         </span>
         {stat && (
