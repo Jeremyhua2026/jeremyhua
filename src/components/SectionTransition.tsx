@@ -8,7 +8,7 @@ export default function SectionTransition({ text }: SectionTransitionProps) {
   const { ref, visible } = useFadeIn();
 
   return (
-    <div className="px-6 py-10">
+    <div className="px-6 py-6">
       <div
         ref={ref}
         className={`max-w-2xl mx-auto transition-all duration-700 ${
