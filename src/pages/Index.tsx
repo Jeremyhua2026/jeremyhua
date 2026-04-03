@@ -1,16 +1,36 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import Header from "@/components/Header";
+import Hero from "@/components/sections/Hero";
+import About from "@/components/sections/About";
+import AlsoMe from "@/components/sections/AlsoMe";
+import Notes from "@/components/sections/Notes";
+import Experience from "@/components/sections/Experience";
+import Proof from "@/components/sections/Proof";
+import HowIThink from "@/components/sections/HowIThink";
+import OffTheClock from "@/components/sections/OffTheClock";
+import Contact from "@/components/sections/Contact";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
-    </div>
+    <>
+      <Header />
+      <main>
+        <Hero />
+        <About />
+        <AlsoMe />
+        <Notes />
+        <Experience />
+        <Proof />
+        <HowIThink />
+        <OffTheClock />
+        <Contact />
+      </main>
+      <footer className="px-6 py-8 text-center">
+        <p className="text-xs text-muted-foreground font-heading">
+          © {new Date().getFullYear()} Jeremy Hua
+        </p>
+      </footer>
+    </>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
