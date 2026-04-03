@@ -3,6 +3,7 @@ import { useFadeIn } from "@/hooks/useFadeIn";
 import origin1 from "@/assets/travel-3.jpg";
 import origin2 from "@/assets/travel-4.jpg";
 import origin3 from "@/assets/travel-2.jpg";
+import sisyphus from "@/assets/options/sisyphus-editorial.png";
 
 const frames = [
   { src: origin1, caption: "Chase everything" },
@@ -30,21 +31,32 @@ export default function Origin() {
           <div className="h-px flex-1 bg-border" />
         </div>
 
-        {/* Story text — centered */}
-        <div className="mb-8 max-w-lg mx-auto text-center">
-          <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-            I've been this way for as long as I can remember—drawn to whatever felt interesting, 
-            even when it didn't make obvious sense. Chasing birds on a beach, pointing at planes, 
-            standing on rocks just to see what's on the other side.
-          </p>
-          <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-            The through-line isn't ambition—it's curiosity. A quiet refusal to stay comfortable. 
-            If something feels too settled, I start looking for the next question, the next place, 
-            the next thing I don't understand yet.
-          </p>
-          <p className="text-sm text-foreground/70 leading-relaxed font-heading">
-            If not for curiosity, what's the point of any of it?
-          </p>
+        {/* Sisyphus illustration + story text side by side */}
+        <div className="flex flex-col sm:flex-row items-center gap-6 mb-8">
+          <div className="w-32 sm:w-40 flex-shrink-0 opacity-70">
+            <img
+              src={sisyphus}
+              alt="Sisyphus pushing a boulder — the eternal climb"
+              className="w-full h-auto"
+              loading="lazy"
+            />
+          </div>
+
+          <div className="max-w-lg text-center sm:text-left">
+            <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+              I've been this way for as long as I can remember—drawn to whatever felt interesting, 
+              even when it didn't make obvious sense. Chasing birds on a beach, pointing at planes, 
+              standing on rocks just to see what's on the other side.
+            </p>
+            <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+              The through-line isn't ambition—it's curiosity. A quiet refusal to stay comfortable. 
+              If something feels too settled, I start looking for the next question, the next place, 
+              the next thing I don't understand yet.
+            </p>
+            <p className="text-sm text-foreground/70 leading-relaxed font-heading">
+              If not for curiosity, what's the point of any of it?
+            </p>
+          </div>
         </div>
 
         {/* Photo strip — centered, small */}
