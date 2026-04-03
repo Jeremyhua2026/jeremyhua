@@ -27,7 +27,7 @@ export default function DecorativeLine({ variant = "dots", className = "" }: Dec
 
   // wave
   return (
-    <div className={`flex justify-center py-6 ${className}`}>
+    <div className={`flex justify-center py-4 ${className}`}>
       <svg width="80" height="12" viewBox="0 0 80 12" fill="none" className="text-muted-foreground/15">
         <path d="M0 6 Q10 0 20 6 Q30 12 40 6 Q50 0 60 6 Q70 12 80 6" stroke="currentColor" strokeWidth="1" fill="none" />
       </svg>
