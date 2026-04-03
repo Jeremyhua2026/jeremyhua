@@ -1,5 +1,6 @@
 import { content } from "@/data/content";
 import { useFadeIn } from "@/hooks/useFadeIn";
+import { ExternalLink } from "lucide-react";
 
 import band1 from "@/assets/band-1.jpg";
 import band2 from "@/assets/band-2.jpg";
@@ -41,7 +42,6 @@ function StoryBlock({
     >
       <div className="divider-accent mb-6" />
 
-      {/* Header row: tag + stat */}
       <div className="flex items-baseline justify-between mb-1">
         <span className="text-[10px] tracking-[0.2em] uppercase text-highlight font-heading">
           {story.tag}
@@ -61,10 +61,9 @@ function StoryBlock({
       <h3 className="text-lg font-heading font-medium mt-1 mb-2">{story.title}</h3>
       <p className="text-sm text-muted-foreground mb-4">{story.intro}</p>
 
-      {/* Images — horizontal row, compact */}
       <div className={`flex gap-2 mb-4 ${isReversed ? "flex-row-reverse" : ""}`}>
         {images.map((src, i) => (
-          <div key={i} className={`${images.length === 1 ? "w-1/2" : images.length === 3 ? "flex-1" : "flex-1"}`}>
+          <div key={i} className="flex-1">
             <img
               src={src}
               alt={`${story.tag} photo ${i + 1}`}
@@ -75,7 +74,6 @@ function StoryBlock({
         ))}
       </div>
 
-      {/* Body text */}
       <div>
         {story.body.split("\n\n").map((p, i) => (
           <p key={i} className="text-sm text-muted-foreground leading-relaxed mb-3">
@@ -111,7 +109,7 @@ export default function Proof() {
             {content.proof.subhead}
           </p>
 
-          {/* Work block */}
+          {/* Work block — merged from Experience */}
           <div id="proof-work" className="mb-12">
             <span className="text-[10px] tracking-[0.2em] uppercase text-highlight font-heading">
               Work
@@ -124,6 +122,36 @@ export default function Proof() {
                 {p}
               </p>
             ))}
+
+            {/* Experience items inline */}
+            <div className="grid sm:grid-cols-2 gap-3 mt-6">
+              {content.experience.items.map((item) => (
+                <div key={item.company} className="rounded-lg p-4 border border-border/50">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="text-sm font-heading font-medium">{item.company}</span>
+                    <span className="text-[9px] tracking-wider uppercase text-highlight font-heading bg-highlight/10 px-1.5 py-0.5 rounded-full">
+                      {item.status}
+                    </span>
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed mb-1.5">
+                    {item.role}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {item.links.map((link) => (
+                      <a
+                        key={link.url}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-[10px] font-heading text-highlight hover:text-highlight/80 transition-colors"
+                      >
+                        {link.label} <ExternalLink size={9} />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
 
             {/* Jump links */}
             <div className="flex flex-wrap items-center gap-2 mt-6">

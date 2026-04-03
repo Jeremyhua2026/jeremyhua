@@ -49,16 +49,8 @@ export const content = {
       "Short observations on systems, incentives, and the gap between what companies say and how they run.",
     items: [
       {
-        title: "Front stage → back office",
-        body: "The real constraints are always upstream: data, governance, incentives, and how decisions travel.",
-      },
-      {
         title: "Rewards apps are behavior machines",
         body: "A rewards program isn't just points. It's a loop: frequency, habit, and the design of tradeoffs.",
-      },
-      {
-        title: "Airlines sell seats",
-        body: "But they run on networks, crews, and constraints that customers never see—and constantly feel.",
       },
       {
         title: "Effort isn't the constraint",
