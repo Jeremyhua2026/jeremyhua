@@ -6,9 +6,9 @@ import origin2 from "@/assets/travel-4.jpg";
 import origin3 from "@/assets/travel-2.jpg";
 
 const frames = [
-  { src: origin1, caption: "Chase everything" },
-  { src: origin2, caption: "Look further" },
-  { src: origin3, caption: "Arms wide open" },
+  { src: origin1, caption: "Pay attention to what pulls you" },
+  { src: origin2, caption: "Look past what's obvious" },
+  { src: origin3, caption: "Let it land" },
 ];
 
 export default function Hero() {
