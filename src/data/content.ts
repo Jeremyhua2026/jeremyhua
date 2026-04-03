@@ -8,14 +8,14 @@ export const content = {
   },
 
   hero: {
-    headline: "Most friction isn't in the experience.",
-    headlineLine2: "It's in the system behind it.",
+    headline: "I'm drawn to how things actually work—",
+    headlineLine2: "not how they're supposed to.",
     subhead:
-      "I study how decisions actually get made—\nwhat creates momentum, and what quietly kills it.",
-    currentStatus: "Currently: studying how rewards programs train behavior at Tim Hortons",
+      "Systems, decisions, the gap between the plan and what happens.\nThat's where I spend most of my time.",
+    currentStatus: "Studying how rewards programs train behavior at Tim Hortons",
     currentDetail:
-      "Not just points—timing, frequency, and what the system teaches people to value.",
-    cta: "Get in touch",
+      "Timing, frequency, and what the system teaches people to value.",
+    cta: "Say hi",
   },
 
   tension: {
