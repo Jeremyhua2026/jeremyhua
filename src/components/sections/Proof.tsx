@@ -25,7 +25,7 @@ function StoryBlock({
         {story.tag}
       </span>
       <h3 className="text-lg font-heading font-medium mt-2 mb-3">{story.title}</h3>
-      <p className="text-sm text-muted-foreground italic mb-6">{story.intro}</p>
+      <p className="text-sm text-muted-foreground mb-6">{story.intro}</p>
 
       <div
         className={`flex flex-col gap-6 ${
