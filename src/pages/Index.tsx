@@ -3,10 +3,10 @@ import Hero from "@/components/sections/Hero";
 import Tension from "@/components/sections/Tension";
 import About from "@/components/sections/About";
 import Origin from "@/components/sections/Origin";
+import AlsoMe from "@/components/sections/AlsoMe";
 import Experience from "@/components/sections/Experience";
 import Proof from "@/components/sections/Proof";
 import Notes from "@/components/sections/Notes";
-import AlsoMe from "@/components/sections/AlsoMe";
 import HowIThink from "@/components/sections/HowIThink";
 import OffTheClock from "@/components/sections/OffTheClock";
 import Contact from "@/components/sections/Contact";
@@ -28,8 +28,11 @@ const Index = () => {
         {/* 3. Reveal */}
         <About />
 
-        {/* Origin story — childhood photos */}
+        {/* Origin story — childhood curiosity */}
         <Origin />
+
+        {/* Also me chips — right after origin for personal flow */}
+        <AlsoMe />
 
         <DecorativeLine variant="arrow" />
 
@@ -44,7 +47,6 @@ const Index = () => {
 
         {/* 6. Human layer */}
         <SectionTransition text={content.transitions.beforePersonal} />
-        <AlsoMe />
         <OffTheClock />
 
         {/* 7. Method */}
