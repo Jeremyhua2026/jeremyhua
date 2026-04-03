@@ -39,7 +39,7 @@ export default function Hero() {
             >
               {/* Polaroid card — thick white border, deep shadow */}
               <div
-                className="relative bg-white p-[6px] pb-12 w-[120px] sm:w-[140px] transition-transform duration-500 group-hover:-translate-y-1"
+                className="relative bg-[#faf8f5] dark:bg-[hsl(30,10%,16%)] p-[6px] pb-12 w-[120px] sm:w-[140px] transition-transform duration-500 group-hover:-translate-y-1"
                 style={{
                   boxShadow: '0 8px 30px -6px rgba(0,0,0,0.15), 0 2px 8px -2px rgba(0,0,0,0.08)',
                 }}
