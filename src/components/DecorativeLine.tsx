@@ -16,7 +16,7 @@ export default function DecorativeLine({ variant = "dots", className = "" }: Dec
 
   if (variant === "arrow") {
     return (
-      <div className={`flex justify-center py-8 ${className}`}>
+      <div className={`flex justify-center py-5 ${className}`}>
         <svg width="24" height="40" viewBox="0 0 24 40" fill="none" className="text-muted-foreground/20">
           <line x1="12" y1="0" x2="12" y2="32" stroke="currentColor" strokeWidth="1" />
           <polyline points="6,28 12,36 18,28" stroke="currentColor" strokeWidth="1" fill="none" />
