@@ -27,31 +27,45 @@ export default function Hero() {
           visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
         }`}
       >
-        {/* Photo strip — first thing you see, sets a human tone */}
-        <div className="flex items-end gap-2 max-w-[220px] mb-10">
+        {/* Photo strip — polaroid-style, slightly rotated, connected */}
+        <div className="flex items-center gap-4 mb-12">
           {frames.map((frame, i) => (
-            <div key={i} className="flex-1 group">
-              <div className="overflow-hidden rounded">
-                <img
-                  src={frame.src}
-                  alt={frame.caption}
-                  className="w-full aspect-[3/4] object-cover grayscale-[30%] group-hover:grayscale-0 transition-all duration-500"
-                  loading="lazy"
-                />
+            <div
+              key={i}
+              className="group"
+              style={{
+                transform: `rotate(${i === 0 ? '-2' : i === 1 ? '1' : '-1'}deg)`,
+              }}
+            >
+              <div className="bg-card p-1.5 pb-6 rounded shadow-md border border-border/40 w-[90px] sm:w-[100px]">
+                <div className="overflow-hidden rounded-sm">
+                  <img
+                    src={frame.src}
+                    alt={frame.caption}
+                    className="w-full aspect-[3/4] object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                </div>
+                <p className="text-[7px] sm:text-[8px] text-muted-foreground font-heading mt-2 text-center tracking-wide">
+                  {frame.caption}
+                </p>
               </div>
-              <p className="text-[8px] text-muted-foreground font-heading mt-1 text-center tracking-wide">
-                {frame.caption}
-              </p>
             </div>
           ))}
+
+          {/* Connecting thread from photos to text */}
+          <div className="hidden sm:flex items-center gap-1.5 ml-2">
+            <div className="w-8 h-px bg-border" />
+            <div className="w-1 h-1 rounded-full bg-muted-foreground/30" />
+          </div>
         </div>
 
-        {/* Name — casual, not corporate */}
+        {/* Name — casual */}
         <p className="text-sm text-muted-foreground font-heading mb-4">
           {content.meta.name} · {content.meta.location}
         </p>
 
-        {/* Headline — conversational */}
+        {/* Headline */}
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-light leading-snug mb-5 font-body">
           {content.hero.headline}
           <br />
@@ -62,7 +76,7 @@ export default function Hero() {
           {content.hero.subhead}
         </p>
 
-        {/* Current status — lighter treatment */}
+        {/* Current status */}
         <div className="mb-8 flex items-start gap-3">
           <span className="inline-block w-1.5 h-1.5 rounded-full bg-highlight animate-pulse mt-1.5 flex-shrink-0" />
           <div>
