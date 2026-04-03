@@ -1,6 +1,6 @@
 import { content } from "@/data/content";
 import { useFadeIn } from "@/hooks/useFadeIn";
-import pixelRunner from "@/assets/options/runner-pixel.png";
+
 
 export default function Hero() {
   const { ref, visible } = useFadeIn();
