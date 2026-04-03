@@ -11,12 +11,19 @@ import hobbies1 from "@/assets/hobbies-1.jpg";
 import travel1 from "@/assets/travel-1.jpg";
 import travel5 from "@/assets/travel-5.jpg";
 import travel6 from "@/assets/travel-6.jpg";
+import logoWestjet from "@/assets/logo-westjet.png";
+import logoTimhortons from "@/assets/logo-timhortons.png";
 
 const storyImages: Record<string, string[]> = {
   "proof-band": [band1, band2, band3],
   "proof-ultra": [ultra1, ultra2],
   "proof-hobbies": [hobbies1, travel1],
   "proof-travel": [travel5, travel6],
+};
+
+const companyLogos: Record<string, string> = {
+  "Tim Hortons": logoTimhortons,
+  "WestJet": logoWestjet,
 };
 
 function StoryBlock({
@@ -109,7 +116,7 @@ export default function Proof() {
             {content.proof.subhead}
           </p>
 
-          {/* Work block — merged from Experience */}
+          {/* Work block with logos */}
           <div id="proof-work" className="mb-12">
             <span className="text-[10px] tracking-[0.2em] uppercase text-highlight font-heading">
               Work
@@ -123,17 +130,24 @@ export default function Proof() {
               </p>
             ))}
 
-            {/* Experience items inline */}
+            {/* Experience cards with logos */}
             <div className="grid sm:grid-cols-2 gap-3 mt-6">
               {content.experience.items.map((item) => (
-                <div key={item.company} className="rounded-lg p-4 border border-border/50">
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <span className="text-sm font-heading font-medium">{item.company}</span>
+                <div key={item.company} className="rounded-lg p-5 border border-border/50 bg-card/50">
+                  <div className="flex items-center gap-3 mb-3">
+                    {companyLogos[item.company] && (
+                      <img
+                        src={companyLogos[item.company]}
+                        alt={`${item.company} logo`}
+                        className="h-6 w-auto object-contain dark:brightness-200 dark:contrast-50"
+                        loading="lazy"
+                      />
+                    )}
                     <span className="text-[9px] tracking-wider uppercase text-highlight font-heading bg-highlight/10 px-1.5 py-0.5 rounded-full">
                       {item.status}
                     </span>
                   </div>
-                  <p className="text-xs text-muted-foreground leading-relaxed mb-1.5">
+                  <p className="text-xs text-muted-foreground leading-relaxed mb-2">
                     {item.role}
                   </p>
                   <div className="flex flex-wrap gap-2">

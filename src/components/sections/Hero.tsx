@@ -27,37 +27,31 @@ export default function Hero() {
           visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
         }`}
       >
-        {/* Photo strip — polaroid-style, slightly rotated, connected */}
-        <div className="flex items-center gap-4 mb-12">
+        {/* Polaroid strip — smaller, refined, with handwritten feel */}
+        <div className="flex items-start gap-5 mb-14">
           {frames.map((frame, i) => (
             <div
               key={i}
-              className="group"
+              className="group cursor-default"
               style={{
-                transform: `rotate(${i === 0 ? '-2' : i === 1 ? '1' : '-1'}deg)`,
+                transform: `rotate(${i === 0 ? '-3' : i === 1 ? '2' : '-1.5'}deg)`,
               }}
             >
-              <div className="bg-card p-1.5 pb-6 rounded shadow-md border border-border/40 w-[90px] sm:w-[100px]">
-                <div className="overflow-hidden rounded-sm">
+              <div className="bg-[hsl(var(--surface-warm))] p-[5px] pb-8 rounded-sm shadow-[0_2px_12px_-2px_rgba(0,0,0,0.12)] w-[72px] sm:w-[80px] relative">
+                <div className="overflow-hidden">
                   <img
                     src={frame.src}
                     alt={frame.caption}
-                    className="w-full aspect-[3/4] object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
                 </div>
-                <p className="text-[7px] sm:text-[8px] text-muted-foreground font-heading mt-2 text-center tracking-wide">
+                <p className="text-[6px] sm:text-[7px] text-muted-foreground font-body italic mt-2 text-center leading-tight px-0.5">
                   {frame.caption}
                 </p>
               </div>
             </div>
           ))}
-
-          {/* Connecting thread from photos to text */}
-          <div className="hidden sm:flex items-center gap-1.5 ml-2">
-            <div className="w-8 h-px bg-border" />
-            <div className="w-1 h-1 rounded-full bg-muted-foreground/30" />
-          </div>
         </div>
 
         {/* Name — casual */}
