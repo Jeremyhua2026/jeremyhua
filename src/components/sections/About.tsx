@@ -16,29 +16,27 @@ export default function About() {
           {content.about.heading}
         </h2>
 
-        <div className="space-y-5">
-          {content.about.paragraphs.map((p, i) => (
-            <p
-              key={i}
-              className={`leading-relaxed ${
-                i === 0 ? "text-xl font-medium font-heading" : "text-base text-muted-foreground"
-              }`}
-            >
-              {p}
-            </p>
-          ))}
-        </div>
+        <div className="flex flex-col md:flex-row gap-10">
+          {/* Text */}
+          <div className="flex-1 space-y-5">
+            {content.about.paragraphs.map((p, i) => (
+              <p
+                key={i}
+                className={`leading-relaxed ${
+                  i === 0 ? "text-xl font-medium font-heading" : "text-base text-muted-foreground"
+                }`}
+              >
+                {p}
+              </p>
+            ))}
+          </div>
 
-        {/* Photo strip placeholder */}
-        <div className="mt-12 grid grid-cols-3 gap-3">
-          {[1, 2, 3].map((n) => (
-            <div
-              key={n}
-              className="aspect-[4/5] rounded-lg bg-muted flex items-center justify-center"
-            >
-              <span className="text-xs text-muted-foreground font-heading">Photo {n}</span>
+          {/* Single large portrait placeholder */}
+          <div className="md:w-64 shrink-0">
+            <div className="aspect-[3/4] rounded-lg bg-muted flex items-center justify-center sticky top-24">
+              <span className="text-xs text-muted-foreground font-heading">Portrait</span>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </section>
