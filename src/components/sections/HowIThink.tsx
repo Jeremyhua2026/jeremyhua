@@ -5,7 +5,7 @@ export default function HowIThink() {
   const { ref, visible } = useFadeIn();
 
   return (
-    <section id="thinking" className="px-6 py-20">
+    <section id="thinking" className="px-6 py-16">
       <div
         ref={ref}
         className={`max-w-2xl mx-auto transition-all duration-700 ${
