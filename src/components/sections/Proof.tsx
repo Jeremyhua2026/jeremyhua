@@ -40,7 +40,7 @@ function StoryBlock({
             </p>
           ))}
           {"closer" in story && story.closer && (
-            <p className="text-sm font-heading font-medium text-foreground mt-4 italic">
+            <p className="text-sm font-heading font-medium text-foreground mt-4">
               {story.closer}
             </p>
           )}
