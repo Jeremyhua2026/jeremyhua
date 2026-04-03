@@ -27,6 +27,8 @@ function StoryBlock({
   const { ref, visible } = useFadeIn();
   const isReversed = index % 2 === 1;
   const images = storyImages[story.id] || [];
+  const stat = "stat" in story ? (story as any).stat : null;
+  const statLabel = "statLabel" in story ? (story as any).statLabel : null;
 
   return (
     <div
@@ -36,45 +38,54 @@ function StoryBlock({
         visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
       }`}
     >
-      <div className="divider-accent mb-8" />
+      <div className="divider-accent mb-6" />
 
-      <span className="text-[10px] tracking-[0.2em] uppercase text-secondary font-heading">
-        {story.tag}
-      </span>
-      <h3 className="text-lg font-heading font-medium mt-2 mb-3">{story.title}</h3>
-      <p className="text-sm text-muted-foreground mb-6">{story.intro}</p>
+      {/* Header row: tag + stat */}
+      <div className="flex items-baseline justify-between mb-1">
+        <span className="text-[10px] tracking-[0.2em] uppercase text-secondary font-heading">
+          {story.tag}
+        </span>
+        {stat && (
+          <div className="text-right">
+            <span className="text-xl font-heading font-semibold text-foreground leading-none">
+              {stat}
+            </span>
+            <span className="text-[10px] text-muted-foreground font-heading ml-1.5 tracking-wide">
+              {statLabel}
+            </span>
+          </div>
+        )}
+      </div>
 
-      <div
-        className={`flex flex-col gap-6 ${
-          isReversed ? "md:flex-row-reverse" : "md:flex-row"
-        }`}
-      >
-        {/* Text */}
-        <div className="flex-1">
-          {story.body.split("\n\n").map((p, i) => (
-            <p key={i} className="text-sm text-muted-foreground leading-relaxed mb-3">
-              {p}
-            </p>
-          ))}
-          {"closer" in story && story.closer && (
-            <p className="text-sm font-heading font-medium text-foreground mt-4">
-              {story.closer}
-            </p>
-          )}
-        </div>
+      <h3 className="text-lg font-heading font-medium mt-1 mb-2">{story.title}</h3>
+      <p className="text-sm text-muted-foreground mb-4">{story.intro}</p>
 
-        {/* Images */}
-        <div className={`shrink-0 flex flex-col gap-3 ${images.length > 2 ? "md:w-48" : "md:w-52"}`}>
-          {images.map((src, i) => (
+      {/* Images — horizontal row, compact */}
+      <div className={`flex gap-2 mb-4 ${isReversed ? "flex-row-reverse" : ""}`}>
+        {images.map((src, i) => (
+          <div key={i} className={`${images.length === 1 ? "w-1/2" : images.length === 3 ? "flex-1" : "flex-1"}`}>
             <img
-              key={i}
               src={src}
               alt={`${story.tag} photo ${i + 1}`}
-              className="rounded-lg object-cover w-full aspect-[4/3]"
+              className="rounded-md object-cover w-full aspect-[3/2]"
               loading="lazy"
             />
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Body text */}
+      <div>
+        {story.body.split("\n\n").map((p, i) => (
+          <p key={i} className="text-sm text-muted-foreground leading-relaxed mb-3">
+            {p}
+          </p>
+        ))}
+        {"closer" in story && story.closer && (
+          <p className="text-sm font-heading font-medium text-foreground mt-3">
+            {story.closer}
+          </p>
+        )}
       </div>
     </div>
   );
@@ -130,7 +141,7 @@ export default function Proof() {
         </div>
 
         {/* Stories */}
-        <div className="space-y-14">
+        <div className="space-y-12">
           {content.proof.stories.map((story, i) => (
             <StoryBlock key={story.id} story={story} index={i} />
           ))}
