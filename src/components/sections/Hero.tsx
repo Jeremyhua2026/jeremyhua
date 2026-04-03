@@ -1,12 +1,15 @@
 import { content } from "@/data/content";
 import { useFadeIn } from "@/hooks/useFadeIn";
-import { ArrowDown } from "lucide-react";
 
 export default function Hero() {
   const { ref, visible } = useFadeIn();
 
   return (
-    <section className="min-h-[90vh] flex flex-col justify-center px-6 pt-24 pb-16">
+    <section className="min-h-[90vh] flex flex-col justify-center px-6 pt-24 pb-16 relative overflow-hidden">
+      {/* Subtle decorative corner accents */}
+      <div className="absolute top-20 left-8 w-12 h-12 border-l border-t border-border/40 rounded-tl-sm pointer-events-none" />
+      <div className="absolute bottom-12 right-8 w-12 h-12 border-r border-b border-border/40 rounded-br-sm pointer-events-none" />
+
       <div
         ref={ref}
         className={`max-w-2xl mx-auto w-full transition-all duration-700 ${
@@ -46,8 +49,10 @@ export default function Hero() {
           <span className="text-xs text-muted-foreground font-heading">{content.meta.location}</span>
         </div>
 
-        <div className="mt-16 flex justify-center">
-          <ArrowDown size={16} className="text-muted-foreground animate-bounce" />
+        {/* Scroll indicator — subtle line + dot */}
+        <div className="mt-16 flex flex-col items-center gap-1">
+          <div className="w-px h-8 bg-gradient-to-b from-transparent to-muted-foreground/30" />
+          <div className="w-1 h-1 rounded-full bg-muted-foreground/30" />
         </div>
       </div>
     </section>
