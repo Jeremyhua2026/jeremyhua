@@ -3,7 +3,7 @@ import { useFadeIn } from "@/hooks/useFadeIn";
 import origin1 from "@/assets/travel-3.jpg";
 import origin2 from "@/assets/travel-4.jpg";
 import origin3 from "@/assets/travel-2.jpg";
-import sisyphus from "@/assets/options/sisyphus-editorial.png";
+import sisyphusVideo from "@/assets/sisyphus-victory.mp4.asset.json";
 
 const frames = [
   { src: origin1, caption: "Chase everything" },
@@ -31,14 +31,16 @@ export default function Origin() {
           <div className="h-px flex-1 bg-border" />
         </div>
 
-        {/* Sisyphus illustration + story text side by side */}
+        {/* Sisyphus video + story text side by side */}
         <div className="flex flex-col sm:flex-row items-center gap-6 mb-8">
           <div className="w-32 sm:w-40 flex-shrink-0 opacity-70">
-            <img
-              src={sisyphus}
-              alt="Sisyphus pushing a boulder — the eternal climb"
-              className="w-full h-auto"
-              loading="lazy"
+            <video
+              src={sisyphusVideo.url}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-auto rounded"
             />
           </div>
 
