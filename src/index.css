@@ -4,95 +4,95 @@
 
 @layer base {
   :root {
-    --background: 38 30% 96%;
-    --foreground: 30 10% 15%;
+    --background: 40 33% 97%;
+    --foreground: 25 15% 12%;
 
-    --card: 36 25% 93%;
-    --card-foreground: 30 10% 15%;
+    --card: 38 30% 94%;
+    --card-foreground: 25 15% 12%;
 
-    --popover: 38 30% 96%;
-    --popover-foreground: 30 10% 15%;
+    --popover: 40 33% 97%;
+    --popover-foreground: 25 15% 12%;
 
-    --primary: 30 18% 45%;
-    --primary-foreground: 38 30% 96%;
+    --primary: 24 45% 42%;
+    --primary-foreground: 40 33% 97%;
 
-    --secondary: 150 12% 42%;
-    --secondary-foreground: 38 30% 96%;
+    --secondary: 160 18% 38%;
+    --secondary-foreground: 40 33% 97%;
 
-    --muted: 35 18% 91%;
-    --muted-foreground: 30 8% 45%;
+    --muted: 36 22% 90%;
+    --muted-foreground: 25 10% 42%;
 
-    --accent: 150 12% 42%;
-    --accent-foreground: 38 30% 96%;
+    --accent: 160 18% 38%;
+    --accent-foreground: 40 33% 97%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 33 15% 85%;
-    --input: 33 15% 85%;
-    --ring: 30 18% 45%;
+    --border: 35 18% 82%;
+    --input: 35 18% 82%;
+    --ring: 24 45% 42%;
 
     --radius: 0.5rem;
 
-    /* Extended palette */
-    --surface-warm: 33 25% 92%;
-    --surface-cool: 150 8% 93%;
-    --highlight: 28 60% 58%;
-    --highlight-foreground: 38 30% 96%;
+    /* Extended palette — richer, warmer */
+    --surface-warm: 36 30% 93%;
+    --surface-cool: 160 12% 94%;
+    --highlight: 18 65% 52%;
+    --highlight-foreground: 40 33% 97%;
 
-    --sidebar-background: 38 30% 96%;
-    --sidebar-foreground: 30 10% 15%;
-    --sidebar-primary: 30 18% 45%;
-    --sidebar-primary-foreground: 38 30% 96%;
-    --sidebar-accent: 35 18% 91%;
-    --sidebar-accent-foreground: 30 10% 15%;
-    --sidebar-border: 33 15% 85%;
-    --sidebar-ring: 30 18% 45%;
+    --sidebar-background: 40 33% 97%;
+    --sidebar-foreground: 25 15% 12%;
+    --sidebar-primary: 24 45% 42%;
+    --sidebar-primary-foreground: 40 33% 97%;
+    --sidebar-accent: 36 22% 90%;
+    --sidebar-accent-foreground: 25 15% 12%;
+    --sidebar-border: 35 18% 82%;
+    --sidebar-ring: 24 45% 42%;
   }
 
   .dark {
-    --background: 30 8% 8%;
+    --background: 25 10% 7%;
     --foreground: 35 15% 82%;
 
-    --card: 30 8% 11%;
+    --card: 25 10% 10%;
     --card-foreground: 35 15% 82%;
 
-    --popover: 30 8% 8%;
+    --popover: 25 10% 7%;
     --popover-foreground: 35 15% 82%;
 
-    --primary: 33 20% 50%;
-    --primary-foreground: 30 8% 8%;
+    --primary: 28 35% 50%;
+    --primary-foreground: 25 10% 7%;
 
-    --secondary: 150 10% 32%;
+    --secondary: 160 12% 30%;
     --secondary-foreground: 35 15% 82%;
 
-    --muted: 30 6% 15%;
-    --muted-foreground: 33 10% 50%;
+    --muted: 25 8% 14%;
+    --muted-foreground: 30 10% 48%;
 
-    --accent: 150 10% 32%;
+    --accent: 160 12% 30%;
     --accent-foreground: 35 15% 82%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 30 6% 18%;
-    --input: 30 6% 18%;
-    --ring: 33 20% 50%;
+    --border: 25 8% 17%;
+    --input: 25 8% 17%;
+    --ring: 28 35% 50%;
 
     /* Extended palette — dark */
-    --surface-warm: 30 8% 12%;
-    --surface-cool: 150 6% 11%;
-    --highlight: 28 50% 52%;
-    --highlight-foreground: 30 8% 8%;
+    --surface-warm: 25 10% 11%;
+    --surface-cool: 160 8% 10%;
+    --highlight: 22 55% 50%;
+    --highlight-foreground: 25 10% 7%;
 
-    --sidebar-background: 30 8% 8%;
+    --sidebar-background: 25 10% 7%;
     --sidebar-foreground: 35 15% 82%;
-    --sidebar-primary: 33 20% 50%;
-    --sidebar-primary-foreground: 30 8% 8%;
-    --sidebar-accent: 30 6% 15%;
+    --sidebar-primary: 28 35% 50%;
+    --sidebar-primary-foreground: 25 10% 7%;
+    --sidebar-accent: 25 8% 14%;
     --sidebar-accent-foreground: 35 15% 82%;
-    --sidebar-border: 30 6% 18%;
-    --sidebar-ring: 33 20% 50%;
+    --sidebar-border: 25 8% 17%;
+    --sidebar-ring: 28 35% 50%;
   }
 }
 
@@ -135,7 +135,7 @@ body::before {
   height: 100%;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.03;
+  opacity: 0.025;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px 256px;
