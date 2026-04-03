@@ -1,6 +1,23 @@
 import { content } from "@/data/content";
 import { useFadeIn } from "@/hooks/useFadeIn";
 
+import band1 from "@/assets/band-1.jpg";
+import band2 from "@/assets/band-2.jpg";
+import band3 from "@/assets/band-3.jpg";
+import ultra1 from "@/assets/ultra-1.jpg";
+import hobbies1 from "@/assets/hobbies-1.jpg";
+import travel1 from "@/assets/travel-1.jpg";
+import travel2 from "@/assets/travel-2.jpg";
+import travel3 from "@/assets/travel-3.jpg";
+import travel4 from "@/assets/travel-4.jpg";
+
+const storyImages: Record<string, string[]> = {
+  "proof-band": [band1, band2, band3],
+  "proof-ultra": [ultra1, travel1],
+  "proof-hobbies": [hobbies1, travel2],
+  "proof-travel": [travel3, travel4],
+};
+
 function StoryBlock({
   story,
   index,
@@ -10,6 +27,7 @@ function StoryBlock({
 }) {
   const { ref, visible } = useFadeIn();
   const isReversed = index % 2 === 1;
+  const images = storyImages[story.id] || [];
 
   return (
     <div
@@ -48,13 +66,14 @@ function StoryBlock({
 
         {/* Images */}
         <div className="md:w-56 shrink-0 flex flex-col gap-3">
-          {Array.from({ length: story.imageCount }).map((_, i) => (
-            <div
+          {images.map((src, i) => (
+            <img
               key={i}
-              className="aspect-[4/3] rounded-lg bg-muted flex items-center justify-center"
-            >
-              <span className="text-xs text-muted-foreground font-heading">Photo {i + 1}</span>
-            </div>
+              src={src}
+              alt={`${story.tag} photo ${i + 1}`}
+              className="rounded-lg object-cover w-full aspect-[4/3]"
+              loading="lazy"
+            />
           ))}
         </div>
       </div>
