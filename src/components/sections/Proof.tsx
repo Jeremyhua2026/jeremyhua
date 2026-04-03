@@ -139,7 +139,7 @@ export default function Proof() {
                       <img
                         src={companyLogos[item.company]}
                         alt={`${item.company} logo`}
-                        className="h-6 w-auto object-contain dark:brightness-200 dark:contrast-50"
+                        className="h-8 w-auto object-contain dark:brightness-200 dark:contrast-50"
                         loading="lazy"
                       />
                     )}

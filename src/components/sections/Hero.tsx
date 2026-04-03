@@ -27,34 +27,46 @@ export default function Hero() {
           visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
         }`}
       >
-        {/* Polaroid strip — smaller, refined, with handwritten feel */}
-        <div className="flex items-start gap-5 mb-14">
-          {frames.map((frame, i) => (
-            <div
-              key={i}
-              className="group cursor-default"
-              style={{
-                transform: `rotate(${i === 0 ? '-3' : i === 1 ? '2' : '-1.5'}deg)`,
-              }}
-            >
-              <div className="bg-[hsl(var(--surface-warm))] p-[5px] pb-8 rounded-sm shadow-[0_2px_12px_-2px_rgba(0,0,0,0.12)] w-[72px] sm:w-[80px] relative">
-                <div className="overflow-hidden">
-                  <img
-                    src={frame.src}
-                    alt={frame.caption}
-                    className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
+        {/* Polaroid clothesline — hung-up style */}
+        <div className="relative mb-14">
+          {/* Clothesline */}
+          <div className="absolute top-3 left-0 right-0 h-px bg-border/60" style={{ width: '85%' }} />
+          
+          <div className="flex items-start gap-6 sm:gap-8">
+            {frames.map((frame, i) => (
+              <div
+                key={i}
+                className="group relative"
+                style={{
+                  transform: `rotate(${i === 0 ? '-2.5' : i === 1 ? '1.5' : '-1'}deg)`,
+                  marginTop: `${i === 1 ? '4' : i === 2 ? '2' : '0'}px`,
+                }}
+              >
+                {/* Clip/pin */}
+                <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-5 z-10">
+                  <div className="w-1.5 h-4 bg-muted-foreground/30 rounded-sm mx-auto" />
                 </div>
-                <p className="text-[6px] sm:text-[7px] text-muted-foreground font-body italic mt-2 text-center leading-tight px-0.5">
-                  {frame.caption}
-                </p>
+
+                {/* Polaroid frame */}
+                <div className="bg-[hsl(var(--surface-warm))] p-2 pb-10 rounded-sm shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] w-[110px] sm:w-[130px] mt-3">
+                  <div className="overflow-hidden">
+                    <img
+                      src={frame.src}
+                      alt={frame.caption}
+                      className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                  </div>
+                  <p className="text-[9px] sm:text-[10px] text-muted-foreground font-body italic mt-3 text-center leading-snug px-1">
+                    {frame.caption}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        {/* Name — casual */}
+        {/* Name */}
         <p className="text-sm text-muted-foreground font-heading mb-4">
           {content.meta.name} · {content.meta.location}
         </p>

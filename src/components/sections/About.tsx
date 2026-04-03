@@ -36,11 +36,11 @@ export default function About() {
               ))}
             </div>
 
-            {/* Origin — merged in */}
+            {/* Outside of work — merged Origin */}
             <div className="flex flex-col sm:flex-row items-center gap-5 pt-6 border-t border-border/50">
               <div className="text-center sm:text-left order-2 sm:order-1">
                 <p className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground font-heading mb-2">
-                  A long time ago
+                  Outside of work
                 </p>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-2">
                   Standing on rocks just to see what's on the other side.
