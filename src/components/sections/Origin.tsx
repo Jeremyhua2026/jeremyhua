@@ -44,17 +44,11 @@ export default function Origin() {
 
           <div className="max-w-lg text-center sm:text-left">
             <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-              I've been this way for as long as I can remember—drawn to whatever felt interesting, 
-              even when it didn't make obvious sense. Chasing birds on a beach, pointing at planes, 
-              standing on rocks just to see what's on the other side.
-            </p>
-            <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-              The through-line isn't ambition—it's curiosity. A quiet refusal to stay comfortable. 
-              If something feels too settled, I start looking for the next question, the next place, 
-              the next thing I don't understand yet.
+              Drawn to whatever felt interesting, even when it didn't make obvious sense.
+              Chasing birds on a beach, standing on rocks just to see what's on the other side.
             </p>
             <p className="text-sm text-foreground/70 leading-relaxed font-heading">
-              If not for curiosity, what's the point of any of it?
+              The through-line isn't ambition—it's curiosity.
             </p>
           </div>
         </div>
