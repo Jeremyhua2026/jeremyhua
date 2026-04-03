@@ -1,6 +1,5 @@
 import Header from "@/components/Header";
 import Hero from "@/components/sections/Hero";
-import Tension from "@/components/sections/Tension";
 import About from "@/components/sections/About";
 import Origin from "@/components/sections/Origin";
 import AlsoMe from "@/components/sections/AlsoMe";
@@ -22,39 +21,36 @@ const Index = () => {
         {/* 1. Hook */}
         <Hero />
 
-        {/* 2. Tension */}
-        <Tension />
-
-        {/* 3. Reveal */}
+        {/* 2. Reveal */}
         <About />
 
         {/* Origin story — childhood curiosity */}
         <Origin />
 
-        {/* Also me chips — right after origin for personal flow */}
+        {/* Also me chips */}
         <AlsoMe />
 
         <DecorativeLine variant="arrow" />
 
-        {/* 4. Proof / Credibility */}
+        {/* 3. Proof / Credibility */}
         <SectionTransition text={content.transitions.beforeProof} />
         <Experience />
         <Proof />
 
-        {/* 5. Pattern expansion */}
+        {/* 4. Pattern expansion */}
         <DecorativeLine variant="dots" />
         <Notes />
 
-        {/* 6. Human layer */}
+        {/* 5. Human layer */}
         <SectionTransition text={content.transitions.beforePersonal} />
         <OffTheClock />
 
-        {/* 7. Method */}
+        {/* 6. Method */}
         <DecorativeLine variant="wave" />
         <SectionTransition text={content.transitions.beforeMethod} />
         <HowIThink />
 
-        {/* 8. Resolution */}
+        {/* 7. Resolution */}
         <Contact />
       </main>
       <footer className="px-6 py-8 text-center">
