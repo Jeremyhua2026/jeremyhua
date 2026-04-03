@@ -5,7 +5,7 @@ export default function AlsoMe() {
   const { ref, visible } = useFadeIn();
 
   return (
-    <section id="also-me" className="px-6 py-16">
+    <section id="also-me" className="px-6 py-8">
       <div
         ref={ref}
         className={`max-w-2xl mx-auto transition-all duration-700 ${

@@ -6,7 +6,7 @@ interface DecorativeLineProps {
 export default function DecorativeLine({ variant = "dots", className = "" }: DecorativeLineProps) {
   if (variant === "dots") {
     return (
-      <div className={`flex justify-center items-center gap-1.5 py-6 ${className}`}>
+      <div className={`flex justify-center items-center gap-1.5 py-4 ${className}`}>
         <div className="w-0.5 h-0.5 rounded-full bg-muted-foreground/25" />
         <div className="w-0.5 h-0.5 rounded-full bg-muted-foreground/25" />
         <div className="w-0.5 h-0.5 rounded-full bg-muted-foreground/25" />
