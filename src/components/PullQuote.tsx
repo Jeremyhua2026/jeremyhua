@@ -16,7 +16,7 @@ export default function PullQuote({ quote }: PullQuoteProps) {
         }`}
       >
         <div className="divider-accent mb-10" />
-        <blockquote className="text-xl sm:text-2xl md:text-3xl font-body italic text-foreground/80 leading-relaxed text-center">
+        <blockquote className="text-xl sm:text-2xl md:text-3xl font-body text-foreground/80 leading-relaxed text-center">
           "{quote}"
         </blockquote>
         <div className="divider-accent mt-10" />

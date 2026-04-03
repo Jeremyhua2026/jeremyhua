@@ -25,7 +25,7 @@ function StoryBlock({
         {story.tag}
       </span>
       <h3 className="text-lg font-heading font-medium mt-2 mb-3">{story.title}</h3>
-      <p className="text-sm text-muted-foreground italic mb-6">{story.intro}</p>
+      <p className="text-sm text-muted-foreground mb-6">{story.intro}</p>
 
       <div
         className={`flex flex-col gap-6 ${
@@ -40,7 +40,7 @@ function StoryBlock({
             </p>
           ))}
           {"closer" in story && story.closer && (
-            <p className="text-sm font-heading font-medium text-foreground mt-4 italic">
+            <p className="text-sm font-heading font-medium text-foreground mt-4">
               {story.closer}
             </p>
           )}
@@ -77,7 +77,7 @@ export default function Proof() {
           <h2 className="text-xs tracking-[0.2em] uppercase text-muted-foreground font-heading mb-3">
             {content.proof.heading}
           </h2>
-          <p className="text-sm text-muted-foreground mb-10 italic">
+          <p className="text-sm text-muted-foreground mb-10">
             {content.proof.subhead}
           </p>
 

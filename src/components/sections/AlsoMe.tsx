@@ -28,7 +28,7 @@ export default function AlsoMe() {
           ))}
         </div>
 
-        <p className="text-xs text-muted-foreground italic">
+        <p className="text-xs text-muted-foreground">
           {content.alsoMe.note}
         </p>
       </div>

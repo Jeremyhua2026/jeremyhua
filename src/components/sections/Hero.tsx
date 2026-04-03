@@ -16,10 +16,10 @@ export default function Hero() {
         <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground font-heading mb-6">
           {content.hero.eyebrow}
         </p>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-2 font-body italic">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-2 font-body">
           {content.hero.headline}
         </h1>
-        <p className="text-xl sm:text-2xl md:text-3xl font-light leading-tight mb-6 font-body italic text-muted-foreground">
+        <p className="text-xl sm:text-2xl md:text-3xl font-light leading-tight mb-6 font-body text-muted-foreground">
           {content.hero.headlineLine2}
         </p>
         <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-4 max-w-xl whitespace-pre-line">
@@ -32,7 +32,7 @@ export default function Hero() {
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
             {content.hero.currentStatus}
           </p>
-          <p className="text-sm text-muted-foreground italic mt-1 ml-3.5">
+          <p className="text-sm text-muted-foreground mt-1 ml-3.5">
             {content.hero.currentDetail}
           </p>
         </div>
@@ -40,7 +40,7 @@ export default function Hero() {
         <div className="divider-accent mb-6" />
         <div className="pt-0 mb-10">
           <p className="text-sm font-heading font-medium mb-1">{content.hero.signature}</p>
-          <p className="text-sm text-muted-foreground italic">{content.hero.signatureNote}</p>
+          <p className="text-sm text-muted-foreground leading-relaxed">{content.hero.signatureNote}</p>
         </div>
 
         <div className="flex items-center gap-6">
