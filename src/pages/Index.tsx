@@ -3,8 +3,7 @@ import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import AlsoMe from "@/components/sections/AlsoMe";
 import Proof from "@/components/sections/Proof";
-import Notes from "@/components/sections/Notes";
-import HowIThink from "@/components/sections/HowIThink";
+import Thinking from "@/components/sections/Thinking";
 import Contact from "@/components/sections/Contact";
 
 const Index = () => {
@@ -16,8 +15,7 @@ const Index = () => {
         <About />
         <AlsoMe />
         <Proof />
-        <Notes />
-        <HowIThink />
+        <Thinking />
         <Contact />
       </main>
       <footer className="px-6 py-8 text-center">
