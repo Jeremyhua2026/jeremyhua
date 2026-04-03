@@ -21,7 +21,7 @@ function StoryBlock({
     >
       <div className="divider-accent mb-10" />
 
-      <span className="text-[10px] tracking-[0.2em] uppercase text-primary font-heading">
+      <span className="text-[10px] tracking-[0.2em] uppercase text-secondary font-heading">
         {story.tag}
       </span>
       <h3 className="text-lg font-heading font-medium mt-2 mb-3">{story.title}</h3>
@@ -83,7 +83,7 @@ export default function Proof() {
 
           {/* Work block */}
           <div id="proof-work" className="mb-12">
-            <span className="text-[10px] tracking-[0.2em] uppercase text-primary font-heading">
+            <span className="text-[10px] tracking-[0.2em] uppercase text-secondary font-heading">
               Work
             </span>
             <h3 className="text-lg font-heading font-medium mt-2 mb-4">

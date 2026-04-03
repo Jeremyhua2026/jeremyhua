@@ -8,7 +8,6 @@ export const content = {
   },
 
   hero: {
-    eyebrow: "Thinking in systems",
     headline: "Most friction isn't in the experience.",
     headlineLine2: "It's in the system that decides what the experience can be.",
     subhead:
@@ -16,9 +15,6 @@ export const content = {
     currentStatus: "Currently: studying how rewards programs quietly train behavior at Tim Hortons",
     currentDetail:
       "Not just points—but timing, frequency, and what the system teaches people to value.",
-    signature: "Systems before distance",
-    signatureNote:
-      "The long run isn't about pushing harder—it's about removing what makes you stop. Get the system right, and the distance takes care of itself.",
     cta: "Get in touch",
   },
 

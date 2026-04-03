@@ -9,7 +9,6 @@ import AlsoMe from "@/components/sections/AlsoMe";
 import HowIThink from "@/components/sections/HowIThink";
 import OffTheClock from "@/components/sections/OffTheClock";
 import Contact from "@/components/sections/Contact";
-import PullQuote from "@/components/PullQuote";
 import SectionTransition from "@/components/SectionTransition";
 import { content } from "@/data/content";
 
@@ -27,29 +26,24 @@ const Index = () => {
         {/* 3. Reveal */}
         <About />
 
-        {/* 4. Live example → already in Hero's current status */}
-
-        {/* 5. Proof / Credibility */}
+        {/* 4. Proof / Credibility */}
         <SectionTransition text={content.transitions.beforeProof} />
         <Experience />
         <Proof />
 
-        {/* 6. Pattern expansion */}
-        <PullQuote quote="Effort isn't the constraint. The system is." />
+        {/* 5. Pattern expansion */}
         <Notes />
 
-        {/* 7. Human layer */}
+        {/* 6. Human layer */}
         <SectionTransition text={content.transitions.beforePersonal} />
         <AlsoMe />
-        <PullQuote quote="Misalignment doesn't look like conflict. It looks like progress—slightly in the wrong direction." />
         <OffTheClock />
 
-        {/* 8. Method */}
+        {/* 7. Method */}
         <SectionTransition text={content.transitions.beforeMethod} />
         <HowIThink />
 
-        {/* 9. Resolution */}
-        <PullQuote quote="Endurance isn't about pushing harder. It's about listening sooner." />
+        {/* 8. Resolution */}
         <Contact />
       </main>
       <footer className="px-6 py-8 text-center">
