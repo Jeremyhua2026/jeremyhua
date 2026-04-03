@@ -5,6 +5,7 @@ import band1 from "@/assets/band-1.jpg";
 import band2 from "@/assets/band-2.jpg";
 import band3 from "@/assets/band-3.jpg";
 import ultra1 from "@/assets/ultra-1.jpg";
+import ultra2 from "@/assets/ultra-2.jpg";
 import hobbies1 from "@/assets/hobbies-1.jpg";
 import travel1 from "@/assets/travel-1.jpg";
 import travel5 from "@/assets/travel-5.jpg";
