@@ -13,7 +13,7 @@ import travel6 from "@/assets/travel-6.jpg";
 
 const storyImages: Record<string, string[]> = {
   "proof-band": [band1, band2, band3],
-  "proof-ultra": [ultra1],
+  "proof-ultra": [ultra1, ultra2],
   "proof-hobbies": [hobbies1, travel1],
   "proof-travel": [travel5, travel6],
 };
