@@ -16,7 +16,7 @@ export default function Experience() {
         <h2 className="text-xs tracking-[0.2em] uppercase text-muted-foreground font-heading mb-3">
           {content.experience.heading}
         </h2>
-        <p className="text-sm text-muted-foreground mb-10 italic">
+        <p className="text-sm text-muted-foreground mb-10">
           {content.experience.subhead}
         </p>
 

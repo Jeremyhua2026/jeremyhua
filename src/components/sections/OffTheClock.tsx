@@ -15,7 +15,7 @@ export default function OffTheClock() {
         <h2 className="text-xs tracking-[0.2em] uppercase text-muted-foreground font-heading mb-6">
           {content.offTheClock.heading}
         </h2>
-        <p className="text-sm text-muted-foreground leading-relaxed italic">
+        <p className="text-sm text-muted-foreground leading-relaxed">
           {content.offTheClock.body}
         </p>
       </div>

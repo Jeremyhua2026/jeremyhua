@@ -40,7 +40,7 @@ export default function Hero() {
         <div className="divider-accent mb-6" />
         <div className="pt-0 mb-10">
           <p className="text-sm font-heading font-medium mb-1">{content.hero.signature}</p>
-          <p className="text-sm text-muted-foreground italic">{content.hero.signatureNote}</p>
+          <p className="text-sm text-muted-foreground leading-relaxed">{content.hero.signatureNote}</p>
         </div>
 
         <div className="flex items-center gap-6">

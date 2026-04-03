@@ -16,9 +16,9 @@ export const content = {
     currentStatus: "Currently: studying how rewards programs quietly train behavior at Tim Hortons",
     currentDetail:
       "Not just points—but timing, frequency, and what the system teaches people to value.",
-    signature: "The long run",
+    signature: "Systems before distance",
     signatureNote:
-      "Distance rewards pacing; organizations reward the same kind of patience—if the system allows it.",
+      "The long run isn't about pushing harder—it's about removing what makes you stop. Get the system right, and the distance takes care of itself.",
     cta: "Get in touch",
   },
 

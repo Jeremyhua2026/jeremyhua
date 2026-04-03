@@ -15,7 +15,7 @@ export default function SectionTransition({ text }: SectionTransitionProps) {
           visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
         }`}
       >
-        <p className="text-sm text-muted-foreground font-heading italic">
+        <p className="text-sm text-muted-foreground font-heading">
           {text}
         </p>
       </div>

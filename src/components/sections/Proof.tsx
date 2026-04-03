@@ -77,7 +77,7 @@ export default function Proof() {
           <h2 className="text-xs tracking-[0.2em] uppercase text-muted-foreground font-heading mb-3">
             {content.proof.heading}
           </h2>
-          <p className="text-sm text-muted-foreground mb-10 italic">
+          <p className="text-sm text-muted-foreground mb-10">
             {content.proof.subhead}
           </p>
 

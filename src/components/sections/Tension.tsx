@@ -15,7 +15,7 @@ export default function Tension() {
         <p className="text-lg sm:text-xl text-foreground font-heading font-medium mb-4">
           {content.tension.line1}
         </p>
-        <p className="text-lg sm:text-xl text-muted-foreground font-body italic leading-relaxed whitespace-pre-line">
+        <p className="text-lg sm:text-xl text-muted-foreground font-body leading-relaxed whitespace-pre-line">
           {content.tension.line2}
         </p>
       </div>
