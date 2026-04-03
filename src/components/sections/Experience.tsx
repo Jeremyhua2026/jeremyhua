@@ -1,6 +1,6 @@
 import { content } from "@/data/content";
 import { useFadeIn } from "@/hooks/useFadeIn";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 
 export default function Experience() {
   const { ref, visible } = useFadeIn();
@@ -34,15 +34,36 @@ export default function Experience() {
                 {String(i + 1).padStart(2, "0")}
               </span>
 
-              <div className="flex items-center gap-2 mb-3 relative">
+              <div className="flex items-center gap-2 mb-2 relative">
                 <h3 className="text-base font-heading font-medium">{item.company}</h3>
                 <span className="text-[10px] tracking-wider uppercase text-highlight font-heading bg-highlight/10 px-2 py-0.5 rounded-full">
                   {item.status}
                 </span>
               </div>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-4 relative">
+
+              <p className="text-sm text-muted-foreground leading-relaxed mb-2 relative">
                 {item.description}
               </p>
+
+              <p className="text-xs text-foreground/70 leading-relaxed mb-3 relative">
+                {item.role}
+              </p>
+
+              {/* External links */}
+              <div className="flex flex-wrap gap-2 mb-3 relative">
+                {item.links.map((link) => (
+                  <a
+                    key={link.url}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-[11px] font-heading text-highlight hover:text-highlight/80 transition-colors"
+                  >
+                    {link.label} <ExternalLink size={10} />
+                  </a>
+                ))}
+              </div>
+
               <a
                 href={item.proofLink}
                 className="inline-flex items-center gap-1 text-xs font-heading text-foreground hover:text-highlight transition-colors relative"

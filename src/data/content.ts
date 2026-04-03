@@ -79,15 +79,24 @@ export const content = {
       {
         company: "Tim Hortons",
         status: "Current",
+        role: "Designed the welcome journey for Tims Rewards. Approved budgets, recommended next steps across digital touchpoints.",
         description:
           "Consumer-scale systems—how digital touchpoints interact with operations, habits, and incentives.",
+        links: [
+          { label: "Tims Rewards", url: "https://www.timhortons.com/timsrewards" },
+        ],
         proofLink: "#proof-work",
       },
       {
         company: "WestJet",
         status: "Prior",
+        role: "Worked on ancillary strategy and rewards program evolution. Approved budgets, shaped recommendations.",
         description:
           "Networked travel—where customer experience meets operational reality at scale.",
+        links: [
+          { label: "UltraBasic", url: "https://www.westjet.com/en-ca/news/2024/westjet-introduces-ultrabasic-" },
+          { label: "WestJet Rewards", url: "https://www.westjet.com/en-ca/rewards/new-westjet-rewards" },
+        ],
         proofLink: "#proof-work",
       },
     ],
