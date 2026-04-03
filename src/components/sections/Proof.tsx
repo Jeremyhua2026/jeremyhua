@@ -36,7 +36,7 @@ function StoryBlock({
         visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
       }`}
     >
-      <div className="divider-accent mb-10" />
+      <div className="divider-accent mb-8" />
 
       <span className="text-[10px] tracking-[0.2em] uppercase text-secondary font-heading">
         {story.tag}
@@ -64,7 +64,7 @@ function StoryBlock({
         </div>
 
         {/* Images */}
-        <div className="md:w-56 shrink-0 flex flex-col gap-3">
+        <div className={`shrink-0 flex flex-col gap-3 ${images.length > 2 ? "md:w-48" : "md:w-52"}`}>
           {images.map((src, i) => (
             <img
               key={i}
@@ -84,7 +84,7 @@ export default function Proof() {
   const { ref, visible } = useFadeIn();
 
   return (
-    <section id="proof" className="px-6 py-20">
+    <section id="proof" className="px-6 py-16">
       <div className="max-w-2xl mx-auto">
         <div
           ref={ref}
@@ -114,7 +114,7 @@ export default function Proof() {
             ))}
 
             {/* Jump links */}
-            <div className="flex flex-wrap gap-2 mt-6">
+            <div className="flex flex-wrap items-center gap-2 mt-6">
               <span className="text-xs text-muted-foreground font-heading">Jump</span>
               {content.proof.stories.map((s) => (
                 <a

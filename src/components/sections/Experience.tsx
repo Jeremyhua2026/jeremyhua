@@ -6,7 +6,7 @@ export default function Experience() {
   const { ref, visible } = useFadeIn();
 
   return (
-    <section id="experience" className="px-6 py-20">
+    <section id="experience" className="px-6 py-16">
       <div
         ref={ref}
         className={`max-w-2xl mx-auto transition-all duration-700 ${

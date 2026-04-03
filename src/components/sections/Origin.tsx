@@ -14,7 +14,7 @@ export default function Origin() {
   const { ref, visible } = useFadeIn();
 
   return (
-    <div className="px-6 py-10">
+    <div className="px-6 py-12">
       <div
         ref={ref}
         className={`max-w-2xl mx-auto transition-all duration-1000 ${
@@ -30,8 +30,8 @@ export default function Origin() {
           <div className="h-px flex-1 bg-border" />
         </div>
 
-        {/* Story text */}
-        <div className="mb-8 max-w-lg">
+        {/* Story text — centered */}
+        <div className="mb-8 max-w-lg mx-auto text-center">
           <p className="text-sm text-muted-foreground leading-relaxed mb-3">
             I've been this way for as long as I can remember—drawn to whatever felt interesting, 
             even when it didn't make obvious sense. Chasing birds on a beach, pointing at planes, 
@@ -47,8 +47,8 @@ export default function Origin() {
           </p>
         </div>
 
-        {/* Photo strip — small */}
-        <div className="flex items-end gap-2 sm:gap-3 max-w-md">
+        {/* Photo strip — centered, small */}
+        <div className="flex items-end gap-3 max-w-sm mx-auto">
           {frames.map((frame, i) => (
             <div key={i} className="flex-1 group">
               <div className="overflow-hidden rounded">

@@ -5,7 +5,7 @@ export default function OffTheClock() {
   const { ref, visible } = useFadeIn();
 
   return (
-    <section className="px-6 py-16">
+    <section className="px-6 py-12">
       <div
         ref={ref}
         className={`max-w-2xl mx-auto transition-all duration-700 ${
