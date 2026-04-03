@@ -112,6 +112,8 @@ export const content = {
           "A Scottish pipe band isn't subtle. You learn that volume can be precise—and that leadership is sometimes just keeping tempo honest.",
         body: "Leading a marching band is a weird mix of theatre and logistics: music, movement, and egos, all moving at once. You can't micromanage your way through it—you set standards, rehearse the boring parts, and trust people to hold the line when the crowd is watching.\n\nI keep coming back to that when I think about organizations: alignment isn't a slide; it's what happens when dozens of people interpret the same beat.",
         closer: "Tempo is alignment you can hear.",
+        stat: "100+",
+        statLabel: "musicians led",
         imageCount: 2,
       },
       {
@@ -122,6 +124,8 @@ export const content = {
           "Long races are a blunt instrument: you can't negotiate with distance. You can only adjust cadence, fuel, and ego.",
         body: "Ultramarathons strip the story down. Plans collide with weather, stomachs, and sleep debt. The useful skill isn't toughness theater—it's noticing early when the system (your body, your day) is sending a signal you should obey.\n\nThat's the parallel I care about: most 'performance problems' are feedback problems—just easier to ignore in an office than at mile 40.",
         closer: "Endurance isn't about pushing harder. It's about listening sooner.",
+        stat: "3,000+",
+        statLabel: "km in 2 years",
         imageCount: 2,
       },
       {
@@ -131,6 +135,8 @@ export const content = {
         intro:
           "Growing up, a lot of my life was filed under courts, trails, ice, water, and tables—different rules, same appetite for repetition.",
         body: "Skiing, basketball, ultimate, track, table tennis, hockey, surfing, pool: I spent real time in these—not as a tourist. They taught me different versions of the same thing: timing, space, teammates, and the gap between what you intend and what your body does under pressure.\n\nI don't live in every one of these every week now, but I still come back when I can. They're the counterweight to the abstract stuff—games with visible rules, where proof is immediate and a little humbling.",
+        stat: "∞",
+        statLabel: "things tried",
         imageCount: 2,
       },
       {
@@ -141,6 +147,8 @@ export const content = {
           "Travel doesn't make you wise—but it does swap your defaults: time, space, what counts as normal.",
         body: "I'm drawn to places where the infrastructure is different enough that you stop autopiloting. That's often where you notice how much of 'common sense' is just local habit.\n\nIt's the same reason I like big complex employers: the world looks obvious until you see the machinery.",
         closer: "Most \"obvious\" things are just local agreements.",
+        stat: "53",
+        statLabel: "countries · 30 in 3 months",
         imageCount: 2,
       },
     ],
