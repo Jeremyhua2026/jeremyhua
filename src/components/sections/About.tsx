@@ -17,13 +17,14 @@ export default function About() {
         </h2>
 
         <div className="flex flex-col md:flex-row gap-10">
-          {/* Text */}
           <div className="flex-1 space-y-5">
             {content.about.paragraphs.map((p, i) => (
               <p
                 key={i}
-                className={`leading-relaxed ${
-                  i === 0 ? "text-xl font-medium font-heading" : "text-base text-muted-foreground"
+                className={`leading-relaxed whitespace-pre-line ${
+                  i === 0 ? "text-xl font-medium font-heading" : 
+                  i === 1 || i === 2 ? "text-base text-foreground font-medium" :
+                  "text-base text-muted-foreground"
                 }`}
               >
                 {p}
@@ -31,7 +32,6 @@ export default function About() {
             ))}
           </div>
 
-          {/* Single large portrait placeholder */}
           <div className="md:w-64 shrink-0">
             <div className="aspect-[3/4] rounded-lg bg-muted flex items-center justify-center sticky top-24">
               <span className="text-xs text-muted-foreground font-heading">Portrait</span>

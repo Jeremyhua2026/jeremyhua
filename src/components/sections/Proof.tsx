@@ -39,9 +39,14 @@ function StoryBlock({
               {p}
             </p>
           ))}
+          {"closer" in story && story.closer && (
+            <p className="text-sm font-heading font-medium text-foreground mt-4 italic">
+              {story.closer}
+            </p>
+          )}
         </div>
 
-        {/* Images stacked vertically on the side */}
+        {/* Images */}
         <div className="md:w-56 shrink-0 flex flex-col gap-3">
           {Array.from({ length: story.imageCount }).map((_, i) => (
             <div
@@ -84,9 +89,11 @@ export default function Proof() {
             <h3 className="text-lg font-heading font-medium mt-2 mb-4">
               {content.proof.work.title}
             </h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              {content.proof.work.body}
-            </p>
+            {content.proof.work.body.split("\n\n").map((p, i) => (
+              <p key={i} className="text-sm text-muted-foreground leading-relaxed mb-3">
+                {p}
+              </p>
+            ))}
 
             {/* Jump links */}
             <div className="flex flex-wrap gap-2 mt-6">

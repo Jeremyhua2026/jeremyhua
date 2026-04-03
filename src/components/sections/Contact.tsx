@@ -15,7 +15,7 @@ export default function Contact() {
         <h2 className="text-xs tracking-[0.2em] uppercase text-muted-foreground font-heading mb-6">
           {content.contact.heading}
         </h2>
-        <p className="text-base text-muted-foreground leading-relaxed mb-8">
+        <p className="text-base text-muted-foreground leading-relaxed mb-8 whitespace-pre-line">
           {content.contact.body}
         </p>
         <a
