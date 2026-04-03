@@ -3,7 +3,7 @@ import { useFadeIn } from "@/hooks/useFadeIn";
 import origin1 from "@/assets/travel-3.jpg";
 import origin2 from "@/assets/travel-4.jpg";
 import origin3 from "@/assets/travel-2.jpg";
-import sisyphus from "@/assets/options/sisyphus-pixel.png";
+import sisyphus from "@/assets/options/sisyphus-editorial.png";
 
 const frames = [
   { src: origin1, caption: "Chase everything" },
