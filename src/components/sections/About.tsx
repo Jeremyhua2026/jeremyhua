@@ -1,6 +1,5 @@
 import { content } from "@/data/content";
 import { useFadeIn } from "@/hooks/useFadeIn";
-import sisyphusVideo from "@/assets/sisyphus-victory.mp4.asset.json";
 
 export default function About() {
   const { ref, visible } = useFadeIn();
@@ -36,32 +35,25 @@ export default function About() {
               ))}
             </div>
 
-            {/* Outside of work — merged Origin */}
-            <div className="flex flex-col sm:flex-row items-center gap-5 pt-6 border-t border-border/50">
-              <div className="text-center sm:text-left order-2 sm:order-1">
-                <p className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground font-heading mb-2">
-                  Outside of work
-                </p>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-2">
-                  Standing on rocks just to see what's on the other side.
-                </p>
-                <p className="text-sm text-foreground/70 leading-relaxed font-heading">
-                  The through-line isn't ambition—it's curiosity.
-                </p>
+            {/* Also me chips */}
+            <div className="pt-6 border-t border-border/50">
+              <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground font-heading mb-4">
+                {content.alsoMe.heading}
+              </p>
+              <div className="flex flex-wrap gap-2 mb-3">
+                {content.alsoMe.chips.map((chip) => (
+                  <a
+                    key={chip.anchor}
+                    href={`#${chip.anchor}`}
+                    className="inline-block text-sm font-heading px-4 py-1.5 rounded-full border border-border hover:border-highlight hover:text-highlight transition-colors"
+                  >
+                    {chip.label}
+                  </a>
+                ))}
               </div>
-
-              <div className="w-28 sm:w-32 flex-shrink-0 order-1 sm:order-2">
-                <div className="rounded-lg overflow-hidden bg-background shadow-sm border border-border/30">
-                  <video
-                    src={sisyphusVideo.url}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-auto mix-blend-multiply dark:mix-blend-screen"
-                  />
-                </div>
-              </div>
+              <p className="text-xs text-muted-foreground">
+                {content.alsoMe.note}
+              </p>
             </div>
           </div>
         </div>

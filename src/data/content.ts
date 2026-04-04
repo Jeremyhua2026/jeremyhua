@@ -44,15 +44,19 @@ export const content = {
     items: [
       {
         title: "Rewards apps are behavior machines",
-        body: "A rewards program isn't just points. It's a loop: frequency, habit, and the design of tradeoffs.",
+        body: "A rewards program isn't just points—it's a closed loop designed to shape frequency, habit formation, and perceived value. The best ones make the user feel smart for participating. The worst ones just discount the brand.",
       },
       {
         title: "Effort isn't the constraint",
-        body: "People work hard and still move slowly when the system punishes coordination. Leverage matters more.",
+        body: "People work hard and still move slowly when the system punishes coordination. The bottleneck is rarely talent—it's how decisions travel through an org. Leverage matters more than hours.",
       },
       {
         title: "Misalignment doesn't look like conflict",
-        body: "It looks like progress—slightly in the wrong direction. Drift looks peaceful until it shows up as rework.",
+        body: "It looks like progress—slightly in the wrong direction. Teams ship confidently while drifting apart. Drift looks peaceful until it shows up as rework, missed quarters, or features nobody asked for.",
+      },
+      {
+        title: "Internal tools shape customer experience",
+        body: "The CRM, the dashboard, the ops workflow nobody redesigned since 2019—these invisible systems decide what frontline teams can actually do. Customers feel internal friction even when they can't name it.",
       },
     ],
   },
