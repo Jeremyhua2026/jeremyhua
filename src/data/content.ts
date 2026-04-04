@@ -134,8 +134,8 @@ export const content = {
         intro:
           "Courts, trails, ice, water, tables—different rules, same appetite for repetition.",
         body: "Skiing, basketball, ultimate, track, table tennis, hockey, surfing, pool. They taught me timing, space, and the gap between intention and execution under pressure.\n\nGames with visible rules, where proof is immediate and humbling.",
-        stat: "∞",
-        statLabel: "things tried",
+        stat: "7M+",
+        statLabel: "Instagram views",
         imageCount: 2,
       },
       {
