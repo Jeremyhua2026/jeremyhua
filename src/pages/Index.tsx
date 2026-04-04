@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
-import AlsoMe from "@/components/sections/AlsoMe";
+
 import Proof from "@/components/sections/Proof";
 import Thinking from "@/components/sections/Thinking";
 import Contact from "@/components/sections/Contact";
