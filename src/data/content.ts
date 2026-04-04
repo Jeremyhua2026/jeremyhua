@@ -8,13 +8,7 @@ export const content = {
   },
 
   hero: {
-    headline: "I'm drawn to how things actually work—",
-    headlineLine2: "not how they're supposed to.",
-    subhead:
-      "Systems, decisions, the gap between the plan and what happens.\nThat's where I spend most of my time.",
-    currentStatus: "Studying how rewards programs train behavior at Tim Hortons",
-    currentDetail:
-      "Timing, frequency, and what the system teaches people to value.",
+    headline: "Systems, behavior, and how things actually move.",
     cta: "Say hi",
   },
 
