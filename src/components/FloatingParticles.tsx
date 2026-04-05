@@ -42,7 +42,7 @@ export default function FloatingParticles() {
     createParticles();
 
     const ro = new ResizeObserver(() => { resize(); createParticles(); });
-    ro.observe(document.documentElement);
+    ro.observe(canvas.parentElement || document.documentElement);
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
