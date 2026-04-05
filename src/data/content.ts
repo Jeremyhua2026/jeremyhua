@@ -69,7 +69,7 @@ export const content = {
       {
         company: "Tim Hortons",
         status: "Current",
-        role: "Designed the welcome journey for Tims Rewards. Approved budgets, recommended next steps across digital touchpoints.",
+        role: "Marketing data analyst across RBI's loyalty program. Weekly behavioral analytics on 3.5M+ active users, presented to the CEO. Identified a pipeline failure affecting 50K daily redemptions. Previously recommended strategies that increased new user sales by 24.8%.",
         description:
           "Consumer-scale systems: how digital touchpoints interact with operations, habits, and incentives.",
         links: [
@@ -80,7 +80,7 @@ export const content = {
       {
         company: "WestJet",
         status: "Prior",
-        role: "Worked on ancillary strategy and rewards program evolution. Approved budgets, shaped recommendations.",
+        role: "Portfolio management across 30+ initiatives ($0.1M to $40M). Presented analytics to the C-Suite weekly. Helped kick off an 80+ stakeholder loyalty program rebuild and contributed to a 5-year strategic roadmap.",
         description:
           "Networked travel, where customer experience meets operational reality at scale.",
         links: [
