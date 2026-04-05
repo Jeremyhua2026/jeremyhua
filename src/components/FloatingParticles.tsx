@@ -32,9 +32,9 @@ export default function FloatingParticles() {
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         size: Math.random() * 1.6 + 0.4,
-        vx: (Math.random() - 0.5) * 0.05,
-        vy: (Math.random() - 0.5) * 0.04,
-        opacity: Math.random() * 0.15 + 0.04,
+        vx: (Math.random() - 0.5) * 0.15,
+        vy: (Math.random() - 0.5) * 0.12,
+        opacity: Math.random() * 0.10 + 0.02,
       }));
     };
 
