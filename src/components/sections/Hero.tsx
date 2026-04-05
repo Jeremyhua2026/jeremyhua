@@ -1,5 +1,6 @@
 import { content } from "@/data/content";
 import { useEffect, useState } from "react";
+import FloatingParticles from "@/components/FloatingParticles";
 
 export default function Hero() {
   const [stage, setStage] = useState(0);
