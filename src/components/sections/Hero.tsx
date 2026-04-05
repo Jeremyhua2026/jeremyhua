@@ -19,15 +19,6 @@ export default function Hero() {
       {/* Subtle animated grain overlay */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNhKSIvPjwvc3ZnPg==')]" />
 
-      {/* Botanical accent */}
-      <svg className="absolute bottom-32 right-12 opacity-[0.04] pointer-events-none" width="120" height="200" viewBox="0 0 120 200" fill="none">
-        <path d="M60 200 C60 200 60 100 60 0" stroke="currentColor" strokeWidth="0.8" className="text-foreground" />
-        <path d="M60 160 C40 140 20 130 10 110" stroke="currentColor" strokeWidth="0.6" className="text-foreground" />
-        <path d="M60 130 C80 110 95 95 105 75" stroke="currentColor" strokeWidth="0.6" className="text-foreground" />
-        <path d="M60 95 C42 78 28 68 15 52" stroke="currentColor" strokeWidth="0.6" className="text-foreground" />
-        <path d="M60 65 C75 50 88 38 100 22" stroke="currentColor" strokeWidth="0.6" className="text-foreground" />
-        <path d="M60 40 C48 28 35 20 25 8" stroke="currentColor" strokeWidth="0.6" className="text-foreground" />
-      </svg>
 
       <div className="flex flex-col items-center text-center gap-8">
         {/* Name */}
