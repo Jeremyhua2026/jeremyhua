@@ -1,44 +1,59 @@
 import { content } from "@/data/content";
-import { useFadeIn } from "@/hooks/useFadeIn";
+import { useEffect, useState } from "react";
 
 export default function Hero() {
-  const { ref, visible } = useFadeIn();
+  const [stage, setStage] = useState(0);
+
+  useEffect(() => {
+    const timers = [
+      setTimeout(() => setStage(1), 300),   // Name fades in
+      setTimeout(() => setStage(2), 1200),  // Line fades in
+      setTimeout(() => setStage(3), 2200),  // Arrow fades in
+    ];
+    return () => timers.forEach(clearTimeout);
+  }, []);
 
   return (
-    <section className="min-h-[85vh] flex flex-col justify-center px-6 pt-24 pb-16 relative overflow-hidden">
-      {/* Subtle background letter */}
-      <div className="absolute -right-16 top-1/2 -translate-y-1/2 text-[28rem] font-heading font-bold leading-none text-foreground/[0.02] select-none pointer-events-none">
-        J
-      </div>
+    <section className="min-h-[100vh] flex flex-col items-center justify-center px-6 relative overflow-hidden">
+      {/* Subtle animated grain overlay */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNhKSIvPjwvc3ZnPg==')]" />
 
-      <div
-        ref={ref}
-        className={`max-w-2xl mx-auto w-full transition-all duration-700 ${
-          visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-        }`}
-      >
+      <div className="flex flex-col items-center text-center gap-8">
         {/* Name */}
-        <p className="text-sm text-muted-foreground font-heading mb-4">
-          {content.meta.name} · {content.meta.location}
+        <p
+          className={`text-xs tracking-[0.3em] uppercase text-muted-foreground font-heading transition-all duration-1000 ease-out ${
+            stage >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+          }`}
+        >
+          {content.meta.name}
         </p>
 
-        {/* Headline — short */}
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-light leading-snug mb-8 font-body">
-          {content.hero.headline}
-        </h1>
-
-        <a
-          href={`mailto:${content.meta.email}`}
-          className="inline-flex items-center gap-2 text-sm font-heading font-medium bg-foreground text-background px-5 py-2.5 rounded-full hover:opacity-90 transition-opacity"
+        {/* Line */}
+        <h1
+          className={`text-xl sm:text-2xl md:text-3xl font-light leading-relaxed font-body text-foreground/80 max-w-lg transition-all duration-1000 ease-out delay-100 ${
+            stage >= 2 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+          }`}
         >
-          {content.hero.cta}
-        </a>
+          I tend to follow curiosity longer than I should.
+        </h1>
+      </div>
 
-        {/* Scroll indicator */}
-        <div className="mt-16 flex flex-col items-center gap-1">
-          <div className="w-px h-8 bg-gradient-to-b from-transparent to-highlight/30" />
-          <div className="w-1 h-1 rounded-full bg-highlight/40" />
-        </div>
+      {/* Scroll arrow at bottom */}
+      <div
+        className={`absolute bottom-12 flex flex-col items-center gap-2 transition-all duration-1000 ease-out ${
+          stage >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+        }`}
+      >
+        <div className="w-px h-10 bg-gradient-to-b from-transparent to-muted-foreground/30" />
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          className="text-muted-foreground/40 animate-[bounce_3s_ease-in-out_infinite]"
+        >
+          <path d="M2 4L6 8L10 4" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
       </div>
     </section>
   );
