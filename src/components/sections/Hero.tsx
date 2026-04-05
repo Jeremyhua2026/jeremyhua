@@ -91,7 +91,7 @@ export default function Hero() {
           stage >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
         }`}
       >
-        I've learned to trust it.
+        I'm not sure I'd have it any other way.
       </p>
 
       {/* Scroll arrow at bottom */}
