@@ -69,7 +69,7 @@ export const content = {
       {
         company: "Tim Hortons",
         status: "Current",
-        role: "Working on the loyalty program across 3.5M+ active users. Found a pipeline issue affecting 50K daily redemptions that nobody had surfaced yet. The kind of problem you only catch when you care about the system, not just the output.",
+        role: "Loyalty program, 3.5M+ active users. Spend most of my time in behavioral data and offer pipelines. Once caught an issue affecting 50K daily redemptions that had gone unnoticed.",
         description:
           "Consumer-scale systems: how digital touchpoints interact with operations, habits, and incentives.",
         links: [
