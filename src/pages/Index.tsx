@@ -10,7 +10,7 @@ import Contact from "@/components/sections/Contact";
 const Index = () => {
   return (
     <>
-      <FloatingParticles />
+
       <Header />
       <main>
         <Hero />
