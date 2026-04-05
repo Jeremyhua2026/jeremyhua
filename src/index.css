@@ -4,50 +4,50 @@
 
 @layer base {
   :root {
-    --background: 40 33% 97%;
-    --foreground: 25 15% 12%;
+    --background: 40 30% 96%;
+    --foreground: 30 12% 15%;
 
-    --card: 38 30% 94%;
-    --card-foreground: 25 15% 12%;
+    --card: 38 25% 93%;
+    --card-foreground: 30 12% 15%;
 
-    --popover: 40 33% 97%;
-    --popover-foreground: 25 15% 12%;
+    --popover: 40 30% 96%;
+    --popover-foreground: 30 12% 15%;
 
-    --primary: 24 45% 42%;
-    --primary-foreground: 40 33% 97%;
+    --primary: 30 30% 38%;
+    --primary-foreground: 40 30% 96%;
 
-    --secondary: 160 18% 38%;
-    --secondary-foreground: 40 33% 97%;
+    --secondary: 35 15% 50%;
+    --secondary-foreground: 40 30% 96%;
 
-    --muted: 36 22% 90%;
-    --muted-foreground: 25 10% 42%;
+    --muted: 36 18% 89%;
+    --muted-foreground: 30 8% 45%;
 
-    --accent: 160 18% 38%;
-    --accent-foreground: 40 33% 97%;
+    --accent: 35 15% 50%;
+    --accent-foreground: 40 30% 96%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 35 18% 82%;
-    --input: 35 18% 82%;
-    --ring: 24 45% 42%;
+    --border: 35 15% 82%;
+    --input: 35 15% 82%;
+    --ring: 30 30% 38%;
 
     --radius: 0.5rem;
 
-    /* Extended palette — richer, warmer */
-    --surface-warm: 36 30% 93%;
-    --surface-cool: 160 12% 94%;
-    --highlight: 18 65% 52%;
-    --highlight-foreground: 40 33% 97%;
+    /* Extended palette — warm, earthy, cohesive */
+    --surface-warm: 36 22% 91%;
+    --surface-cool: 38 15% 93%;
+    --highlight: 30 35% 42%;
+    --highlight-foreground: 40 30% 96%;
 
-    --sidebar-background: 40 33% 97%;
-    --sidebar-foreground: 25 15% 12%;
-    --sidebar-primary: 24 45% 42%;
-    --sidebar-primary-foreground: 40 33% 97%;
-    --sidebar-accent: 36 22% 90%;
-    --sidebar-accent-foreground: 25 15% 12%;
-    --sidebar-border: 35 18% 82%;
-    --sidebar-ring: 24 45% 42%;
+    --sidebar-background: 40 30% 96%;
+    --sidebar-foreground: 30 12% 15%;
+    --sidebar-primary: 30 30% 38%;
+    --sidebar-primary-foreground: 40 30% 96%;
+    --sidebar-accent: 36 18% 89%;
+    --sidebar-accent-foreground: 30 12% 15%;
+    --sidebar-border: 35 15% 82%;
+    --sidebar-ring: 30 30% 38%;
   }
 
   .dark {
