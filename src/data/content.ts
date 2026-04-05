@@ -98,7 +98,7 @@ export const content = {
       "Work first, then the personal stuff.",
     work: {
       title: "Same problem, different surface",
-      body: "Tim Hortons and WestJet look different. They're the same problem.\n\nA simple surface on top of a system full of tradeoffs: data, operations, incentives, timing.",
+      body: "Tim Hortons and WestJet look different. They're the same problem.\n\nA simple surface on top of a system full of tradeoffs: data, operations, incentives, timing. At both, I worked where the customer-facing layer meets the internal machinery. Loyalty programs, portfolio decisions, cross-functional alignment. The work that shapes what customers experience before anyone designs a screen.",
     },
     stories: [
       {
