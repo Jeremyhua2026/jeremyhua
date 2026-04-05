@@ -69,7 +69,7 @@ export const content = {
       {
         company: "Tim Hortons",
         status: "Current",
-        role: "Designed the welcome journey for Tims Rewards. Approved budgets, recommended next steps across digital touchpoints.",
+        role: "Marketing data analyst across RBI's loyalty program. Weekly behavioral analytics on 3.5M+ active users, presented to the CEO. Identified a pipeline failure affecting 50K daily redemptions. Previously recommended strategies that increased new user sales by 24.8%.",
         description:
           "Consumer-scale systems: how digital touchpoints interact with operations, habits, and incentives.",
         links: [
@@ -80,7 +80,7 @@ export const content = {
       {
         company: "WestJet",
         status: "Prior",
-        role: "Worked on ancillary strategy and rewards program evolution. Approved budgets, shaped recommendations.",
+        role: "Portfolio management across 30+ initiatives ($0.1M to $40M). Presented analytics to the C-Suite weekly. Helped kick off an 80+ stakeholder loyalty program rebuild and contributed to a 5-year strategic roadmap.",
         description:
           "Networked travel, where customer experience meets operational reality at scale.",
         links: [
@@ -98,7 +98,7 @@ export const content = {
       "Work first, then the personal stuff.",
     work: {
       title: "Same problem, different surface",
-      body: "Tim Hortons and WestJet look different. They're the same problem.\n\nA simple surface on top of a system full of tradeoffs: data, operations, incentives, timing.",
+      body: "Tim Hortons and WestJet look different. They're the same problem.\n\nA simple surface on top of a system full of tradeoffs: data, operations, incentives, timing. At both, I worked where the customer-facing layer meets the internal machinery. Loyalty programs, portfolio decisions, cross-functional alignment. The work that shapes what customers experience before anyone designs a screen.",
     },
     stories: [
       {
