@@ -80,7 +80,7 @@ export const content = {
       {
         company: "WestJet",
         status: "Prior",
-        role: "Helped coordinate 30+ initiatives and an 80-stakeholder loyalty program rebuild. Spent the summer learning how large organizations actually move when the stakes are real.",
+        role: "Helped coordinate 30+ initiatives and an 80-stakeholder loyalty program rebuild. Mostly learned how slowly large organizations move, and why.",
         description:
           "Networked travel, where customer experience meets operational reality at scale.",
         links: [
