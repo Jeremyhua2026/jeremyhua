@@ -15,6 +15,7 @@ export default function Hero() {
 
   return (
     <section className="min-h-[100vh] flex flex-col items-center justify-center px-6 relative overflow-hidden">
+      <style>{`@keyframes fadePulse { 0%, 100% { opacity: 0.15; } 50% { opacity: 0.6; } }`}</style>
       {/* Subtle animated grain overlay */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNhKSIvPjwvc3ZnPg==')]" />
 
@@ -50,7 +51,8 @@ export default function Hero() {
           height="12"
           viewBox="0 0 12 12"
           fill="none"
-          className="text-muted-foreground/40 animate-[bounce_3s_ease-in-out_infinite]"
+          className="text-muted-foreground/40 animate-[fadePulse_4s_ease-in-out_infinite]"
+          style={{ animationName: 'fadePulse' }}
         >
           <path d="M2 4L6 8L10 4" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
