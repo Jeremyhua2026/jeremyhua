@@ -51,8 +51,8 @@ export default function Hero() {
           height="12"
           viewBox="0 0 12 12"
           fill="none"
-          className="text-muted-foreground/40 animate-[fadePulse_4s_ease-in-out_infinite]"
-          style={{ animationName: 'fadePulse' }}
+          className="text-muted-foreground/40"
+          style={{ animation: 'slowDrift 5s ease-in-out infinite' }}
         >
           <path d="M2 4L6 8L10 4" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
