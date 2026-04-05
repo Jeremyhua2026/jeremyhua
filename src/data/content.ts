@@ -69,7 +69,7 @@ export const content = {
       {
         company: "Tim Hortons",
         status: "Current",
-        role: "Working on the loyalty program across 3.5M+ active users. Found a pipeline issue affecting 50K daily redemptions that nobody had surfaced yet. The kind of problem you only catch when you care about the system, not just the output.",
+        role: "Loyalty program, 3.5M+ active users. Spend most of my time in behavioral data and offer pipelines. Once caught an issue affecting 50K daily redemptions that had gone unnoticed.",
         description:
           "Consumer-scale systems: how digital touchpoints interact with operations, habits, and incentives.",
         links: [
@@ -80,7 +80,7 @@ export const content = {
       {
         company: "WestJet",
         status: "Prior",
-        role: "Helped coordinate 30+ initiatives and an 80-stakeholder loyalty program rebuild. Spent the summer learning how large organizations actually move when the stakes are real.",
+        role: "Helped coordinate 30+ initiatives and an 80-stakeholder loyalty program rebuild. Mostly learned how slowly large organizations move, and why.",
         description:
           "Networked travel, where customer experience meets operational reality at scale.",
         links: [

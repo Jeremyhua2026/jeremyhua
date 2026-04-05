@@ -5,7 +5,7 @@ export default function Contact() {
   const { ref, visible } = useFadeIn();
 
   return (
-    <section id="contact" className="px-6 py-20 bg-surface-warm relative overflow-hidden">
+    <section id="contact" className="px-6 py-20 bg-surface-warm topo-pattern relative overflow-hidden">
       {/* Corner accents */}
       <div className="absolute top-6 left-6 pointer-events-none">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
