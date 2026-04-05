@@ -5,7 +5,7 @@ export default function Tension() {
   const { ref, visible } = useFadeIn();
 
   return (
-    <section className="px-6 py-20 bg-surface-warm relative overflow-hidden">
+    <section className="px-6 py-20 bg-surface-warm topo-pattern relative overflow-hidden">
       {/* Diagonal accent line */}
       <div className="absolute top-0 right-0 w-px h-full origin-top-right pointer-events-none"
         style={{ background: 'linear-gradient(180deg, transparent, hsl(var(--highlight) / 0.15) 50%, transparent)' }}
