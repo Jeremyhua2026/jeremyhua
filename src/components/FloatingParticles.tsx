@@ -34,7 +34,7 @@ export default function FloatingParticles() {
         size: Math.random() * 1.6 + 0.4,
         vx: (Math.random() - 0.5) * 0.15,
         vy: (Math.random() - 0.5) * 0.12,
-        opacity: Math.random() * 0.15 + 0.04,
+        opacity: Math.random() * 0.10 + 0.02,
       }));
     };
 
