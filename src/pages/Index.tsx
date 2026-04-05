@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import FloatingParticles from "@/components/FloatingParticles";
+
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 
@@ -10,7 +10,7 @@ import Contact from "@/components/sections/Contact";
 const Index = () => {
   return (
     <>
-      <FloatingParticles />
+
       <Header />
       <main>
         <Hero />

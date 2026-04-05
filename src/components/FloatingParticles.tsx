@@ -22,8 +22,8 @@ export default function FloatingParticles() {
     let particles: Particle[] = [];
 
     const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = document.documentElement.scrollHeight;
+      canvas.width = canvas.parentElement?.clientWidth || window.innerWidth;
+      canvas.height = canvas.parentElement?.clientHeight || window.innerHeight;
     };
 
     const createParticles = () => {
@@ -42,7 +42,7 @@ export default function FloatingParticles() {
     createParticles();
 
     const ro = new ResizeObserver(() => { resize(); createParticles(); });
-    ro.observe(document.documentElement);
+    ro.observe(canvas.parentElement || document.documentElement);
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -74,7 +74,7 @@ export default function FloatingParticles() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none"
+      className="absolute inset-0 pointer-events-none"
       style={{ zIndex: 1 }}
       aria-hidden="true"
     />
