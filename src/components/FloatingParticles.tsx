@@ -27,7 +27,7 @@ export default function FloatingParticles() {
     };
 
     const createParticles = () => {
-      const count = Math.min(Math.floor((canvas.width * canvas.height) / 50000), 45);
+      const count = Math.min(Math.floor((canvas.width * canvas.height) / 25000), 80);
       particles = Array.from({ length: count }, () => ({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
