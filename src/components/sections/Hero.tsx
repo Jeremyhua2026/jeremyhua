@@ -41,20 +41,20 @@ export default function Hero() {
 
       {/* Scroll arrow at bottom */}
       <div
-        className={`absolute bottom-12 flex flex-col items-center gap-2 transition-all duration-1000 ease-out ${
+        className={`absolute bottom-16 flex flex-col items-center gap-3 transition-all duration-1000 ease-out ${
           stage >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
         }`}
       >
-        <div className="w-px h-10 bg-gradient-to-b from-transparent to-muted-foreground/30" />
+        <div className="w-px h-12 bg-gradient-to-b from-transparent to-muted-foreground/40" />
         <svg
-          width="12"
-          height="12"
-          viewBox="0 0 12 12"
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
           fill="none"
-          className="text-muted-foreground/40"
+          className="text-muted-foreground/60"
           style={{ animation: 'slowDrift 5s ease-in-out infinite' }}
         >
-          <path d="M2 4L6 8L10 4" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M4 7L10 13L16 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
     </section>
