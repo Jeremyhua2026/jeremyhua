@@ -31,7 +31,9 @@ export default function Contact() {
           {content.contact.body}
         </p>
         <a
-          href={`mailto:${content.meta.email}`}
+          href="https://www.linkedin.com/in/jeremyhua/"
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-flex items-center gap-2 text-sm font-heading font-medium bg-foreground text-background px-5 py-2.5 rounded-full hover:bg-highlight hover:text-highlight-foreground transition-colors"
         >
           {content.contact.cta}
