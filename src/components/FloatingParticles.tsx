@@ -59,7 +59,8 @@ export default function FloatingParticles() {
         line.phase += line.speed;
 
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(${r},${g},${b},${line.opacity})`;
+        const finalOpacity = isDark ? line.opacity : line.opacity * line.lightOpacityMultiplier;
+        ctx.strokeStyle = `rgba(${r},${g},${b},${finalOpacity})`;
         ctx.lineWidth = line.thickness;
 
         const steps = 80;
