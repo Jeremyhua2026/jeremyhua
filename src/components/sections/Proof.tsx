@@ -8,8 +8,8 @@ import band3 from "@/assets/band-3.jpg";
 import ultra1 from "@/assets/ultra-1.jpg";
 import ultra2 from "@/assets/ultra-2.jpg";
 import hobbies1 from "@/assets/hobbies-1.jpg";
+import microgreens from "@/assets/microgreens.jpg";
 import travel1 from "@/assets/travel-1.jpg";
-import travel5 from "@/assets/travel-5.jpg";
 import travel6 from "@/assets/travel-6.jpg";
 import logoWestjet from "@/assets/logo-westjet.png";
 import logoTimhortons from "@/assets/logo-timhortons.png";
@@ -17,8 +17,8 @@ import logoTimhortons from "@/assets/logo-timhortons.png";
 const storyImages: Record<string, string[]> = {
   "proof-band": [band1, band2, band3],
   "proof-ultra": [ultra1, ultra2],
-  "proof-hobbies": [hobbies1, travel1],
-  "proof-travel": [travel5, travel6],
+  "proof-hobbies": [hobbies1, microgreens],
+  "proof-travel": [travel1, travel6],
 };
 
 const companyLogos: Record<string, string> = {
