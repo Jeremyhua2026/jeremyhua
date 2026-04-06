@@ -1,14 +1,12 @@
 import { useEffect, useRef } from "react";
 
-interface WindLine {
-  y: number;
-  x: number;
-  length: number;
-  speed: number;
+interface GrassLine {
+  baseY: number;
   amplitude: number;
   frequency: number;
-  opacity: number;
   phase: number;
+  speed: number;
+  opacity: number;
   thickness: number;
 }
 
@@ -22,7 +20,7 @@ export default function FloatingParticles() {
     if (!ctx) return;
 
     let animationId: number;
-    let lines: WindLine[] = [];
+    let lines: GrassLine[] = [];
 
     const resize = () => {
       canvas.width = canvas.parentElement?.clientWidth || window.innerWidth;
@@ -30,17 +28,15 @@ export default function FloatingParticles() {
     };
 
     const createLines = () => {
-      const count = Math.floor(canvas.height / 18);
-      lines = Array.from({ length: count }, () => ({
-        y: Math.random() * canvas.height,
-        x: -Math.random() * canvas.width * 0.5,
-        length: 150 + Math.random() * 350,
-        speed: 0.15 + Math.random() * 0.35,
-        amplitude: 8 + Math.random() * 25,
-        frequency: 0.003 + Math.random() * 0.006,
-        opacity: 0.06 + Math.random() * 0.09,
+      const count = Math.floor(canvas.height / 12);
+      lines = Array.from({ length: count }, (_, i) => ({
+        baseY: (i / count) * canvas.height + (Math.random() - 0.5) * 6,
+        amplitude: 2 + Math.random() * 5,
+        frequency: 0.002 + Math.random() * 0.003,
         phase: Math.random() * Math.PI * 2,
-        thickness: 0.5 + Math.random() * 1,
+        speed: 0.008 + Math.random() * 0.012,
+        opacity: 0.025 + Math.random() * 0.04,
+        thickness: 0.4 + Math.random() * 0.6,
       }));
     };
 
@@ -58,24 +54,19 @@ export default function FloatingParticles() {
       const b = isDark ? 140 : 65;
 
       lines.forEach((line) => {
-        line.x += line.speed;
-        line.phase += 0.003;
-
-        if (line.x > canvas.width + 50) {
-          line.x = -line.length - Math.random() * 200;
-          line.y = Math.random() * canvas.height;
-        }
+        line.phase += line.speed;
 
         ctx.beginPath();
         ctx.strokeStyle = `rgba(${r},${g},${b},${line.opacity})`;
         ctx.lineWidth = line.thickness;
-        ctx.lineCap = "round";
 
-        const steps = 60;
+        const steps = 80;
         for (let i = 0; i <= steps; i++) {
           const t = i / steps;
-          const px = line.x + t * line.length;
-          const py = line.y + Math.sin(px * line.frequency + line.phase) * line.amplitude;
+          const px = t * canvas.width;
+          const wave1 = Math.sin(px * line.frequency + line.phase) * line.amplitude;
+          const wave2 = Math.sin(px * line.frequency * 1.7 + line.phase * 0.6) * line.amplitude * 0.4;
+          const py = line.baseY + wave1 + wave2;
           if (i === 0) ctx.moveTo(px, py);
           else ctx.lineTo(px, py);
         }
