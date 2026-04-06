@@ -8,6 +8,7 @@ interface GrassLine {
   speed: number;
   opacity: number;
   thickness: number;
+  lightOpacityMultiplier: number;
 }
 
 export default function FloatingParticles() {
@@ -36,6 +37,7 @@ export default function FloatingParticles() {
         phase: Math.random() * Math.PI * 2,
         speed: 0.002 + Math.random() * 0.004,
         opacity: 0.012 + Math.random() * 0.02,
+        lightOpacityMultiplier: 3 + Math.random() * 2,
         thickness: 0.4 + Math.random() * 0.6,
       }));
     };
@@ -57,7 +59,8 @@ export default function FloatingParticles() {
         line.phase += line.speed;
 
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(${r},${g},${b},${line.opacity})`;
+        const finalOpacity = isDark ? line.opacity : line.opacity * line.lightOpacityMultiplier;
+        ctx.strokeStyle = `rgba(${r},${g},${b},${finalOpacity})`;
         ctx.lineWidth = line.thickness;
 
         const steps = 80;
