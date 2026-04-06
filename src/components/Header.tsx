@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "./ThemeProvider";
 import { content } from "@/data/content";
-import { Sun, Moon, Menu, X } from "lucide-react";
+import { Sun, Moon, Menu, X, Instagram, Linkedin } from "lucide-react";
 
 const navLinks = [
   { label: "About", href: "#about" },
