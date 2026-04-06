@@ -19,7 +19,7 @@ const storyImages: Record<string, string[]> = {
   "proof-band": [band1, band2, band3],
   "proof-ultra": [ultra1, ultra2],
   "proof-hobbies": [hobbies1, microgreens],
-  "proof-travel": [travel1, travel6],
+  "proof-travel": [travel5, travel1],
 };
 
 const companyLogos: Record<string, string> = {
