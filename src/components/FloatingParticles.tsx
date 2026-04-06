@@ -36,6 +36,7 @@ export default function FloatingParticles() {
         phase: Math.random() * Math.PI * 2,
         speed: 0.002 + Math.random() * 0.004,
         opacity: 0.012 + Math.random() * 0.02,
+        lightOpacityMultiplier: 3 + Math.random() * 2,
         thickness: 0.4 + Math.random() * 0.6,
       }));
     };
