@@ -60,18 +60,16 @@ export default function Header() {
 
         {/* Mobile */}
         <div className="flex md:hidden items-center gap-3">
-          <button
-            onClick={toggle}
-            aria-label="Toggle theme"
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
+          <a href="https://www.instagram.com/jeremyh.zip/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Instagram size={16} />
+          </a>
+          <a href="https://www.linkedin.com/in/jeremyhua/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Linkedin size={16} />
+          </a>
+          <button onClick={toggle} aria-label="Toggle theme" className="text-muted-foreground hover:text-foreground transition-colors">
             {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
           </button>
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle menu"
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
+          <button onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle menu" className="text-muted-foreground hover:text-foreground transition-colors">
             {mobileOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
