@@ -35,7 +35,7 @@ export default function FloatingParticles() {
         frequency: 0.002 + Math.random() * 0.003,
         phase: Math.random() * Math.PI * 2,
         speed: 0.002 + Math.random() * 0.004,
-        opacity: 0.025 + Math.random() * 0.04,
+        opacity: 0.012 + Math.random() * 0.02,
         thickness: 0.4 + Math.random() * 0.6,
       }));
     };
