@@ -100,15 +100,15 @@ export default function Hero() {
           stage >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
         }`}
       >
-        <div className="w-px h-12 bg-gradient-to-b from-transparent to-[hsl(140,30%,35%)]/40" />
+        <div className="w-px h-12 bg-gradient-to-b from-transparent via-[hsla(140,30%,35%,0.3)] to-[hsla(140,35%,45%,0.7)]" style={{ filter: 'drop-shadow(0 6px 8px hsla(140,40%,40%,0.4))' }} />
         <svg
           width="20"
           height="20"
           viewBox="0 0 20 20"
           fill="none"
-          style={{ animation: 'slowDrift 5s ease-in-out infinite', filter: 'drop-shadow(0 0 4px hsla(140,35%,40%,0.5))' }}
+          style={{ animation: 'slowDrift 5s ease-in-out infinite', filter: 'drop-shadow(0 0 6px hsla(140,40%,45%,0.6)) drop-shadow(0 0 12px hsla(140,40%,40%,0.3))' }}
         >
-          <path d="M4 7L10 13L16 7" stroke="hsl(140,30%,38%)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M4 7L10 13L16 7" stroke="hsl(140,30%,42%)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
     </section>
