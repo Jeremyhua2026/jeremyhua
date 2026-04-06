@@ -8,6 +8,7 @@ interface GrassLine {
   speed: number;
   opacity: number;
   thickness: number;
+  lightOpacityMultiplier: number;
 }
 
 export default function FloatingParticles() {
