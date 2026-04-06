@@ -131,9 +131,9 @@ export const content = {
         title: "Granola hobbies",
         intro:
           "Courts, trails, ice, water, tables. Different rules, same appetite for repetition.",
-        body: "Skiing, basketball, ultimate, track, table tennis, hockey, surfing, pool. They taught me timing, space, and the gap between intention and execution under pressure.\n\nGames with visible rules, where proof is immediate and humbling.",
+        body: "Skiing, basketball, ultimate, track, table tennis, hockey, surfing, pool. They taught me timing, space, and the gap between intention and execution under pressure.\n\nGames with visible rules, where proof is immediate and humbling.\n\nI also got curious about social media — wanted to understand how attention works. Posted 200 times, amassed 7M+ views. Learned the algorithm is its own system with its own physics.",
         stat: "7M+",
-        statLabel: "Instagram views",
+        statLabel: "views · 200 posts",
         imageCount: 2,
       },
       {
