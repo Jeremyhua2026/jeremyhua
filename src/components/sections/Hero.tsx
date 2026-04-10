@@ -87,7 +87,7 @@ export default function Hero() {
 
       {/* Bottom-right italic phrase */}
       <p
-        className={`absolute bottom-20 right-8 sm:right-12 md:right-16 text-xs sm:text-sm italic text-muted-foreground/50 font-body transition-all duration-1000 ease-out ${
+        className={`absolute bottom-20 right-8 sm:right-12 md:right-16 text-[10px] sm:text-sm italic text-muted-foreground/50 font-body transition-all duration-1000 ease-out max-w-[140px] sm:max-w-none text-right ${
           stage >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
         }`}
       >
