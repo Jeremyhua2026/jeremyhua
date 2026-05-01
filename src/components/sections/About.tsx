@@ -21,39 +21,18 @@ export default function About() {
               {content.about.heading}
             </h2>
 
-            <div className="space-y-5 mb-10">
+            <div className="space-y-5">
               {content.about.paragraphs.map((p, i) => (
                 <p
                   key={i}
                   className={`leading-relaxed whitespace-pre-line ${
-                    i === 0 ? "text-xl font-medium font-heading" : 
+                    i === 0 ? "text-xl font-medium font-heading" :
                     "text-base text-muted-foreground"
                   }`}
                 >
                   {p}
                 </p>
               ))}
-            </div>
-
-            {/* Also me chips */}
-            <div className="pt-6 border-t border-border/50">
-              <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground font-heading mb-4">
-                {content.alsoMe.heading}
-              </p>
-              <div className="flex flex-wrap gap-2 mb-3">
-                {content.alsoMe.chips.map((chip) => (
-                  <a
-                    key={chip.anchor}
-                    href={`#${chip.anchor}`}
-                    className="inline-block text-sm font-heading px-4 py-1.5 rounded-full border border-border hover:border-highlight hover:text-highlight transition-colors"
-                  >
-                    {chip.label}
-                  </a>
-                ))}
-              </div>
-              <p className="text-xs text-muted-foreground">
-                {content.alsoMe.note}
-              </p>
             </div>
           </div>
         </div>

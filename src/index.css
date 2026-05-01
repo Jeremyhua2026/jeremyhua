@@ -5,93 +5,99 @@
 @layer base {
   :root {
     --background: 40 30% 96%;
-    --foreground: 30 12% 15%;
+    --foreground: 30 14% 12%;
 
-    --card: 38 25% 93%;
-    --card-foreground: 30 12% 15%;
+    --card: 38 22% 90%;
+    --card-foreground: 30 14% 12%;
 
     --popover: 40 30% 96%;
-    --popover-foreground: 30 12% 15%;
+    --popover-foreground: 30 14% 12%;
 
-    --primary: 30 30% 38%;
+    --primary: 30 38% 32%;
     --primary-foreground: 40 30% 96%;
 
-    --secondary: 35 15% 50%;
+    --secondary: 35 18% 44%;
     --secondary-foreground: 40 30% 96%;
 
-    --muted: 36 18% 89%;
-    --muted-foreground: 30 8% 45%;
+    --muted: 36 16% 86%;
+    --muted-foreground: 30 12% 30%;
 
-    --accent: 35 15% 50%;
+    --accent: 35 18% 44%;
     --accent-foreground: 40 30% 96%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 35 15% 82%;
-    --input: 35 15% 82%;
-    --ring: 30 30% 38%;
+    --border: 35 18% 72%;
+    --input: 35 18% 72%;
+    --ring: 30 38% 32%;
 
     --radius: 0.5rem;
 
-    /* Extended palette — warm, earthy, cohesive */
-    --surface-warm: 36 22% 91%;
-    --surface-cool: 38 15% 93%;
-    --highlight: 30 35% 42%;
+    --surface-warm: 36 22% 88%;
+    --surface-cool: 38 15% 90%;
+    --highlight: 30 42% 30%;
     --highlight-foreground: 40 30% 96%;
 
+    /* Mind map / thread edge colors */
+    --edge: 140 30% 30%;
+    --edge-active: 140 36% 26%;
+
     --sidebar-background: 40 30% 96%;
-    --sidebar-foreground: 30 12% 15%;
-    --sidebar-primary: 30 30% 38%;
+    --sidebar-foreground: 30 14% 12%;
+    --sidebar-primary: 30 38% 32%;
     --sidebar-primary-foreground: 40 30% 96%;
-    --sidebar-accent: 36 18% 89%;
-    --sidebar-accent-foreground: 30 12% 15%;
-    --sidebar-border: 35 15% 82%;
-    --sidebar-ring: 30 30% 38%;
+    --sidebar-accent: 36 16% 86%;
+    --sidebar-accent-foreground: 30 14% 12%;
+    --sidebar-border: 35 18% 72%;
+    --sidebar-ring: 30 38% 32%;
   }
 
   .dark {
     --background: 25 10% 7%;
-    --foreground: 38 12% 80%;
+    --foreground: 38 12% 82%;
 
     --card: 25 10% 10%;
-    --card-foreground: 38 12% 80%;
+    --card-foreground: 38 12% 82%;
 
     --popover: 25 10% 7%;
-    --popover-foreground: 38 12% 80%;
+    --popover-foreground: 38 12% 82%;
 
     --primary: 32 28% 48%;
     --primary-foreground: 25 10% 7%;
 
     --secondary: 30 12% 32%;
-    --secondary-foreground: 38 12% 80%;
+    --secondary-foreground: 38 12% 82%;
 
     --muted: 25 8% 14%;
-    --muted-foreground: 32 8% 48%;
+    --muted-foreground: 32 10% 54%;
 
     --accent: 30 12% 32%;
-    --accent-foreground: 38 12% 80%;
+    --accent-foreground: 38 12% 82%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 25 8% 17%;
-    --input: 25 8% 17%;
+    --border: 25 8% 20%;
+    --input: 25 8% 20%;
     --ring: 32 28% 48%;
 
-    /* Extended palette — dark */
     --surface-warm: 25 10% 11%;
     --surface-cool: 28 8% 10%;
-    --highlight: 32 30% 48%;
+    --highlight: 32 30% 52%;
     --highlight-foreground: 25 10% 7%;
 
+    /* Mind map / thread edge colors */
+    --edge: 140 18% 52%;
+    --edge-active: 140 28% 48%;
+
     --sidebar-background: 25 10% 7%;
-    --sidebar-foreground: 38 12% 80%;
+    --sidebar-foreground: 38 12% 82%;
     --sidebar-primary: 32 28% 48%;
     --sidebar-primary-foreground: 25 10% 7%;
     --sidebar-accent: 25 8% 14%;
-    --sidebar-accent-foreground: 38 12% 80%;
-    --sidebar-border: 25 8% 17%;
+    --sidebar-accent-foreground: 38 12% 82%;
+    --sidebar-border: 25 8% 20%;
     --sidebar-ring: 32 28% 48%;
   }
 }
@@ -135,7 +141,7 @@ body::before {
   height: 100%;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.035;
+  opacity: 0.03;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px 256px;
@@ -147,8 +153,8 @@ body::before {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    hsl(var(--highlight) / 0.5) 30%,
-    hsl(var(--highlight) / 0.5) 70%,
+    hsl(var(--highlight) / 0.45) 30%,
+    hsl(var(--highlight) / 0.45) 70%,
     transparent 100%
   );
 }
@@ -162,3 +168,17 @@ body::before {
   background-color: hsl(var(--surface-cool));
 }
 
+/* Thread connector between sections */
+.section-thread {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  height: 48px;
+  pointer-events: none;
+}
+
+.section-thread svg {
+  height: 100%;
+  width: auto;
+}

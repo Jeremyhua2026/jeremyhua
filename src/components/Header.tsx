@@ -4,9 +4,9 @@ import { content } from "@/data/content";
 import { Sun, Moon, Menu, X, Instagram, Linkedin } from "lucide-react";
 
 const navLinks = [
-  { label: "About", href: "#about" },
   { label: "Proof", href: "#proof" },
-  { label: "Thinking", href: "#thinking" },
+  { label: "Notes", href: "#thinking" },
+  { label: "Projects", href: "#projects" },
   { label: "Contact", href: "#contact" },
 ];
 

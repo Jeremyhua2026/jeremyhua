@@ -11,7 +11,6 @@ import hobbies1 from "@/assets/hobbies-1.jpg";
 import microgreens from "@/assets/microgreens.jpg";
 import travel1 from "@/assets/travel-1.jpg";
 import travel5 from "@/assets/travel-5.jpg";
-import travel6 from "@/assets/travel-6.jpg";
 import logoWestjet from "@/assets/logo-westjet.png";
 import logoTimhortons from "@/assets/logo-timhortons.png";
 
@@ -27,6 +26,13 @@ const companyLogos: Record<string, string> = {
   "WestJet": logoWestjet,
 };
 
+const storyConnectors: Record<string, string> = {
+  "proof-band":    "tempo",
+  "proof-ultra":   "signals",
+  "proof-travel":  "defaults",
+  "proof-hobbies": "feedback",
+};
+
 function StoryBlock({
   story,
   index,
@@ -39,6 +45,7 @@ function StoryBlock({
   const images = storyImages[story.id] || [];
   const stat = "stat" in story ? (story as any).stat : null;
   const statLabel = "statLabel" in story ? (story as any).statLabel : null;
+  const connectorWord = storyConnectors[story.id];
 
   return (
     <div
@@ -48,34 +55,41 @@ function StoryBlock({
         visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
       }`}
     >
-      <div className="divider-accent mb-6" />
+      <div className="divider-accent mb-8" />
 
-      <div className="flex items-baseline justify-between mb-1">
-        <span className="text-[10px] tracking-[0.2em] uppercase text-highlight font-heading">
-          {story.tag}
-        </span>
+      <div className="flex items-baseline justify-between mb-2">
+        <div className="flex items-baseline gap-3">
+          <span className="text-[10px] tracking-[0.2em] uppercase text-highlight font-heading">
+            {story.tag}
+          </span>
+          {connectorWord && (
+            <span className="text-[9px] font-body italic text-muted-foreground/50">
+              · {connectorWord}
+            </span>
+          )}
+        </div>
         {stat && (
           <div className="text-right">
-            <span className="text-xl font-heading font-semibold text-foreground leading-none">
+            <span className="text-3xl font-heading font-semibold text-foreground leading-none">
               {stat}
             </span>
-            <span className="text-[10px] text-muted-foreground font-heading ml-1.5 tracking-wide">
+            <span className="text-xs text-muted-foreground font-heading ml-2 tracking-wide">
               {statLabel}
             </span>
           </div>
         )}
       </div>
 
-      <h3 className="text-lg font-heading font-medium mt-1 mb-2">{story.title}</h3>
-      <p className="text-sm text-muted-foreground mb-4">{story.intro}</p>
+      <h3 className="text-2xl font-heading font-medium mt-2 mb-3">{story.title}</h3>
+      <p className="text-base text-muted-foreground mb-6 leading-relaxed">{story.intro}</p>
 
-      <div className={`flex gap-2 mb-4 ${isReversed ? "flex-row-reverse" : ""}`}>
+      <div className={`flex gap-3 mb-6 ${isReversed ? "flex-row-reverse" : ""}`}>
         {images.map((src, i) => (
           <div key={i} className="flex-1">
             <img
               src={src}
               alt={`${story.tag} photo ${i + 1}`}
-              className="rounded-md object-cover w-full aspect-[3/2]"
+              className="rounded-lg object-cover w-full aspect-[3/2]"
               loading="lazy"
             />
           </div>
@@ -84,12 +98,12 @@ function StoryBlock({
 
       <div>
         {story.body.split("\n\n").map((p, i) => (
-          <p key={i} className="text-sm text-muted-foreground leading-relaxed mb-3">
+          <p key={i} className="text-base text-muted-foreground leading-relaxed mb-4">
             {p}
           </p>
         ))}
         {"closer" in story && story.closer && (
-          <p className="text-sm font-heading font-medium text-foreground mt-3">
+          <p className="text-base font-heading font-medium text-foreground mt-5 pl-5 border-l-2 border-highlight/30">
             {story.closer}
           </p>
         )}
@@ -102,7 +116,7 @@ export default function Proof() {
   const { ref, visible } = useFadeIn();
 
   return (
-    <section id="proof" className="px-6 py-16">
+    <section id="proof" className="px-6 py-20">
       <div className="max-w-2xl mx-auto">
         <div
           ref={ref}
@@ -110,45 +124,41 @@ export default function Proof() {
             visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
-          <h2 className="text-xs tracking-[0.2em] uppercase text-muted-foreground font-heading mb-3">
+          <h2 className="text-xs tracking-[0.2em] uppercase text-muted-foreground font-heading mb-4">
             {content.proof.heading}
           </h2>
-          <p className="text-sm text-muted-foreground mb-10">
+          <p className="text-lg text-foreground/80 leading-relaxed mb-12 max-w-xl">
             {content.proof.subhead}
           </p>
 
-          {/* Work block with logos */}
-          <div id="proof-work" className="mb-12">
+          {/* Work block */}
+          <div id="proof-work" className="mb-16">
             <span className="text-[10px] tracking-[0.2em] uppercase text-highlight font-heading">
-              Work
+              Work · <span className="italic font-body normal-case tracking-normal text-muted-foreground/50">incentives</span>
             </span>
-            <h3 className="text-lg font-heading font-medium mt-2 mb-4">
-              {content.proof.work.title}
-            </h3>
-            {content.proof.work.body.split("\n\n").map((p, i) => (
-              <p key={i} className="text-sm text-muted-foreground leading-relaxed mb-3">
-                {p}
-              </p>
-            ))}
 
-            {/* Experience cards with logos */}
-            <div className="grid sm:grid-cols-2 gap-3 mt-6">
+            {/* Experience cards */}
+            <div className="grid sm:grid-cols-3 gap-3 mt-5 mb-10">
               {content.experience.items.map((item) => (
-                <div key={item.company} className="rounded-lg p-5 border border-border/50 bg-card/50">
-                  <div className="flex items-center gap-3 mb-3">
-                    {companyLogos[item.company] && (
+                <div key={item.company} className="rounded-xl p-5 border border-border/50 bg-card/50">
+                  <div className="flex items-center gap-2 mb-4 flex-wrap">
+                    {companyLogos[item.company] ? (
                       <img
                         src={companyLogos[item.company]}
                         alt={`${item.company} logo`}
-                        className="h-8 w-auto object-contain dark:brightness-200 dark:contrast-50"
+                        className="h-7 w-auto object-contain dark:brightness-200 dark:contrast-50"
                         loading="lazy"
                       />
+                    ) : (
+                      <span className="text-base font-heading font-semibold text-foreground tracking-tight">
+                        {item.company}
+                      </span>
                     )}
                     <span className="text-[9px] tracking-wider uppercase text-highlight font-heading bg-highlight/10 px-1.5 py-0.5 rounded-full">
                       {item.status}
                     </span>
                   </div>
-                  <p className="text-xs text-muted-foreground leading-relaxed mb-2">
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">
                     {item.role}
                   </p>
                   <div className="flex flex-wrap gap-2">
@@ -158,9 +168,9 @@ export default function Proof() {
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-[10px] font-heading text-highlight hover:text-highlight/80 transition-colors"
+                        className="inline-flex items-center gap-1 text-xs font-heading text-highlight hover:text-highlight/80 transition-colors"
                       >
-                        {link.label} <ExternalLink size={9} />
+                        {link.label} <ExternalLink size={10} />
                       </a>
                     ))}
                   </div>
@@ -168,16 +178,36 @@ export default function Proof() {
               ))}
             </div>
 
+            {/* Narrative */}
+            <h3 className="text-2xl font-heading font-medium mb-4">
+              {content.proof.work.title}
+            </h3>
+            {content.proof.work.body.split("\n\n").map((p, i) => (
+              <p key={i} className="text-base text-muted-foreground leading-relaxed mb-4">
+                {p}
+              </p>
+            ))}
+
+            {/* 50K pull-quote */}
+            <blockquote className="my-8 pl-5 border-l-2 border-highlight/40">
+              <p className="text-base font-body italic text-foreground/75 leading-relaxed">
+                "Once caught an issue affecting 50,000 daily redemptions that had gone unnoticed."
+              </p>
+              <cite className="text-xs font-heading tracking-wide text-muted-foreground/50 not-italic mt-2 block">
+                Tim Hortons Rewards — 3.5M+ active users
+              </cite>
+            </blockquote>
+
             {/* Jump links */}
-            <div className="flex flex-wrap items-center gap-2 mt-6">
-              <span className="text-xs text-muted-foreground font-heading">Jump</span>
+            <div className="flex flex-wrap items-center gap-3 mt-8">
+              <span className="text-xs text-muted-foreground font-heading">Jump to</span>
               {content.proof.stories.map((s) => (
                 <a
                   key={s.id}
                   href={`#${s.id}`}
-                  className="text-xs font-heading text-foreground hover:text-primary transition-colors"
+                  className="text-xs font-heading text-muted-foreground hover:text-highlight transition-colors"
                 >
-                  ·{s.tag}
+                  · {s.tag}
                 </a>
               ))}
             </div>
@@ -185,7 +215,7 @@ export default function Proof() {
         </div>
 
         {/* Stories */}
-        <div className="space-y-12">
+        <div className="space-y-16">
           {content.proof.stories.map((story, i) => (
             <StoryBlock key={story.id} story={story} index={i} />
           ))}

@@ -3,44 +3,20 @@ export const content = {
     name: "Jeremy Hua",
     email: "jeremy.hua@queensu.ca",
     location: "Toronto, CA",
-    title: "Jeremy Hua — systems, behavior, and how companies move",
+    title: "Jeremy Hua: systems, behavior, and how companies move",
     description: "Notes on behavior, consumer vs internal systems, Toronto.",
-  },
-
-  hero: {
-    headline: "Systems, behavior, and how things actually move.",
-    cta: "Say hi",
-  },
-
-  tension: {
-    line1: "Companies obsess over customer experience.",
-    line2: "But most of what customers feel\nwas decided long before they showed up.",
   },
 
   about: {
     heading: "About",
     paragraphs: [
-      "I started by looking at how people experience brands: journeys, offers, loyalty.",
-      "The friction wasn't where I was looking. It was upstream, in the systems that decide what gets built and how fast anything can move.",
-      "At WestJet and Tim Hortons, the surface looks simple. A seat, a coffee, a reward. But the real story lives in coordination, constraints, and tradeoffs.",
-    ],
-  },
-
-  alsoMe: {
-    heading: "Also me",
-    note: "Each chip links to a story below.",
-    chips: [
-      { label: "Led a Scottish marching band", anchor: "proof-band" },
-      { label: "Ultra marathons", anchor: "proof-ultra" },
-      { label: "Granola hobbies", anchor: "proof-hobbies" },
-      { label: "Travel", anchor: "proof-travel" },
+      "I look for the system underneath the surface.",
+      "At WestJet, Tim Hortons, and now Zip, the surface is always simple: a seat, a coffee, a purchase request. The real story is coordination, data, and what actually slows down.",
     ],
   },
 
   notes: {
     heading: "Notes",
-    subhead:
-      "Short observations on systems, incentives, and the gap between what companies say and how they run.",
     items: [
       {
         title: "Rewards apps are behavior machines",
@@ -58,18 +34,32 @@ export const content = {
         title: "Internal tools shape customer experience",
         body: "The CRM, the dashboard, the ops workflow nobody redesigned since 2019. These invisible systems decide what frontline teams can actually do. Customers feel internal friction even when they can't name it.",
       },
+      {
+        title: "Every domain runs on the same physics",
+        body: "A loyalty program, an ultramarathon, a pipe band, a microgreens farm. Different surfaces, same underlying structure. Incentives shape behavior. Coordination determines speed. Feedback tells you when you're wrong. The skill isn't knowing more domains. It's noticing the pattern faster.",
+      },
     ],
   },
 
   experience: {
     heading: "Where I've spent real time",
-    subhead:
-      "Context I can stand behind.",
+    subhead: "Context I can stand behind.",
     items: [
       {
-        company: "Tim Hortons",
+        company: "Zip",
         status: "Current",
-        role: "Loyalty program, 3.5M+ active users. Spend most of my time in behavioral data and offer pipelines. Once caught an issue affecting 50K daily redemptions that had gone unnoticed.",
+        role: "Procurement workflow at enterprise scale. Every purchase request touches finance, legal, IT, and ops. The bottleneck is never the budget, it's the coordination getting there.",
+        description:
+          "Enterprise spend management: intake-to-procure, where internal systems determine what a company can actually buy and how fast.",
+        links: [
+          { label: "ziphq.com", url: "https://ziphq.com" },
+        ],
+        proofLink: "#proof-work",
+      },
+      {
+        company: "Tim Hortons",
+        status: "Prior",
+        role: "Loyalty program, 3.5M+ active users. Spent most of my time in behavioral data and offer pipelines. Once caught an issue affecting 50K daily redemptions that had gone unnoticed.",
         description:
           "Consumer-scale systems: how digital touchpoints interact with operations, habits, and incentives.",
         links: [
@@ -93,12 +83,12 @@ export const content = {
   },
 
   proof: {
-    heading: "Stories & proof",
+    heading: "Work & proof",
     subhead:
-      "Work first, then the personal stuff.",
+      "I'm a strategy and operations person who tends to end up inside the systems running consumer and enterprise businesses: loyalty programs, airline products, procurement workflows. The work is usually somewhere between the obvious surface and whatever is actually slowing things down.",
     work: {
       title: "Same problem, different surface",
-      body: "Tim Hortons and WestJet look different. They're the same problem.\n\nA simple surface on top of a system full of tradeoffs: data, operations, incentives, timing.",
+      body: "A coffee, a seat, a purchase request. Simple on top, full of coordination, data tradeoffs, and misaligned incentives underneath.\n\nThe companies look different. The problem is the same.",
     },
     stories: [
       {
@@ -119,7 +109,7 @@ export const content = {
         title: "Ultras as a feedback system",
         intro:
           "Long races are blunt: you can't negotiate with distance.",
-        body: "Plans collide with weather, stomachs, and sleep debt. The useful skill isn't toughness. It's noticing early when the system is sending a signal you should obey.\n\nMost 'performance problems' are feedback problems, easier to ignore in an office than at mile 40.",
+        body: "Plans collide with weather, stomachs, and sleep debt. The useful skill isn't toughness. It's noticing early when the system is sending a signal you should obey.\n\nMost performance problems are feedback problems, easier to ignore in an office than at mile 40.",
         closer: "Endurance isn't pushing harder. It's listening sooner.",
         stat: "3,000+",
         statLabel: "km in 2 years",
@@ -127,11 +117,11 @@ export const content = {
       },
       {
         id: "proof-hobbies",
-        tag: "Play",
-        title: "Granola hobbies",
+        tag: "Experiments",
+        title: "Running experiments",
         intro:
-          "Courts, trails, ice, water, tables. Different rules, same appetite for repetition.",
-        body: "Skiing, basketball, ultimate, track, table tennis, hockey, surfing, pool. They taught me timing, space, and the gap between intention and execution under pressure.\n\nGames with visible rules, where proof is immediate and humbling.\n\nI built a microgreens farm — small-scale agriculture with fast feedback loops. Seed to harvest in under two weeks. It's a tiny system where inputs, environment, and timing all compound visibly.\n\nI also got curious about social media — wanted to understand how attention works. Posted 200 times, amassed 7M+ views. Learned the algorithm is its own system with its own physics.",
+          "Courts, trails, ice, water, tables. Different rules, same appetite for testing things.",
+        body: "Skiing, basketball, ultimate, track, table tennis, hockey, surfing, pool. They taught me timing, space, and the gap between intention and execution under pressure.\n\nGames with visible rules, where proof is immediate and humbling.\n\nI built a microgreens farm, small-scale agriculture with fast feedback loops. Seed to harvest in under two weeks. A tiny system where inputs, environment, and timing all compound visibly.\n\nI also got curious about social media, wanted to understand how attention works. Posted 200 times, amassed 7M+ views. The algorithm is its own system with its own physics.",
         stat: "7M+",
         statLabel: "views · 200 posts",
         imageCount: 2,
@@ -142,8 +132,8 @@ export const content = {
         title: "New defaults",
         intro:
           "Travel swaps your defaults: time, space, what counts as normal.",
-        body: "I'm drawn to places where the infrastructure is different enough that you stop autopiloting. That's where you notice how much of 'common sense' is just local habit.",
-        closer: "Most \"obvious\" things are just local agreements.",
+        body: "I'm drawn to places where the infrastructure is different enough that you stop autopiloting. That's where you notice how much of common sense is just local habit.",
+        closer: "Most obvious things are just local agreements.",
         stat: "53",
         statLabel: "countries · 30 in 3 months",
         imageCount: 2,
@@ -163,20 +153,40 @@ export const content = {
     ],
   },
 
-  offTheClock: {
-    heading: "Off the clock",
-    body: `Band, ultras, granola hobbies, airports. I cut my own hair, mix my own electrolytes, and read constantly. Repetition is where you learn how systems behave when nobody's watching.`,
+  projects: {
+    heading: "Side projects",
+    subhead: "Things I build on my own time.",
+    items: [
+      {
+        id: "budget-tracker",
+        title: "Budget Tracker",
+        description: "Most budgeting tools show you categories. This one shows you patterns, where money actually goes versus where you think it goes. Built because the gap between the two was embarrassing.",
+        status: "Building",
+        tags: ["Personal finance", "Behavior"],
+      },
+      {
+        id: "risk-calculator",
+        title: "Investment Risk Calculator",
+        description: "Risk tolerance quizzes ask how you'd feel about losing money. This one asks about your actual situation, income stability, time horizon, existing obligations, and gives a calibrated output, not a personality type.",
+        status: "Building",
+        tags: ["Investing", "Decision tools"],
+      },
+    ],
   },
 
-  transitions: {
-    beforeProof: "So where does this show up?",
-    beforePersonal: "Not just how I work, but how I see everything.",
-    beforeMethod: "A way of seeing becomes a way of working.",
+  synthesis: {
+    heading: "The through-line",
+    paragraphs: [
+      "Every domain I've spent real time in runs on the same physics: loyalty programs, ultramarathons, pipe bands, algorithms. Incentives shape behavior. Coordination determines speed. Feedback tells you when you're wrong, if you're listening.",
+      "What changes is the surface. What stays the same is the system.",
+      "That's the question I keep asking: not what is this, but how does it actually work, and where does it slow down?",
+    ],
+    closer: "The question travels.",
   },
 
   contact: {
     heading: "Contact",
-    body: "If you're thinking about systems, incentives, or how things actually move,\nlet's talk.",
+    body: "If you're building something and want to think through the system underneath it, or if something I've written or worked on is relevant to what you're doing, I'm reachable.",
     cta: "Get in touch",
   },
 } as const;
