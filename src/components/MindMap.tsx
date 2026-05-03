@@ -1,8 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 
-const VW = 960;
-const VH = 620;
-
 interface MindNode {
   id: string;
   label: string;
@@ -31,66 +28,110 @@ interface ConnectorNode {
   cy: number;
 }
 
-const ROOT = { id: "root", cx: 480, cy: 310, r: 56 };
+// ─────────────────────────────────────────────────────────────────────────────
+// Two layouts: a wide landscape one for desktop, a tall portrait one for
+// phones. Same nodes, same edges, just rearranged so the figure fills the
+// screen properly in each orientation.
+// ─────────────────────────────────────────────────────────────────────────────
 
-const SATELLITES: MindNode[] = [
+const SATELLITE_BASE = [
   {
     id: "work",
     label: "Work",
     subtitle: "Zip · Tim Hortons · WestJet",
     detail: "Procurement at Zip, loyalty at Tim Hortons and WestJet. Different surfaces — purchase requests, coffees, seats — same underlying problem: coordination, data, and what slows things down.",
-    cx: 740, cy: 96, r: 42,
     href: "#proof-work", tag: "Systems",
-    tipDx: -225, tipDy: -8,
   },
   {
     id: "endurance",
     label: "Running",
     subtitle: "3,000+ km · ultramarathons",
     detail: "Long races are blunt: you can't negotiate with distance. The useful skill isn't toughness — it's noticing signals early.",
-    cx: 860, cy: 318, r: 40,
     href: "#proof-ultra", tag: "Endurance",
-    tipDx: -235, tipDy: -70,
   },
   {
     id: "travel",
     label: "Travel",
     subtitle: "53 countries · 30 in 3 months",
     detail: "I'm drawn to places where the infrastructure is different enough that you stop autopiloting. That's where you notice how much of 'common sense' is just local habit.",
-    cx: 700, cy: 528, r: 40,
     href: "#proof-travel", tag: "Perspective",
-    tipDx: -225, tipDy: -155,
   },
   {
     id: "play",
     label: "Experiments",
     subtitle: "Microgreens · 7M views · sports",
     detail: "Microgreens farm: seed to harvest in 2 weeks. Posted 200 times, hit 7M views — learned the algorithm like a system. Sports across 8 disciplines.",
-    cx: 260, cy: 528, r: 40,
     href: "#proof-hobbies", tag: "Experiments",
-    tipDx: 14, tipDy: -155,
   },
   {
     id: "leadership",
     label: "Band",
     subtitle: "100+ musicians · pipe band",
     detail: "Leading a Scottish pipe band is theatre and logistics at once. Alignment isn't a slide. It's what happens when dozens of people interpret the same beat.",
-    cx: 96, cy: 318, r: 40,
     href: "#proof-band", tag: "Leadership",
-    tipDx: 52, tipDy: -70,
   },
   {
     id: "thinking",
     label: "Thinking",
     subtitle: "systems · behavior",
     detail: "Observe behavior. Map the system. Find friction. Name tradeoffs. Find leverage. More habit than framework.",
-    cx: 220, cy: 96, r: 40,
     href: "#thinking", tag: "Notes",
-    tipDx: 52, tipDy: -8,
   },
-];
+] as const;
 
-const ALL_NODES = [ROOT, ...SATELLITES];
+type Pos = { cx: number; cy: number; r: number; tipDx: number; tipDy: number };
+
+// Landscape (≥ 640px viewport): wide canvas, 6 satellites around root
+const LANDSCAPE = {
+  vw: 960,
+  vh: 620,
+  root: { id: "root", cx: 480, cy: 310, r: 56 },
+  pos: {
+    work:       { cx: 740, cy: 96,  r: 42, tipDx: -225, tipDy: -8   },
+    endurance:  { cx: 860, cy: 318, r: 40, tipDx: -235, tipDy: -70  },
+    travel:     { cx: 700, cy: 528, r: 40, tipDx: -225, tipDy: -155 },
+    play:       { cx: 260, cy: 528, r: 40, tipDx:   14, tipDy: -155 },
+    leadership: { cx:  96, cy: 318, r: 40, tipDx:   52, tipDy: -70  },
+    thinking:   { cx: 220, cy:  96, r: 40, tipDx:   52, tipDy: -8   },
+  } as Record<string, Pos>,
+  connectors: [
+    { id: "cn-incentives", word: "incentives", cx: 480, cy: 96  },
+    { id: "cn-signals",    word: "signals",    cx: 610, cy: 203 },
+    { id: "cn-tempo",      word: "tempo",      cx: 288, cy: 314 },
+    { id: "cn-defaults",   word: "defaults",   cx: 480, cy: 528 },
+    { id: "cn-pace",       word: "pace",       cx: 800, cy: 207 },
+  ] as ConnectorNode[],
+  rootFontSize: 16,
+  rootHintFontSize: 8,
+  labelFontMultiplier: 1,
+  subtitleFontSize: 8,
+};
+
+// Portrait (< 640px viewport): tall hexagonal layout, bigger tap targets
+const PORTRAIT = {
+  vw: 600,
+  vh: 820,
+  root: { id: "root", cx: 300, cy: 410, r: 78 },
+  pos: {
+    thinking:   { cx: 300, cy: 130, r: 60, tipDx: -110, tipDy:  72 },
+    work:       { cx: 510, cy: 270, r: 60, tipDx: -240, tipDy:  18 },
+    endurance:  { cx: 510, cy: 550, r: 60, tipDx: -240, tipDy: -75 },
+    travel:     { cx: 300, cy: 690, r: 60, tipDx: -110, tipDy: -210 },
+    play:       { cx:  90, cy: 550, r: 60, tipDx:   18, tipDy: -75 },
+    leadership: { cx:  90, cy: 270, r: 60, tipDx:   18, tipDy:  18 },
+  } as Record<string, Pos>,
+  connectors: [
+    { id: "cn-incentives", word: "incentives", cx: 405, cy: 200 },
+    { id: "cn-signals",    word: "signals",    cx: 405, cy: 340 },
+    { id: "cn-tempo",      word: "tempo",      cx: 195, cy: 340 },
+    { id: "cn-defaults",   word: "defaults",   cx: 195, cy: 620 },
+    { id: "cn-pace",       word: "pace",       cx: 510, cy: 410 },
+  ] as ConnectorNode[],
+  rootFontSize: 22,
+  rootHintFontSize: 11,
+  labelFontMultiplier: 1.55,
+  subtitleFontSize: 12,
+};
 
 const EDGES: Edge[] = [
   { fromId: "root", toId: "work",       dur: 3.2 },
@@ -106,24 +147,11 @@ const EDGES: Edge[] = [
   { fromId: "work",       toId: "endurance", cross: true, dur: 6.5 },
 ];
 
-// Midpoints of their respective edges
-const CONNECTOR_NODES: ConnectorNode[] = [
-  { id: "cn-incentives", word: "incentives", cx: 480, cy: 96  }, // work ↔ thinking
-  { id: "cn-signals",    word: "signals",    cx: 610, cy: 203 }, // root → work
-  { id: "cn-tempo",      word: "tempo",      cx: 288, cy: 314 }, // root → band
-  { id: "cn-defaults",   word: "defaults",   cx: 480, cy: 528 }, // travel ↔ experiments
-  { id: "cn-pace",       word: "pace",       cx: 800, cy: 207 }, // work ↔ endurance
-];
-
-function nodeById(id: string) {
-  return ALL_NODES.find((n) => n.id === id)!;
-}
-
 function pillHalfW(word: string) {
   return Math.ceil(word.length * 4.6) + 10;
 }
 
-function labelFontSize(label: string) {
+function baseLabelFontSize(label: string) {
   if (label.length <= 5) return 13;
   if (label.length <= 7) return 11;
   if (label.length <= 9) return 10;
@@ -134,6 +162,16 @@ export default function MindMap() {
   const [stage, setStage] = useState(0);
   const [hovered, setHovered] = useState<string | null>(null);
   const [rootHovered, setRootHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState<boolean>(
+    typeof window !== "undefined" ? window.innerWidth < 640 : false
+  );
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 640);
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   useEffect(() => {
     const timers = [
@@ -151,8 +189,16 @@ export default function MindMap() {
     else window.location.hash = id;
   }, []);
 
+  const L = isMobile ? PORTRAIT : LANDSCAPE;
+  const SATELLITES: MindNode[] = SATELLITE_BASE.map((s) => ({
+    ...s,
+    ...L.pos[s.id],
+  }));
+  const ALL_NODES = [L.root, ...SATELLITES];
+  const nodeById = (id: string) => ALL_NODES.find((n) => n.id === id)!;
+
   return (
-    <section className="min-h-screen flex flex-col items-center overflow-x-hidden px-4 pt-24">
+    <section className="min-h-screen flex flex-col items-center overflow-x-hidden px-4 pt-16 sm:pt-24">
 
       {/* ── Intro text — staged reveal ── */}
       <div className="text-center mb-4 max-w-xl">
@@ -170,18 +216,15 @@ export default function MindMap() {
       {/* ── SVG mind map ── */}
       <div className={`w-full max-w-5xl flex-1 transition-all duration-1000 delay-300 ${stage >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
         <svg
-          viewBox={`0 0 ${VW} ${VH}`}
+          viewBox={`0 0 ${L.vw} ${L.vh}`}
           className="w-full h-auto"
           aria-label="Mind map of Jeremy Hua's experiences"
         >
           <defs>
-            {/* Glow filter */}
             <filter id="mm-glow" x="-60%" y="-60%" width="220%" height="220%">
               <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
               <feComposite in="SourceGraphic" in2="blur" operator="over" />
             </filter>
-
-            {/* Arrowhead marker — inward-pointing chevron */}
             <marker id="arr-in" markerWidth="7" markerHeight="7"
               refX="3" refY="3.5" orient="auto">
               <polyline points="0,1 3.5,3.5 0,6"
@@ -209,7 +252,6 @@ export default function MindMap() {
                     opacity={hovered ? (isLit ? 0.45 : 0.05) : 0.18}
                   />
                 ) : (
-                  /* Primary edge with midpoint inward arrowhead */
                   <path
                     d={`M ${to.cx} ${to.cy} L ${mid.x} ${mid.y} L ${from.cx} ${from.cy}`}
                     style={{ stroke: "hsl(var(--edge))", transition: "opacity 0.3s" }}
@@ -220,7 +262,6 @@ export default function MindMap() {
                   />
                 )}
 
-                {/* Animated dash on primary edges — flows inward */}
                 {!edge.cross && (
                   <line
                     x1={from.cx} y1={from.cy} x2={to.cx} y2={to.cy}
@@ -239,16 +280,15 @@ export default function MindMap() {
           })}
 
           {/* ── Connector word nodes ── */}
-          {CONNECTOR_NODES.map((cn) => {
+          {L.connectors.map((cn) => {
             const hw = pillHalfW(cn.word);
             return (
               <g key={cn.id} style={{ pointerEvents: "none" }}>
-                {/* Fully opaque background — always blocks the edge line behind it */}
                 <rect x={cn.cx - hw} y={cn.cy - 9} width={hw * 2} height={17} rx={8.5}
                   fill="hsl(var(--background))" opacity="1" />
-                {/* Only the text fades, not the background */}
                 <text x={cn.cx} y={cn.cy + 4.5} textAnchor="middle"
-                  fontSize="8.5" fontFamily="Newsreader, serif" fontStyle="italic"
+                  fontSize={isMobile ? 10 : 8.5}
+                  fontFamily="Newsreader, serif" fontStyle="italic"
                   fill="hsl(var(--muted-foreground))"
                   opacity={hovered ? 0.2 : 0.8}
                   style={{ transition: "opacity 0.35s" }}
@@ -268,10 +308,10 @@ export default function MindMap() {
             const tipY = node.cy + node.tipDy;
             const TW = 215;
             const TH = 145;
+            const labelFs = baseLabelFontSize(node.label) * L.labelFontMultiplier;
 
             return (
               <g key={node.id}>
-                {/* Breathing pulse ring */}
                 {!isHov && (
                   <g opacity={isDimmed ? 0.2 : 1} style={{ transition: "opacity 0.4s" }}>
                     <circle cx={node.cx} cy={node.cy} r={node.r + 4}
@@ -286,14 +326,12 @@ export default function MindMap() {
                   </g>
                 )}
 
-                {/* Hover glow */}
                 {isHov && (
                   <circle cx={node.cx} cy={node.cy} r={node.r + 20}
                     fill="none" stroke="hsl(var(--highlight))"
                     strokeWidth="1.4" opacity="0.30" filter="url(#mm-glow)" />
                 )}
 
-                {/* Main circle */}
                 <circle
                   cx={node.cx} cy={node.cy} r={node.r}
                   fill="hsl(var(--surface-warm))"
@@ -307,9 +345,8 @@ export default function MindMap() {
                   onClick={() => scrollTo(node.href)}
                 />
 
-                {/* Label */}
                 <text x={node.cx} y={node.cy - 5} textAnchor="middle"
-                  fontSize={labelFontSize(node.label)}
+                  fontSize={labelFs}
                   fontFamily="DM Sans, sans-serif" fontWeight="600"
                   fill="hsl(var(--foreground))"
                   opacity={isDimmed ? 0.22 : isHov ? 1 : 0.88}
@@ -317,8 +354,9 @@ export default function MindMap() {
                   style={{ transition: "opacity 0.25s" }}>
                   {node.label}
                 </text>
-                <text x={node.cx} y={node.cy + 10} textAnchor="middle"
-                  fontSize="8" fontFamily="DM Sans, sans-serif" fontWeight="400"
+                <text x={node.cx} y={node.cy + (isMobile ? 14 : 10)} textAnchor="middle"
+                  fontSize={L.subtitleFontSize}
+                  fontFamily="DM Sans, sans-serif" fontWeight="400"
                   fill="hsl(var(--muted-foreground))"
                   opacity={isDimmed ? 0.15 : isHov ? 1 : 0.70}
                   className="pointer-events-none select-none"
@@ -326,8 +364,8 @@ export default function MindMap() {
                   {node.subtitle.split("·")[0].trim()}
                 </text>
 
-                {/* Tooltip card */}
-                {isHov && (
+                {/* Tooltip card — desktop only (touch devices tap directly) */}
+                {isHov && !isMobile && (
                   <foreignObject x={tipX} y={tipY} width={TW} height={TH}
                     style={{ overflow: "visible" }}>
                     <div style={{
@@ -368,54 +406,51 @@ export default function MindMap() {
             onMouseLeave={() => setRootHovered(false)}
             onClick={() => scrollTo("#proof")}
           >
-            {/* Outer ripple */}
-            <circle cx={ROOT.cx} cy={ROOT.cy} r={ROOT.r + 10}
+            <circle cx={L.root.cx} cy={L.root.cy} r={L.root.r + 10}
               fill="none" stroke="hsl(var(--highlight))" strokeWidth="1">
               <animate attributeName="r"
-                values={`${ROOT.r + 8};${ROOT.r + 26};${ROOT.r + 8}`}
+                values={`${L.root.r + 8};${L.root.r + 26};${L.root.r + 8}`}
                 dur="4.5s" repeatCount="indefinite" />
               <animate attributeName="opacity"
                 values="0.26;0.04;0.26" dur="4.5s" repeatCount="indefinite" />
             </circle>
-            {/* Inner ripple */}
-            <circle cx={ROOT.cx} cy={ROOT.cy} r={ROOT.r + 4}
+            <circle cx={L.root.cx} cy={L.root.cy} r={L.root.r + 4}
               fill="none" stroke="hsl(var(--highlight))" strokeWidth="1.3">
               <animate attributeName="r"
-                values={`${ROOT.r + 2};${ROOT.r + 14};${ROOT.r + 2}`}
+                values={`${L.root.r + 2};${L.root.r + 14};${L.root.r + 2}`}
                 dur="4.5s" begin="0.9s" repeatCount="indefinite" />
               <animate attributeName="opacity"
                 values="0.36;0.07;0.36" dur="4.5s" begin="0.9s" repeatCount="indefinite" />
             </circle>
 
-            {/* Hover glow */}
             {rootHovered && (
-              <circle cx={ROOT.cx} cy={ROOT.cy} r={ROOT.r + 22}
+              <circle cx={L.root.cx} cy={L.root.cy} r={L.root.r + 22}
                 fill="none" stroke="hsl(var(--highlight))"
                 strokeWidth="1.6" opacity="0.26" filter="url(#mm-glow)" />
             )}
 
-            {/* Fill */}
-            <circle cx={ROOT.cx} cy={ROOT.cy} r={ROOT.r}
+            <circle cx={L.root.cx} cy={L.root.cy} r={L.root.r}
               fill="hsl(var(--surface-warm))"
               stroke="hsl(var(--highlight))"
               strokeWidth={rootHovered ? 2.8 : 2.2}
               style={{ transition: "stroke-width 0.2s" }} />
 
-            {/* Name */}
-            <text x={ROOT.cx} y={ROOT.cy - 10} textAnchor="middle"
-              fontSize="16" fontFamily="DM Sans, sans-serif" fontWeight="700"
+            <text x={L.root.cx} y={L.root.cy - 10} textAnchor="middle"
+              fontSize={L.rootFontSize}
+              fontFamily="DM Sans, sans-serif" fontWeight="700"
               fill="hsl(var(--foreground))" className="select-none">
               Jeremy
             </text>
-            <text x={ROOT.cx} y={ROOT.cy + 9} textAnchor="middle"
-              fontSize="16" fontFamily="DM Sans, sans-serif" fontWeight="700"
+            <text x={L.root.cx} y={L.root.cy + (isMobile ? 12 : 9)} textAnchor="middle"
+              fontSize={L.rootFontSize}
+              fontFamily="DM Sans, sans-serif" fontWeight="700"
               fill="hsl(var(--foreground))" className="select-none">
               Hua
             </text>
 
-            {/* scroll hint */}
-            <text x={ROOT.cx} y={ROOT.cy + 28} textAnchor="middle"
-              fontSize="8" fontFamily="DM Sans, sans-serif" fontWeight="400"
+            <text x={L.root.cx} y={L.root.cy + (isMobile ? 36 : 28)} textAnchor="middle"
+              fontSize={L.rootHintFontSize}
+              fontFamily="DM Sans, sans-serif" fontWeight="400"
               letterSpacing="0.14em"
               fill="hsl(var(--highlight))"
               opacity={rootHovered ? 0.9 : 0.5}
@@ -436,7 +471,7 @@ export default function MindMap() {
       `}</style>
       <div className={`flex flex-col items-center gap-2 pt-1 pb-10 pointer-events-none transition-all duration-700 delay-500 ${stage >= 3 ? "opacity-100" : "opacity-0"}`}>
         <p className="text-[9px] tracking-[0.22em] uppercase text-muted-foreground/60 font-heading">
-          hover a node · scroll to go deeper
+          {isMobile ? "tap a node · scroll to go deeper" : "hover a node · scroll to go deeper"}
         </p>
         <div className="w-px h-7"
           style={{ background: "linear-gradient(to bottom, transparent, hsl(var(--edge)))" }} />
