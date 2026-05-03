@@ -90,6 +90,10 @@ export const content = {
       title: "Same problem, different surface",
       body: "A coffee, a seat, a purchase request. Simple on top, full of coordination, data tradeoffs, and misaligned incentives underneath.\n\nThe companies look different. The problem is the same.",
     },
+    proofIntro: {
+      label: "Proof · patterns",
+      body: "Same problem, different surface. Off the clock, the feedback gets faster.",
+    },
     stories: [
       {
         id: "proof-band",
@@ -122,6 +126,7 @@ export const content = {
         intro:
           "Courts, trails, ice, water, tables. Different rules, same appetite for testing things.",
         body: "Skiing, basketball, ultimate, track, table tennis, hockey, surfing, pool. They taught me timing, space, and the gap between intention and execution under pressure.\n\nGames with visible rules, where proof is immediate and humbling.\n\nI built a microgreens farm, small-scale agriculture with fast feedback loops. Seed to harvest in under two weeks. A tiny system where inputs, environment, and timing all compound visibly.\n\nI also got curious about social media, wanted to understand how attention works. Posted 200 times, amassed 7M+ views. The algorithm is its own system with its own physics.",
+        closer: "Tight loops teach faster than theory.",
         stat: "7M+",
         statLabel: "views · 200 posts",
         imageCount: 2,

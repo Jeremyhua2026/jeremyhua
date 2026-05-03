@@ -214,6 +214,17 @@ export default function Proof() {
           </div>
         </div>
 
+        {/* Transition into the Proof half */}
+        <div className="max-w-2xl mx-auto mt-4 mb-12">
+          <div className="divider-accent mb-8" />
+          <span className="text-[10px] tracking-[0.2em] uppercase text-highlight font-heading">
+            {content.proof.proofIntro.label}
+          </span>
+          <p className="text-base text-foreground/80 leading-relaxed mt-3 max-w-xl">
+            {content.proof.proofIntro.body}
+          </p>
+        </div>
+
         {/* Stories */}
         <div className="space-y-16">
           {content.proof.stories.map((story, i) => (
