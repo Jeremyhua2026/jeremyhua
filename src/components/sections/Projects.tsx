@@ -7,21 +7,27 @@ function ProjectCard({
   item: (typeof content.projects.items)[number];
 }) {
   const { ref, visible } = useFadeIn();
+  const href = "href" in item ? (item as { href?: string }).href : undefined;
+  const isExternal = href?.startsWith("http");
 
-  return (
-    <div
-      ref={ref}
-      className={`group relative rounded-xl border border-border/60 bg-card/40 p-7 transition-all duration-700 hover:border-highlight/40 hover:shadow-sm ${
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-      }`}
-    >
+  const cardClasses = `group relative rounded-xl border border-border/60 bg-card/40 p-7 transition-all duration-700 hover:border-highlight/40 hover:shadow-sm ${
+    visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+  } ${href ? "cursor-pointer" : ""}`;
+
+  const inner = (
+    <>
       <span className="inline-flex items-center gap-1.5 text-[9px] tracking-[0.18em] uppercase font-heading text-highlight/70 mb-5">
         <span className="w-1.5 h-1.5 rounded-full bg-highlight/60 animate-pulse" />
         {item.status}
       </span>
 
-      <h3 className="text-xl font-heading font-semibold text-foreground mb-3 leading-snug">
+      <h3 className="text-xl font-heading font-semibold text-foreground mb-3 leading-snug flex items-center gap-1.5">
         {item.title}
+        {href && (
+          <span aria-hidden className="text-highlight/60 text-base transition-transform group-hover:translate-x-0.5">
+            {isExternal ? "↗" : "→"}
+          </span>
+        )}
       </h3>
 
       <p className="text-sm text-muted-foreground leading-relaxed mb-5">
@@ -38,6 +44,26 @@ function ProjectCard({
           </span>
         ))}
       </div>
+    </>
+  );
+
+  if (href) {
+    return (
+      <a
+        ref={ref as React.RefObject<HTMLAnchorElement>}
+        href={href}
+        target={isExternal ? "_blank" : undefined}
+        rel={isExternal ? "noopener noreferrer" : undefined}
+        className={`${cardClasses} block no-underline`}
+      >
+        {inner}
+      </a>
+    );
+  }
+
+  return (
+    <div ref={ref} className={cardClasses}>
+      {inner}
     </div>
   );
 }

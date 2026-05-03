@@ -1,0 +1,2594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio Risk Intelligence</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:            #F5F1EA;
+      --bg-subtle:     #EDE9E1;
+      --surface:       #FDFBF7;
+      --surface-hover: #F0EDE6;
+      --border:        #D8D2C6;
+      --border-light:  #C8C2B6;
+      --text-primary:  #111110;
+      --text-secondary:#5A5650;
+      --text-muted:    #8A8680;
+      --accent:        #2A5E3A;
+      --accent-light:  #EBF3EE;
+      --accent-glow:   rgba(42,94,58,0.12);
+      --amber:         #8A6020;
+      --amber-light:   #F6EFE3;
+      --rose:          #8A3030;
+      --rose-light:    #F6E8E8;
+      --blue:          #2A4A7A;
+      --blue-light:    #E8EEF8;
+      --shadow-sm:     0 1px 4px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);
+      --shadow-md:     0 2px 8px rgba(0,0,0,0.06), 0 8px 28px rgba(0,0,0,0.06);
+      --shadow-card:   0 1px 3px rgba(0,0,0,0.04), 0 6px 20px rgba(0,0,0,0.05);
+      --radius-card:   20px;
+      --radius-inner:  12px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ────────────────────── NAV ────────────────────── */
+    .top-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      padding: 0 32px;
+      height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(245,241,234,0.88); backdrop-filter: blur(16px) saturate(1.4);
+      border-bottom: 1px solid rgba(216,210,198,0.6);
+    }
+    .nav-brand {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700; font-size: 14px; color: var(--text-primary);
+      cursor: pointer; text-decoration: none; letter-spacing: -0.01em;
+    }
+    .nav-brand-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent); box-shadow: 0 0 10px var(--accent-glow);
+    }
+    .nav-tag {
+      font-size: 11px; color: var(--text-muted);
+      background: var(--bg-subtle); border: 1px solid var(--border);
+      padding: 3px 10px; border-radius: 20px; letter-spacing: 0.02em;
+    }
+
+    /* ────────────────────── LANDING ────────────────────── */
+    .landing {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative; overflow: hidden;
+    }
+
+    /* Decorative background orb */
+    .landing::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(42,94,58,0.065) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -60%);
+      pointer-events: none;
+    }
+
+    .landing-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; color: var(--accent);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 28px;
+      position: relative;
+    }
+    .landing-eyebrow::before,
+    .landing-eyebrow::after {
+      content: '';
+      display: inline-block;
+      width: 24px; height: 1px;
+      background: var(--accent); opacity: 0.45;
+    }
+
+    .badge-dot {
+      width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+      animation: blink 2.5s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+    .landing h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(48px, 7.5vw, 84px);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      max-width: 680px;
+      margin-bottom: 26px;
+      position: relative;
+    }
+    .landing h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .landing-rule {
+      width: 48px; height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      margin: 0 auto 28px;
+      border-radius: 2px;
+    }
+
+    .landing .subtitle {
+      font-size: 17px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      max-width: 460px;
+      margin-bottom: 48px;
+      line-height: 1.75;
+    }
+
+    .landing-cta {
+      display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+      margin-bottom: 64px;
+    }
+
+    .btn-primary {
+      background: var(--accent); color: #fff; border: none;
+      padding: 15px 36px; font-size: 14px; font-weight: 600;
+      border-radius: 10px; cursor: pointer; font-family: inherit;
+      letter-spacing: 0.01em;
+      box-shadow: 0 2px 8px var(--accent-glow), 0 0 0 0 var(--accent-glow);
+      transition: all 0.2s;
+    }
+    .btn-primary:hover {
+      background: #1E4829;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(42,94,58,0.25);
+    }
+    .btn-secondary {
+      background: var(--surface); color: var(--text-primary);
+      border: 1px solid var(--border); padding: 14px 28px;
+      font-size: 14px; font-weight: 500; border-radius: 10px;
+      cursor: pointer; font-family: inherit; transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-light);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Feature grid on landing */
+    .landing-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      max-width: 680px;
+      width: 100%;
+    }
+    .landing-feature {
+      background: var(--surface);
+      padding: 20px 18px;
+      display: flex; flex-direction: column; align-items: flex-start;
+      text-align: left; gap: 6px;
+    }
+    .landing-feature-icon {
+      font-size: 18px; margin-bottom: 2px;
+    }
+    .landing-feature-label {
+      font-size: 13px; font-weight: 600; color: var(--text-primary);
+      line-height: 1.3;
+    }
+    .landing-feature-desc {
+      font-size: 11px; color: var(--text-muted); line-height: 1.4;
+    }
+
+    /* ── Upload Screen ── */
+    .screen {
+      min-height: 100vh; padding: 100px 24px 64px;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .screen-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(26px, 4vw, 36px); font-weight: 400;
+      letter-spacing: -0.02em;
+      text-align: center; margin-bottom: 10px; line-height: 1.1;
+    }
+    .screen-sub {
+      font-size: 15px; color: var(--text-secondary); text-align: center;
+      margin-bottom: 36px; max-width: 400px; line-height: 1.7;
+    }
+    .upload-area {
+      width: 100%; max-width: 560px;
+      border: 1.5px dashed var(--border); border-radius: 18px;
+      background: var(--surface); padding: 44px 32px;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; cursor: pointer; transition: all 0.2s; gap: 8px;
+      position: relative;
+      box-shadow: var(--shadow-sm);
+    }
+    .upload-area:hover { border-color: var(--border-light); box-shadow: var(--shadow-md); }
+    .upload-area.drag { border-color: var(--accent); background: var(--accent-light); box-shadow: 0 0 0 4px var(--accent-glow); }
+    .upload-area .drop-icon { font-size: 38px; margin-bottom: 8px; }
+    .upload-area .drop-label { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+    .upload-area .drop-sub { font-size: 13px; color: var(--text-muted); }
+    .upload-area .drop-link { color: var(--accent); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+    .upload-area input[type=file] { display: none; }
+
+    .file-list { width: 100%; max-width: 560px; margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+    .file-pill {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 12px 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .file-pill-icon { font-size: 18px; }
+    .file-pill-name { font-size: 13px; font-weight: 600; flex: 1; }
+    .file-pill-size { font-size: 12px; color: var(--text-muted); }
+    .file-pill-remove {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--bg-subtle); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 11px; color: var(--text-muted);
+      transition: all 0.15s; flex-shrink: 0;
+    }
+    .file-pill-remove:hover { background: var(--rose-light); color: var(--rose); border-color: var(--rose); }
+
+    .broker-chips {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: 10px; justify-content: center;
+    }
+    .broker-chip {
+      font-size: 11px; font-weight: 500; color: var(--text-muted);
+      background: var(--bg-subtle); border: 1px solid var(--border);
+      border-radius: 6px; padding: 3px 10px; letter-spacing: 0.01em;
+    }
+
+    .upload-actions {
+      display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap;
+      justify-content: center; width: 100%; max-width: 560px;
+    }
+    .upload-actions .btn-primary { flex: 1; min-width: 160px; }
+    .upload-actions .btn-secondary { flex: 1; min-width: 140px; }
+
+    /* ── Processing ── */
+    .processing-screen {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; padding: 100px 24px;
+      text-align: center;
+    }
+    .processing-ring {
+      position: relative; width: 64px; height: 64px; margin: 0 auto 32px;
+    }
+    .processing-ring svg { animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .processing-spinner {
+      width: 52px; height: 52px; border-radius: 50%;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      animation: spin 0.9s linear infinite; margin: 0 auto 28px;
+    }
+    .processing-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 28px; font-weight: 400; margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+    .processing-step { font-size: 14px; color: var(--text-secondary); margin-bottom: 36px; }
+    .processing-log {
+      width: 100%; max-width: 380px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .log-item {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 13px; color: var(--text-muted); text-align: left;
+      padding: 8px 14px; border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .log-item.done { color: var(--accent); background: var(--accent-light); }
+    .log-item.active { color: var(--text-primary); font-weight: 500; background: var(--bg-subtle); }
+    .log-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+    .log-item.done .log-dot { background: var(--accent); }
+    .log-item.active .log-dot { background: var(--accent); animation: blink 1s ease-in-out infinite; }
+
+    /* ── Results Layout ── */
+    .results-screen { padding: 84px 0 100px; }
+    .results-container { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Portfolio Hero ── */
+    .portfolio-hero {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-card); padding: 32px 36px; margin-bottom: 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 24px;
+      box-shadow: var(--shadow-card);
+    }
+    .portfolio-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(40px, 6vw, 56px);
+      font-weight: 400; letter-spacing: -0.02em; line-height: 1;
+    }
+    .portfolio-value-label {
+      font-size: 12px; color: var(--text-muted); margin-top: 6px;
+      letter-spacing: 0.03em; text-transform: uppercase; font-weight: 500;
+    }
+    .portfolio-meta { display: flex; gap: 28px; flex-wrap: wrap; }
+    .portfolio-meta-item { text-align: center; }
+    .portfolio-meta-item .val {
+      font-family: 'DM Serif Display', serif;
+      font-size: 24px; font-weight: 400; letter-spacing: -0.02em;
+    }
+    .portfolio-meta-item .lbl { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+
+    /* ── Risk flags ── */
+    .risk-flags { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+    .risk-flag {
+      display: flex; align-items: flex-start; gap: 16px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 18px 20px;
+      border-left: 3px solid var(--border);
+    }
+    .risk-flag.high { border-left-color: var(--rose); background: #FDF9F9; }
+    .risk-flag.medium { border-left-color: var(--amber); background: #FDFAF5; }
+    .risk-flag.good { border-left-color: var(--accent); background: var(--accent-light); }
+    .risk-flag-icon { font-size: 17px; flex-shrink: 0; margin-top: 2px; }
+    .risk-flag-body { flex: 1; }
+    .risk-flag-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.01em; }
+    .risk-flag.high .risk-flag-title { color: var(--rose); }
+    .risk-flag.medium .risk-flag-title { color: var(--amber); }
+    .risk-flag.good .risk-flag-title { color: var(--accent); }
+    .risk-flag-detail { font-size: 13px; color: var(--text-secondary); line-height: 1.55; }
+
+    /* ── Section cards ── */
+    .section-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-card); padding: 28px 32px; margin-bottom: 24px;
+      box-shadow: var(--shadow-card);
+    }
+    .section-header {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--bg-subtle);
+    }
+    .section-icon {
+      width: 34px; height: 34px; border-radius: 10px;
+      background: var(--bg-subtle); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center; font-size: 15px;
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 19px; font-weight: 400; letter-spacing: -0.01em;
+    }
+    .section-subtitle { font-size: 12px; color: var(--text-muted); margin-left: auto; }
+
+    /* ── Two-col layout ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+    @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── Donut chart ── */
+    .donut-wrap { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+    .donut-svg-wrap { flex-shrink: 0; position: relative; width: 148px; height: 148px; }
+    .donut-center {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      text-align: center; pointer-events: none;
+    }
+    .donut-center-pct {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px; font-weight: 400; line-height: 1;
+    }
+    .donut-center-lbl { font-size: 10px; color: var(--text-muted); line-height: 1.3; margin-top: 3px; letter-spacing: 0.03em; text-transform: uppercase; }
+    .donut-legend { flex: 1; display: flex; flex-direction: column; gap: 8px; min-width: 120px; }
+    .legend-row { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .legend-label { flex: 1; color: var(--text-secondary); }
+    .legend-pct { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+    /* ── Horizontal bars ── */
+    .hbar-list { display: flex; flex-direction: column; gap: 12px; }
+    .hbar-row { }
+    .hbar-meta { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 5px; }
+    .hbar-label { color: var(--text-secondary); }
+    .hbar-pct { font-weight: 600; }
+    .hbar-track {
+      height: 6px; background: var(--bg-subtle); border-radius: 4px;
+      position: relative; overflow: hidden;
+    }
+    .hbar-fill { height: 100%; border-radius: 4px; transition: width 0.7s cubic-bezier(.4,0,.2,1); }
+    .hbar-benchmark {
+      position: absolute; top: 0; bottom: 0; width: 1.5px;
+      background: var(--text-muted); opacity: 0.45;
+    }
+
+    /* ── Overlap cards ── */
+    .overlap-list { display: flex; flex-direction: column; gap: 10px; }
+    .overlap-row {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 16px; background: var(--bg-subtle);
+      border-radius: 12px; border: 1px solid var(--border);
+    }
+    .overlap-symbol { font-size: 14px; font-weight: 700; min-width: 60px; }
+    .overlap-body { flex: 1; }
+    .overlap-bar-track {
+      height: 5px; background: var(--border); border-radius: 3px;
+      margin-top: 5px; overflow: hidden;
+    }
+    .overlap-bar-fill { height: 100%; border-radius: 3px; background: var(--accent); }
+    .overlap-sources { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+    .overlap-pct {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px; font-weight: 400; color: var(--accent); min-width: 48px; text-align: right;
+    }
+
+    /* ── Holdings table ── */
+    .holdings-table { width: 100%; border-collapse: collapse; }
+    .holdings-table th {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--text-muted);
+      padding: 0 0 12px; text-align: left; border-bottom: 1px solid var(--border);
+    }
+    .holdings-table th:last-child, .holdings-table td:last-child { text-align: right; }
+    .holdings-table td {
+      font-size: 13px; padding: 13px 0; border-bottom: 1px solid var(--bg-subtle);
+      vertical-align: middle;
+    }
+    .holdings-table tr:last-child td { border-bottom: none; }
+    .holding-symbol { font-weight: 700; font-size: 13px; }
+    .holding-name { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+    .holding-tag {
+      display: inline-block; font-size: 9px; font-weight: 700;
+      padding: 2px 7px; border-radius: 4px;
+      text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .tag-us { background: #E8F3EE; color: #2A5E3A; }
+    .tag-ca { background: #FDECEA; color: #C41E3A; }
+    .tag-eu { background: #E8EEF8; color: #2A4A7A; }
+    .tag-int { background: #F3EEE8; color: #6A4A20; }
+    .tag-em { background: #FDF0E8; color: #9A4820; }
+    .tag-other { background: var(--bg-subtle); color: var(--text-muted); }
+    .holding-value { font-weight: 600; font-variant-numeric: tabular-nums; }
+    .holding-weight { font-size: 12px; color: var(--text-muted); }
+
+    /* ── Flag section label ── */
+    .flags-section-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 10px;
+      margin-top: 4px;
+    }
+
+    /* ── Currency bars ── */
+    .currency-list { display: flex; flex-direction: column; gap: 10px; }
+    .currency-row { display: flex; align-items: center; gap: 12px; font-size: 13px; }
+    .currency-code { font-weight: 700; min-width: 40px; font-size: 14px; }
+    .currency-bar-wrap { flex: 1; }
+    .currency-bar-track { height: 7px; background: var(--bg-subtle); border-radius: 4px; overflow: hidden; }
+    .currency-bar-fill { height: 100%; border-radius: 4px; }
+    .currency-pct { font-weight: 700; min-width: 44px; text-align: right; }
+    .currency-value { font-size: 12px; color: var(--text-muted); min-width: 90px; text-align: right; }
+
+    /* ── Reset link ── */
+    .reset-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; color: var(--text-muted); cursor: pointer;
+      text-decoration: underline; text-underline-offset: 3px; margin-top: 36px;
+    }
+    .reset-link:hover { color: var(--text-secondary); }
+
+    /* ── Unknown-ticker warning ── */
+    .parse-note {
+      font-size: 12px; color: var(--text-muted);
+      background: var(--bg-subtle); border: 1px solid var(--border);
+      border-radius: 8px; padding: 8px 12px; margin-top: 12px;
+    }
+
+    /* ── Home currency selector (legacy, kept for compat) ── */
+    .currency-selector {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 24px;
+      font-size: 13px; color: var(--text-secondary);
+    }
+    .currency-selector select {
+      font-size: 13px; font-family: inherit; font-weight: 600;
+      border: 1px solid var(--border); background: var(--surface);
+      padding: 4px 10px; border-radius: 8px; cursor: pointer; color: var(--text-primary);
+    }
+
+    .fade-in { animation: fadeIn 0.45s ease forwards; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── Manual entry ── */
+    .manual-entry { width: 100%; max-width: 560px; margin-top: 16px; }
+    .manual-entry textarea {
+      width: 100%; font-family: 'Inter', monospace; font-size: 13px;
+      padding: 14px 16px; border: 1px solid var(--border);
+      background: var(--surface); border-radius: 12px;
+      resize: vertical; min-height: 100px; color: var(--text-primary);
+      line-height: 1.7;
+    }
+    .manual-entry textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+    .manual-hint { font-size: 12px; color: var(--text-muted); margin-top: 6px; line-height: 1.5; }
+
+    /* ── Risk Score Card ── */
+    .risk-grade-circle {
+      width: 88px; height: 88px; border-radius: 50%; flex-shrink: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      border: 2.5px solid currentColor;
+      background: transparent;
+    }
+    .risk-grade-letter {
+      font-family: 'DM Serif Display', serif;
+      font-size: 42px; font-weight: 400; line-height: 1;
+    }
+    .risk-grade-score { font-size: 10px; opacity: 0.6; margin-top: 2px; font-weight: 600; letter-spacing: 0.04em; }
+    .grade-a { color: var(--accent); }
+    .grade-b { color: #3A7A3A; }
+    .grade-c { color: var(--amber); }
+    .grade-d, .grade-f { color: var(--rose); }
+
+    /* ── Quick stats strip ── */
+    .quick-stats {
+      display: flex; flex-wrap: wrap;
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border);
+      margin-bottom: 24px; overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+    .quick-stat {
+      flex: 1; min-width: 110px; padding: 20px 20px; text-align: center;
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+    .quick-stat:last-child { border-right: none; }
+    .quick-stat-val {
+      font-family: 'DM Serif Display', serif;
+      font-size: 24px; font-weight: 400; letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .quick-stat-lbl {
+      font-size: 10px; color: var(--text-muted); margin-top: 5px;
+      text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600;
+    }
+
+    /* ── Currency selector ── */
+    .ccy-selector {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; color: var(--text-secondary); margin-bottom: 24px;
+    }
+    .ccy-selector select {
+      font-size: 13px; font-weight: 600; font-family: inherit;
+      border: 1px solid var(--border); background: var(--surface);
+      padding: 6px 12px; border-radius: 8px; cursor: pointer; color: var(--text-primary);
+    }
+    .fx-live {
+      font-size: 10px; font-weight: 700; color: var(--accent);
+      background: var(--accent-light); padding: 3px 10px; border-radius: 10px;
+      letter-spacing: 0.04em; text-transform: uppercase;
+    }
+
+    /* ── Export button ── */
+    .btn-export {
+      display: inline-flex; align-items: center; gap: 7px; font-size: 13px;
+      font-weight: 600; font-family: inherit; border: 1px solid var(--border);
+      background: var(--surface); padding: 8px 16px; border-radius: 9px;
+      cursor: pointer; color: var(--text-secondary); transition: all 0.15s;
+    }
+    .btn-export:hover { background: var(--surface-hover); color: var(--text-primary); }
+
+    /* ── ETF warnings ── */
+    .etf-warning {
+      display: flex; align-items: flex-start; gap: 12px;
+      background: #FDFAF5; border: 1px solid #DDD0B8;
+      border-left: 3px solid var(--amber); border-radius: 12px;
+      padding: 14px 16px; font-size: 13px; color: var(--text-secondary);
+      margin-bottom: 10px; line-height: 1.55;
+    }
+
+    /* ── Treemap ── */
+    .treemap-outer { border-radius: 12px; overflow: hidden; }
+
+    /* ── Responsive ── */
+    @media (max-width: 540px) {
+      .portfolio-hero { flex-direction: column; gap: 20px; }
+      .portfolio-meta { justify-content: flex-start; }
+      .quick-stat { min-width: 80px; padding: 16px 14px; }
+      .two-col { grid-template-columns: 1fr; }
+      .landing-features { grid-template-columns: 1fr 1fr; }
+      .section-card { padding: 22px 20px; }
+    }
+    @media (max-width: 400px) {
+      .landing-features { grid-template-columns: 1fr; }
+    }
+    @media print { .top-nav, .reset-link, .btn-export { display: none; } }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+
+const { useState, useEffect, useRef, useCallback } = React;
+
+// ═══════════════════════════════════════════════════════
+// STATIC DATA — ETFs, Stocks, Geography
+// ═══════════════════════════════════════════════════════
+
+// Geography bucket → display color
+const GEO_COLORS = {
+  'United States': '#2A5E3A',
+  'Canada':        '#C41E3A',
+  'Europe':        '#2A4A7A',
+  'Japan':         '#BC002D',
+  'China':         '#DE2910',
+  'Emerging Markets':'#E07820',
+  'UK':            '#00247D',
+  'Australia':     '#006DAE',
+  'Other Developed':'#5B6E8A',
+  'Other':         '#8A8680',
+  'Global':        '#9A5E3A',
+};
+
+const SECTOR_COLORS = {
+  'Technology':            '#2A5E3A',
+  'Financials':            '#8A6020',
+  'Healthcare':            '#2A4A7A',
+  'Consumer Discretionary':'#7A3A7A',
+  'Industrials':           '#5A6A3A',
+  'Communication Services':'#3A5A8A',
+  'Consumer Staples':      '#3A7A5A',
+  'Energy':                '#8A3030',
+  'Materials':             '#6A5A2A',
+  'Utilities':             '#5A7A8A',
+  'Real Estate':           '#7A5A3A',
+  'Bonds':                 '#6A6A8A',
+  'Other':                 '#8A8680',
+};
+
+const COUNTRY_FLAGS = {
+  'United States':'🇺🇸','Canada':'🇨🇦','UK':'🇬🇧','Germany':'🇩🇪',
+  'France':'🇫🇷','Japan':'🇯🇵','China':'🇨🇳','India':'🇮🇳',
+  'Australia':'🇦🇺','Netherlands':'🇳🇱','Switzerland':'🇨🇭',
+  'Denmark':'🇩🇰','Sweden':'🇸🇪','Taiwan':'🇹🇼','South Korea':'🇰🇷',
+  'Brazil':'🇧🇷','Singapore':'🇸🇬','Europe':'🇪🇺',
+  'Emerging Markets':'🌏','Global':'🌍','Other Developed':'🌐','Other':'🌐',
+};
+
+const LEVERAGED_TICKERS = new Set([
+  'TQQQ','SQQQ','UPRO','SPXU','SPXL','TECL','SOXL','TNA','TZA','LABU','UVXY','TVIX',
+  'HXU.TO','HQU.TO','HSD.TO','HBU.TO','HSU.TO','HGU.TO','HED.TO','HOD.TO',
+]);
+
+// Market benchmark sector weights (global equities, approx 2025/26)
+const SECTOR_BENCHMARK = {
+  'Technology': 0.28, 'Financials': 0.16, 'Healthcare': 0.12,
+  'Consumer Discretionary': 0.10, 'Industrials': 0.10,
+  'Communication Services': 0.08, 'Consumer Staples': 0.06,
+  'Energy': 0.04, 'Materials': 0.04, 'Utilities': 0.03, 'Real Estate': 0.03,
+};
+
+// ETF database — geography (look-through weights) + sector weights + top stock overlaps
+const ETF_DATA = {
+  // ─── US Broad Market ───
+  'SPY':  { name:'SPDR S&P 500 ETF', currency:'USD', type:'etf',
+    geo:{'United States':1.0},
+    sectors:{'Technology':0.31,'Financials':0.14,'Healthcare':0.13,'Consumer Discretionary':0.10,'Industrials':0.09,'Communication Services':0.09,'Consumer Staples':0.06,'Energy':0.04,'Materials':0.02,'Utilities':0.02,'Real Estate':0.02},
+    topHoldings:{'AAPL':0.070,'MSFT':0.065,'NVDA':0.060,'AMZN':0.036,'META':0.025,'GOOGL':0.020,'GOOG':0.019,'BRK.B':0.017,'TSLA':0.017,'AVGO':0.017} },
+  'VOO':  { name:'Vanguard S&P 500 ETF', currency:'USD', type:'etf',
+    geo:{'United States':1.0},
+    sectors:{'Technology':0.31,'Financials':0.14,'Healthcare':0.13,'Consumer Discretionary':0.10,'Industrials':0.09,'Communication Services':0.09,'Consumer Staples':0.06,'Energy':0.04,'Materials':0.02,'Utilities':0.02,'Real Estate':0.02},
+    topHoldings:{'AAPL':0.070,'MSFT':0.065,'NVDA':0.060,'AMZN':0.036,'META':0.025,'GOOGL':0.020,'GOOG':0.019,'BRK.B':0.017,'TSLA':0.017,'AVGO':0.017} },
+  'IVV':  { name:'iShares Core S&P 500 ETF', currency:'USD', type:'etf',
+    geo:{'United States':1.0},
+    sectors:{'Technology':0.31,'Financials':0.14,'Healthcare':0.13,'Consumer Discretionary':0.10,'Industrials':0.09,'Communication Services':0.09,'Consumer Staples':0.06,'Energy':0.04,'Materials':0.02,'Utilities':0.02,'Real Estate':0.02},
+    topHoldings:{'AAPL':0.070,'MSFT':0.065,'NVDA':0.060,'AMZN':0.036,'META':0.025,'GOOGL':0.020,'GOOG':0.019,'BRK.B':0.017,'TSLA':0.017,'AVGO':0.017} },
+  'VTI':  { name:'Vanguard Total Stock Market ETF', currency:'USD', type:'etf',
+    geo:{'United States':1.0},
+    sectors:{'Technology':0.29,'Financials':0.14,'Healthcare':0.13,'Consumer Discretionary':0.10,'Industrials':0.10,'Communication Services':0.09,'Consumer Staples':0.06,'Energy':0.04,'Materials':0.03,'Utilities':0.02,'Real Estate':0.03},
+    topHoldings:{'AAPL':0.063,'MSFT':0.058,'NVDA':0.052,'AMZN':0.033,'META':0.022,'GOOGL':0.019,'GOOG':0.018,'BRK.B':0.016,'TSLA':0.015,'AVGO':0.015} },
+  'QQQ':  { name:'Invesco QQQ Trust (NASDAQ-100)', currency:'USD', type:'etf',
+    geo:{'United States':0.97,'Other':0.03},
+    sectors:{'Technology':0.51,'Communication Services':0.16,'Consumer Discretionary':0.14,'Healthcare':0.07,'Industrials':0.05,'Consumer Staples':0.03,'Other':0.04},
+    topHoldings:{'AAPL':0.089,'MSFT':0.080,'NVDA':0.079,'AMZN':0.052,'META':0.049,'AVGO':0.044,'TSLA':0.032,'COST':0.026,'GOOGL':0.024,'GOOG':0.023} },
+  'QQQM': { name:'Invesco Nasdaq-100 ETF', currency:'USD', type:'etf',
+    geo:{'United States':0.97,'Other':0.03},
+    sectors:{'Technology':0.51,'Communication Services':0.16,'Consumer Discretionary':0.14,'Healthcare':0.07,'Industrials':0.05,'Consumer Staples':0.03,'Other':0.04},
+    topHoldings:{'AAPL':0.089,'MSFT':0.080,'NVDA':0.079,'AMZN':0.052,'META':0.049,'AVGO':0.044,'TSLA':0.032,'COST':0.026,'GOOGL':0.024,'GOOG':0.023} },
+  'IWM':  { name:'iShares Russell 2000 ETF', currency:'USD', type:'etf',
+    geo:{'United States':1.0},
+    sectors:{'Healthcare':0.17,'Industrials':0.18,'Financials':0.17,'Technology':0.14,'Consumer Discretionary':0.12,'Energy':0.06,'Materials':0.04,'Real Estate':0.07,'Other':0.05} },
+  'SCHD': { name:'Schwab US Dividend Equity ETF', currency:'USD', type:'etf',
+    geo:{'United States':1.0},
+    sectors:{'Financials':0.18,'Healthcare':0.15,'Consumer Staples':0.15,'Technology':0.13,'Industrials':0.12,'Energy':0.10,'Communication Services':0.08,'Other':0.09} },
+  'VIG':  { name:'Vanguard Dividend Appreciation ETF', currency:'USD', type:'etf',
+    geo:{'United States':1.0},
+    sectors:{'Technology':0.25,'Financials':0.19,'Healthcare':0.14,'Industrials':0.14,'Consumer Staples':0.09,'Consumer Discretionary':0.08,'Other':0.11} },
+
+  // ─── International ───
+  'VXUS': { name:'Vanguard Total International Stock ETF', currency:'USD', type:'etf',
+    geo:{'Japan':0.14,'UK':0.09,'China':0.08,'Europe':0.28,'Canada':0.06,'Australia':0.05,'Emerging Markets':0.18,'Other Developed':0.12},
+    sectors:{'Financials':0.22,'Technology':0.15,'Industrials':0.14,'Consumer Discretionary':0.10,'Healthcare':0.10,'Consumer Staples':0.08,'Materials':0.06,'Energy':0.05,'Other':0.10} },
+  'EFA':  { name:'iShares MSCI EAFE ETF', currency:'USD', type:'etf',
+    geo:{'Japan':0.22,'Europe':0.45,'UK':0.13,'Australia':0.07,'Other Developed':0.13},
+    sectors:{'Financials':0.23,'Industrials':0.16,'Healthcare':0.13,'Consumer Discretionary':0.11,'Consumer Staples':0.10,'Technology':0.09,'Materials':0.07,'Energy':0.05,'Other':0.06} },
+  'EEM':  { name:'iShares MSCI Emerging Markets ETF', currency:'USD', type:'etf',
+    geo:{'China':0.27,'India':0.19,'Taiwan':0.19,'South Korea':0.12,'Brazil':0.05,'Saudi Arabia':0.04,'Other':0.14},
+    sectors:{'Technology':0.23,'Financials':0.22,'Consumer Discretionary':0.12,'Materials':0.09,'Energy':0.07,'Industrials':0.06,'Communication Services':0.10,'Other':0.11} },
+  'VWO':  { name:'Vanguard FTSE Emerging Markets ETF', currency:'USD', type:'etf',
+    geo:{'China':0.32,'India':0.20,'Taiwan':0.17,'Brazil':0.07,'South Korea':0.04,'Other':0.20},
+    sectors:{'Technology':0.21,'Financials':0.22,'Consumer Discretionary':0.12,'Materials':0.09,'Energy':0.07,'Industrials':0.06,'Communication Services':0.10,'Other':0.13} },
+  'IEMG': { name:'iShares Core MSCI Emerging Markets ETF', currency:'USD', type:'etf',
+    geo:{'China':0.28,'India':0.20,'Taiwan':0.18,'South Korea':0.11,'Brazil':0.06,'Saudi Arabia':0.04,'Other':0.13},
+    sectors:{'Technology':0.22,'Financials':0.22,'Consumer Discretionary':0.12,'Materials':0.09,'Energy':0.07,'Industrials':0.06,'Communication Services':0.10,'Other':0.12} },
+
+  // ─── Canadian All-in-One ETFs ───
+  'XEQT.TO': { name:'iShares Core Equity ETF Portfolio', currency:'CAD', type:'etf',
+    geo:{'United States':0.46,'Canada':0.24,'Europe':0.12,'Japan':0.05,'Emerging Markets':0.08,'Other Developed':0.05},
+    sectors:{'Technology':0.24,'Financials':0.18,'Healthcare':0.11,'Industrials':0.10,'Consumer Discretionary':0.09,'Consumer Staples':0.06,'Communication Services':0.08,'Energy':0.05,'Materials':0.05,'Other':0.04},
+    topHoldings:{'AAPL':0.032,'MSFT':0.030,'NVDA':0.028,'AMZN':0.017,'META':0.012} },
+  'VEQT.TO': { name:'Vanguard All-Equity ETF Portfolio', currency:'CAD', type:'etf',
+    geo:{'United States':0.44,'Canada':0.30,'Europe':0.12,'Japan':0.04,'Emerging Markets':0.07,'Other Developed':0.03},
+    sectors:{'Technology':0.22,'Financials':0.20,'Healthcare':0.11,'Industrials':0.10,'Consumer Discretionary':0.09,'Consumer Staples':0.07,'Communication Services':0.07,'Energy':0.06,'Materials':0.05,'Other':0.03},
+    topHoldings:{'AAPL':0.028,'MSFT':0.026,'NVDA':0.024,'AMZN':0.015,'META':0.010} },
+  'XGRO.TO': { name:'iShares Core Growth ETF Portfolio', currency:'CAD', type:'etf',
+    geo:{'United States':0.38,'Canada':0.20,'Europe':0.10,'Japan':0.04,'Emerging Markets':0.06,'Other Developed':0.04,'Bonds':0.18},
+    sectors:{'Technology':0.20,'Financials':0.17,'Healthcare':0.10,'Industrials':0.09,'Consumer Discretionary':0.08,'Bonds':0.18,'Other':0.18} },
+  'VGRO.TO': { name:'Vanguard Growth ETF Portfolio', currency:'CAD', type:'etf',
+    geo:{'United States':0.38,'Canada':0.25,'Europe':0.10,'Japan':0.04,'Emerging Markets':0.06,'Other Developed':0.03,'Bonds':0.14},
+    sectors:{'Technology':0.19,'Financials':0.18,'Healthcare':0.09,'Industrials':0.09,'Consumer Discretionary':0.08,'Bonds':0.14,'Other':0.23} },
+  'XBAL.TO': { name:'iShares Core Balanced ETF Portfolio', currency:'CAD', type:'etf',
+    geo:{'United States':0.29,'Canada':0.18,'Europe':0.08,'Japan':0.03,'Emerging Markets':0.05,'Bonds':0.37},
+    sectors:{'Technology':0.14,'Financials':0.14,'Healthcare':0.07,'Industrials':0.07,'Consumer Discretionary':0.06,'Bonds':0.37,'Other':0.15} },
+  'VBAL.TO': { name:'Vanguard Balanced ETF Portfolio', currency:'CAD', type:'etf',
+    geo:{'United States':0.28,'Canada':0.20,'Europe':0.08,'Japan':0.03,'Emerging Markets':0.04,'Bonds':0.37},
+    sectors:{'Technology':0.13,'Financials':0.14,'Healthcare':0.06,'Industrials':0.07,'Consumer Discretionary':0.06,'Bonds':0.37,'Other':0.17} },
+
+  // ─── Canadian Equity ETFs ───
+  'XIU.TO': { name:'iShares S&P/TSX 60 ETF', currency:'CAD', type:'etf',
+    geo:{'Canada':1.0},
+    sectors:{'Financials':0.36,'Energy':0.19,'Technology':0.09,'Materials':0.09,'Industrials':0.08,'Consumer Staples':0.05,'Communication Services':0.04,'Real Estate':0.03,'Other':0.07},
+    topHoldings:{'RY.TO':0.12,'TD.TO':0.10,'ENB.TO':0.07,'BNS.TO':0.07,'CNR.TO':0.05,'CP.TO':0.04,'BMO.TO':0.04,'SU.TO':0.04,'CM.TO':0.04,'SHOP.TO':0.03} },
+  'XIC.TO': { name:'iShares Core S&P/TSX Capped Composite ETF', currency:'CAD', type:'etf',
+    geo:{'Canada':1.0},
+    sectors:{'Financials':0.34,'Energy':0.18,'Technology':0.10,'Materials':0.10,'Industrials':0.08,'Consumer Staples':0.05,'Communication Services':0.04,'Real Estate':0.03,'Other':0.08},
+    topHoldings:{'RY.TO':0.10,'TD.TO':0.09,'ENB.TO':0.06,'BNS.TO':0.06,'CNR.TO':0.05,'CP.TO':0.04,'BMO.TO':0.04,'SU.TO':0.04,'CM.TO':0.03,'SHOP.TO':0.03} },
+  'VCN.TO': { name:'Vanguard FTSE Canada All Cap Index ETF', currency:'CAD', type:'etf',
+    geo:{'Canada':1.0},
+    sectors:{'Financials':0.35,'Energy':0.18,'Technology':0.10,'Materials':0.09,'Industrials':0.09,'Consumer Staples':0.05,'Communication Services':0.04,'Real Estate':0.04,'Other':0.06} },
+  'XDV.TO': { name:'iShares Canadian Select Dividend ETF', currency:'CAD', type:'etf',
+    geo:{'Canada':1.0},
+    sectors:{'Financials':0.46,'Energy':0.22,'Communication Services':0.15,'Utilities':0.10,'Other':0.07} },
+  'VDY.TO': { name:'Vanguard FTSE Canadian High Dividend Yield ETF', currency:'CAD', type:'etf',
+    geo:{'Canada':1.0},
+    sectors:{'Financials':0.52,'Energy':0.22,'Communication Services':0.12,'Utilities':0.08,'Other':0.06} },
+
+  // ─── Canadian S&P 500 wrappers ───
+  'ZSP.TO': { name:'BMO S&P 500 Index ETF', currency:'CAD', type:'etf',
+    geo:{'United States':1.0},
+    sectors:{'Technology':0.31,'Financials':0.14,'Healthcare':0.13,'Consumer Discretionary':0.10,'Industrials':0.09,'Communication Services':0.09,'Consumer Staples':0.06,'Energy':0.04,'Materials':0.02,'Utilities':0.02,'Real Estate':0.02},
+    topHoldings:{'AAPL':0.070,'MSFT':0.065,'NVDA':0.060,'AMZN':0.036,'META':0.025} },
+  'VFV.TO': { name:'Vanguard S&P 500 Index ETF (CAD)', currency:'CAD', type:'etf',
+    geo:{'United States':1.0},
+    sectors:{'Technology':0.31,'Financials':0.14,'Healthcare':0.13,'Consumer Discretionary':0.10,'Industrials':0.09,'Communication Services':0.09,'Consumer Staples':0.06,'Energy':0.04,'Materials':0.02,'Utilities':0.02,'Real Estate':0.02},
+    topHoldings:{'AAPL':0.070,'MSFT':0.065,'NVDA':0.060,'AMZN':0.036,'META':0.025} },
+  'HXS.TO': { name:'Horizons S&P 500 Index ETF', currency:'CAD', type:'etf',
+    geo:{'United States':1.0},
+    sectors:{'Technology':0.31,'Financials':0.14,'Healthcare':0.13,'Consumer Discretionary':0.10,'Industrials':0.09,'Communication Services':0.09,'Consumer Staples':0.06,'Energy':0.04,'Other':0.04},
+    topHoldings:{'AAPL':0.070,'MSFT':0.065,'NVDA':0.060,'AMZN':0.036,'META':0.025} },
+  'XQQ.TO': { name:'iShares NASDAQ 100 Index ETF (CAD)', currency:'CAD', type:'etf',
+    geo:{'United States':0.97,'Other':0.03},
+    sectors:{'Technology':0.51,'Communication Services':0.16,'Consumer Discretionary':0.14,'Healthcare':0.07,'Industrials':0.05,'Other':0.07},
+    topHoldings:{'AAPL':0.089,'MSFT':0.080,'NVDA':0.079,'AMZN':0.052,'META':0.049} },
+  'ZQQ.TO': { name:'BMO NASDAQ 100 Equity Hedged to CAD ETF', currency:'CAD', type:'etf',
+    geo:{'United States':0.97,'Other':0.03},
+    sectors:{'Technology':0.51,'Communication Services':0.16,'Consumer Discretionary':0.14,'Healthcare':0.07,'Industrials':0.05,'Other':0.07},
+    topHoldings:{'AAPL':0.089,'MSFT':0.080,'NVDA':0.079,'AMZN':0.052,'META':0.049} },
+
+  // ─── Bonds ───
+  'AGG':     { name:'iShares Core US Aggregate Bond ETF', currency:'USD', type:'bond', geo:{'United States':0.99,'Other':0.01}, sectors:{'Bonds':1.0} },
+  'BND':     { name:'Vanguard Total Bond Market ETF', currency:'USD', type:'bond', geo:{'United States':0.99,'Other':0.01}, sectors:{'Bonds':1.0} },
+  'TLT':     { name:'iShares 20+ Year Treasury Bond ETF', currency:'USD', type:'bond', geo:{'United States':1.0}, sectors:{'Bonds':1.0} },
+  'BNDX':    { name:'Vanguard Total International Bond ETF', currency:'USD', type:'bond', geo:{'Europe':0.38,'Japan':0.18,'Other Developed':0.24,'Emerging Markets':0.20}, sectors:{'Bonds':1.0} },
+  'ZAG.TO':  { name:'BMO Aggregate Bond Index ETF', currency:'CAD', type:'bond', geo:{'Canada':0.71,'United States':0.29}, sectors:{'Bonds':1.0} },
+  'VAB.TO':  { name:'Vanguard Canadian Aggregate Bond Index ETF', currency:'CAD', type:'bond', geo:{'Canada':0.74,'United States':0.26}, sectors:{'Bonds':1.0} },
+  'XBB.TO':  { name:'iShares Core Canadian Universe Bond ETF', currency:'CAD', type:'bond', geo:{'Canada':0.95,'Other':0.05}, sectors:{'Bonds':1.0} },
+  'ZDB.TO':  { name:'BMO Discount Bond Index ETF', currency:'CAD', type:'bond', geo:{'Canada':1.0}, sectors:{'Bonds':1.0} },
+  'ZCS.TO':  { name:'BMO Short Corporate Bond Index ETF', currency:'CAD', type:'bond', geo:{'Canada':0.80,'United States':0.20}, sectors:{'Bonds':1.0} },
+  'ZGQ.TO':  { name:'BMO MSCI All Country World High Quality Index ETF', currency:'CAD', type:'etf',
+    geo:{'United States':0.62,'Japan':0.07,'Europe':0.20,'Other':0.11},
+    sectors:{'Technology':0.34,'Healthcare':0.17,'Financials':0.14,'Consumer Staples':0.10,'Consumer Discretionary':0.10,'Other':0.15} },
+
+  // ─── Thematic / Specialty ───
+  'ARKK':  { name:'ARK Innovation ETF', currency:'USD', type:'etf',
+    geo:{'United States':0.82,'Other':0.18},
+    sectors:{'Technology':0.52,'Healthcare':0.27,'Consumer Discretionary':0.12,'Other':0.09} },
+  'GLD':   { name:'SPDR Gold Shares', currency:'USD', type:'commodity', geo:{'Global':1.0}, sectors:{'Other':1.0} },
+  'SLV':   { name:'iShares Silver Trust', currency:'USD', type:'commodity', geo:{'Global':1.0}, sectors:{'Other':1.0} },
+  'GDX':   { name:'VanEck Gold Miners ETF', currency:'USD', type:'etf',
+    geo:{'Canada':0.45,'United States':0.15,'Australia':0.13,'Other':0.27},
+    sectors:{'Materials':1.0} },
+  'XRE.TO':{ name:'iShares S&P/TSX Capped REIT Index ETF', currency:'CAD', type:'etf',
+    geo:{'Canada':1.0}, sectors:{'Real Estate':1.0} },
+  'ZRE.TO':{ name:'BMO Equal Weight REITs Index ETF', currency:'CAD', type:'etf',
+    geo:{'Canada':1.0}, sectors:{'Real Estate':1.0} },
+  // ─── HISA / Cash ETFs ───
+  'CASH.TO': { name:'Purpose High Interest Savings ETF', currency:'CAD', type:'cash', geo:{'Canada':1.0}, sectors:{'Bonds':1.0} },
+  'PSA.TO':  { name:'Purpose Premium Money Market ETF', currency:'CAD', type:'cash', geo:{'Canada':1.0}, sectors:{'Bonds':1.0} },
+  'HSAV.TO': { name:'Horizons Cash Maximizer ETF', currency:'CAD', type:'cash', geo:{'Canada':1.0}, sectors:{'Bonds':1.0} },
+  'CBIL.TO': { name:'CI 1-5 Yr Laddered Govt Bond ETF', currency:'CAD', type:'bond', geo:{'Canada':1.0}, sectors:{'Bonds':1.0} },
+  'ZMMK.TO': { name:'BMO Money Market ETF', currency:'CAD', type:'cash', geo:{'Canada':1.0}, sectors:{'Bonds':1.0} },
+  // ─── Crypto ETFs ───
+  'BTCX.B.TO':{ name:'CI Bitcoin ETF (CAD unhedged)', currency:'CAD', type:'crypto', geo:{'Global':1.0}, sectors:{'Other':1.0} },
+  'ETHH.B.TO':{ name:'Purpose Ether ETF (CAD)', currency:'CAD', type:'crypto', geo:{'Global':1.0}, sectors:{'Other':1.0} },
+  'IBIT':  { name:'iShares Bitcoin Trust ETF', currency:'USD', type:'crypto', geo:{'Global':1.0}, sectors:{'Other':1.0} },
+  'FBTC':  { name:'Fidelity Wise Origin Bitcoin Fund', currency:'USD', type:'crypto', geo:{'Global':1.0}, sectors:{'Other':1.0} },
+  // ─── Leveraged ETFs ───
+  'TQQQ':  { name:'ProShares UltraPro QQQ (3× Leveraged)', currency:'USD', type:'etf', leveraged:true,
+    geo:{'United States':0.97,'Other':0.03}, sectors:{'Technology':0.51,'Communication Services':0.16,'Consumer Discretionary':0.14,'Other':0.19},
+    topHoldings:{'AAPL':0.089,'MSFT':0.080,'NVDA':0.079,'AMZN':0.052,'META':0.049} },
+  'UPRO':  { name:'ProShares UltraPro S&P500 (3× Leveraged)', currency:'USD', type:'etf', leveraged:true,
+    geo:{'United States':1.0}, sectors:{'Technology':0.31,'Financials':0.14,'Healthcare':0.13,'Other':0.42},
+    topHoldings:{'AAPL':0.070,'MSFT':0.065,'NVDA':0.060,'AMZN':0.036,'META':0.025} },
+  'SOXL':  { name:'Direxion Daily Semiconductor Bull 3×', currency:'USD', type:'etf', leveraged:true,
+    geo:{'United States':0.82,'Taiwan':0.10,'Netherlands':0.06,'Other':0.02}, sectors:{'Technology':1.0} },
+  'HXU.TO':{ name:'BetaPro S&P/TSX 60 2× Daily Bull ETF', currency:'CAD', type:'etf', leveraged:true,
+    geo:{'Canada':1.0}, sectors:{'Financials':0.36,'Energy':0.19,'Technology':0.09,'Other':0.36} },
+  'HQU.TO':{ name:'BetaPro NASDAQ-100 2× Daily Bull ETF', currency:'CAD', type:'etf', leveraged:true,
+    geo:{'United States':0.97,'Other':0.03}, sectors:{'Technology':0.51,'Communication Services':0.16,'Consumer Discretionary':0.14,'Other':0.19} },
+  // ─── Income / Covered Call ───
+  'JEPI':  { name:'JPMorgan Equity Premium Income ETF', currency:'USD', type:'etf',
+    geo:{'United States':0.95,'Other':0.05}, sectors:{'Technology':0.17,'Healthcare':0.13,'Financials':0.12,'Industrials':0.11,'Consumer Staples':0.10,'Other':0.37} },
+  'JEPQ':  { name:'JPMorgan NASDAQ Equity Premium Income ETF', currency:'USD', type:'etf',
+    geo:{'United States':0.97,'Other':0.03}, sectors:{'Technology':0.45,'Communication Services':0.18,'Consumer Discretionary':0.13,'Other':0.24} },
+  'ZWB.TO':{ name:'BMO Covered Call Canadian Banks ETF', currency:'CAD', type:'etf',
+    geo:{'Canada':1.0}, sectors:{'Financials':1.0} },
+  'ZEB.TO':{ name:'BMO Equal Weight Banks Index ETF', currency:'CAD', type:'etf',
+    geo:{'Canada':1.0}, sectors:{'Financials':1.0},
+    topHoldings:{'RY.TO':0.17,'TD.TO':0.17,'BNS.TO':0.17,'BMO.TO':0.17,'CM.TO':0.16,'NA.TO':0.16} },
+  'CDZ.TO':{ name:'iShares S&P/TSX Canadian Dividend Aristocrats ETF', currency:'CAD', type:'etf',
+    geo:{'Canada':1.0}, sectors:{'Financials':0.35,'Energy':0.20,'Communication Services':0.15,'Utilities':0.10,'Other':0.20} },
+  // ─── Bonds ───
+  'HYG':   { name:'iShares iBoxx $ High Yield Corporate Bond ETF', currency:'USD', type:'bond', geo:{'United States':0.90,'Other':0.10}, sectors:{'Bonds':1.0} },
+  'LQD':   { name:'iShares iBoxx $ Investment Grade Corporate Bond ETF', currency:'USD', type:'bond', geo:{'United States':0.88,'Other':0.12}, sectors:{'Bonds':1.0} },
+  'TLT':   { name:'iShares 20+ Year Treasury Bond ETF', currency:'USD', type:'bond', geo:{'United States':1.0}, sectors:{'Bonds':1.0} },
+  'SHY':   { name:'iShares 1-3 Year Treasury Bond ETF', currency:'USD', type:'bond', geo:{'United States':1.0}, sectors:{'Bonds':1.0} },
+  'BNDX':  { name:'Vanguard Total International Bond ETF', currency:'USD', type:'bond',
+    geo:{'Europe':0.38,'Japan':0.18,'Other Developed':0.24,'Emerging Markets':0.20}, sectors:{'Bonds':1.0} },
+  // ─── Commodities ───
+  'SLV':   { name:'iShares Silver Trust', currency:'USD', type:'commodity', geo:{'Global':1.0}, sectors:{'Other':1.0} },
+  'GDX':   { name:'VanEck Gold Miners ETF', currency:'USD', type:'etf',
+    geo:{'Canada':0.44,'United States':0.16,'Australia':0.13,'Other':0.27}, sectors:{'Materials':1.0} },
+  'PDBC':  { name:'Invesco Optimum Yield Diversified Commodity Strategy No K-1 ETF', currency:'USD', type:'commodity', geo:{'Global':1.0}, sectors:{'Other':1.0} },
+  // ─── Extra US ───
+  'SPLG':  { name:'SPDR Portfolio S&P 500 ETF', currency:'USD', type:'etf',
+    geo:{'United States':1.0}, sectors:{'Technology':0.31,'Financials':0.14,'Healthcare':0.13,'Consumer Discretionary':0.10,'Industrials':0.09,'Communication Services':0.09,'Other':0.14},
+    topHoldings:{'AAPL':0.070,'MSFT':0.065,'NVDA':0.060,'AMZN':0.036,'META':0.025} },
+  'ITOT':  { name:'iShares Core S&P Total U.S. Stock Market ETF', currency:'USD', type:'etf',
+    geo:{'United States':1.0}, sectors:{'Technology':0.29,'Financials':0.14,'Healthcare':0.13,'Consumer Discretionary':0.10,'Industrials':0.10,'Communication Services':0.09,'Other':0.15},
+    topHoldings:{'AAPL':0.063,'MSFT':0.058,'NVDA':0.052,'AMZN':0.033,'META':0.022} },
+  'VIG':   { name:'Vanguard Dividend Appreciation ETF', currency:'USD', type:'etf',
+    geo:{'United States':1.0}, sectors:{'Technology':0.25,'Financials':0.19,'Healthcare':0.14,'Industrials':0.14,'Consumer Staples':0.09,'Other':0.19} },
+  'SCHD':  { name:'Schwab US Dividend Equity ETF', currency:'USD', type:'etf',
+    geo:{'United States':1.0}, sectors:{'Financials':0.18,'Healthcare':0.15,'Consumer Staples':0.15,'Technology':0.13,'Industrials':0.12,'Energy':0.10,'Other':0.17} },
+
+  // ─── Canadian International ETFs (iShares/Vanguard/BMO) ───
+  'XEF.TO': { name:'iShares Core MSCI EAFE IMI Index ETF', currency:'CAD', type:'etf',
+    geo:{'Japan':0.23,'UK':0.14,'France':0.10,'Germany':0.09,'Switzerland':0.08,'Australia':0.07,'Netherlands':0.05,'Other Developed':0.24},
+    sectors:{'Financials':0.21,'Industrials':0.15,'Healthcare':0.13,'Consumer Discretionary':0.11,'Consumer Staples':0.09,'Technology':0.09,'Materials':0.06,'Energy':0.04,'Other':0.12} },
+  'XEF':   { name:'iShares Core MSCI EAFE IMI Index ETF', currency:'CAD', type:'etf',
+    geo:{'Japan':0.23,'UK':0.14,'France':0.10,'Germany':0.09,'Switzerland':0.08,'Australia':0.07,'Netherlands':0.05,'Other Developed':0.24},
+    sectors:{'Financials':0.21,'Industrials':0.15,'Healthcare':0.13,'Consumer Discretionary':0.11,'Consumer Staples':0.09,'Technology':0.09,'Materials':0.06,'Energy':0.04,'Other':0.12} },
+  'XEU.TO': { name:'iShares Core MSCI European IMI Index ETF', currency:'CAD', type:'etf',
+    geo:{'UK':0.21,'France':0.16,'Switzerland':0.13,'Germany':0.12,'Netherlands':0.09,'Sweden':0.05,'Spain':0.04,'Other':0.20},
+    sectors:{'Financials':0.21,'Industrials':0.16,'Healthcare':0.14,'Consumer Staples':0.10,'Consumer Discretionary':0.09,'Technology':0.08,'Materials':0.05,'Other':0.17} },
+  'XEU':   { name:'iShares Core MSCI European IMI Index ETF', currency:'CAD', type:'etf',
+    geo:{'UK':0.21,'France':0.16,'Switzerland':0.13,'Germany':0.12,'Netherlands':0.09,'Sweden':0.05,'Spain':0.04,'Other':0.20},
+    sectors:{'Financials':0.21,'Industrials':0.16,'Healthcare':0.14,'Consumer Staples':0.10,'Consumer Discretionary':0.09,'Technology':0.08,'Materials':0.05,'Other':0.17} },
+  'XID.TO': { name:'iShares MSCI India Index ETF', currency:'CAD', type:'etf',
+    geo:{'India':1.0},
+    sectors:{'Financials':0.26,'Technology':0.19,'Consumer Discretionary':0.12,'Energy':0.10,'Materials':0.07,'Industrials':0.06,'Consumer Staples':0.06,'Communication Services':0.05,'Other':0.09} },
+  'XID':   { name:'iShares MSCI India Index ETF', currency:'CAD', type:'etf',
+    geo:{'India':1.0},
+    sectors:{'Financials':0.26,'Technology':0.19,'Consumer Discretionary':0.12,'Energy':0.10,'Materials':0.07,'Industrials':0.06,'Consumer Staples':0.06,'Communication Services':0.05,'Other':0.09} },
+  'VEE.TO': { name:'Vanguard FTSE Emerging Markets All Cap Index ETF', currency:'CAD', type:'etf',
+    geo:{'China':0.30,'India':0.20,'Taiwan':0.17,'South Korea':0.09,'Brazil':0.06,'Other':0.18},
+    sectors:{'Technology':0.22,'Financials':0.21,'Consumer Discretionary':0.12,'Materials':0.08,'Energy':0.07,'Communication Services':0.08,'Other':0.22} },
+  'VEE':   { name:'Vanguard FTSE Emerging Markets All Cap Index ETF', currency:'CAD', type:'etf',
+    geo:{'China':0.30,'India':0.20,'Taiwan':0.17,'South Korea':0.09,'Brazil':0.06,'Other':0.18},
+    sectors:{'Technology':0.22,'Financials':0.21,'Consumer Discretionary':0.12,'Materials':0.08,'Energy':0.07,'Communication Services':0.08,'Other':0.22} },
+  'VEF.TO': { name:'Vanguard FTSE Developed Europe All Cap Index ETF', currency:'CAD', type:'etf',
+    geo:{'UK':0.21,'France':0.17,'Germany':0.13,'Switzerland':0.12,'Netherlands':0.09,'Sweden':0.05,'Spain':0.04,'Other':0.19},
+    sectors:{'Financials':0.19,'Industrials':0.15,'Healthcare':0.13,'Consumer Staples':0.10,'Consumer Discretionary':0.09,'Technology':0.08,'Materials':0.06,'Energy':0.05,'Other':0.15} },
+  'VEF':   { name:'Vanguard FTSE Developed Europe All Cap Index ETF', currency:'CAD', type:'etf',
+    geo:{'UK':0.21,'France':0.17,'Germany':0.13,'Switzerland':0.12,'Netherlands':0.09,'Sweden':0.05,'Spain':0.04,'Other':0.19},
+    sectors:{'Financials':0.19,'Industrials':0.15,'Healthcare':0.13,'Consumer Staples':0.10,'Consumer Discretionary':0.09,'Technology':0.08,'Materials':0.06,'Energy':0.05,'Other':0.15} },
+
+  // ─── Canadian Sector/Thematic ETFs ───
+  'XEG.TO': { name:'iShares S&P/TSX Capped Energy Index ETF', currency:'CAD', type:'etf',
+    geo:{'Canada':1.0}, sectors:{'Energy':1.0},
+    topHoldings:{'CNQ.TO':0.22,'SU.TO':0.20,'CVE.TO':0.15,'TRP.TO':0.10,'ENB.TO':0.08,'PPL.TO':0.05,'MEG.TO':0.04,'POU.TO':0.03,'ARX.TO':0.03,'VET.TO':0.03} },
+  'XEG':   { name:'iShares S&P/TSX Capped Energy Index ETF', currency:'CAD', type:'etf',
+    geo:{'Canada':1.0}, sectors:{'Energy':1.0},
+    topHoldings:{'CNQ.TO':0.22,'SU.TO':0.20,'CVE.TO':0.15,'TRP.TO':0.10,'ENB.TO':0.08} },
+  'XGD.TO': { name:'iShares S&P/TSX Global Gold Index ETF', currency:'CAD', type:'etf',
+    geo:{'Canada':0.63,'United States':0.17,'Australia':0.12,'Other':0.08}, sectors:{'Materials':1.0},
+    topHoldings:{'ABX.TO':0.22,'AEM.TO':0.18,'WPM.TO':0.14,'AGI.TO':0.08,'KL.TO':0.07,'EDV.TO':0.05} },
+  'XGD':   { name:'iShares S&P/TSX Global Gold Index ETF', currency:'CAD', type:'etf',
+    geo:{'Canada':0.63,'United States':0.17,'Australia':0.12,'Other':0.08}, sectors:{'Materials':1.0} },
+  'XBM.TO': { name:'iShares S&P/TSX Global Base Metals Index ETF', currency:'CAD', type:'etf',
+    geo:{'Canada':0.42,'Australia':0.22,'United States':0.15,'UK':0.10,'Other':0.11}, sectors:{'Materials':1.0} },
+  'XBM':   { name:'iShares S&P/TSX Global Base Metals Index ETF', currency:'CAD', type:'etf',
+    geo:{'Canada':0.42,'Australia':0.22,'United States':0.15,'UK':0.10,'Other':0.11}, sectors:{'Materials':1.0} },
+  'XCH.TO': { name:'iShares S&P/TSX Global Clean Technology Index ETF', currency:'CAD', type:'etf',
+    geo:{'United States':0.50,'Canada':0.18,'Europe':0.20,'Other':0.12},
+    sectors:{'Industrials':0.38,'Technology':0.28,'Utilities':0.22,'Other':0.12} },
+  'XCH':   { name:'iShares S&P/TSX Global Clean Technology Index ETF', currency:'CAD', type:'etf',
+    geo:{'United States':0.50,'Canada':0.18,'Europe':0.20,'Other':0.12},
+    sectors:{'Industrials':0.38,'Technology':0.28,'Utilities':0.22,'Other':0.12} },
+  'ENCC.TO':{ name:'Global X Canadian Oil and Gas Equity Covered Call ETF', currency:'CAD', type:'etf',
+    geo:{'Canada':1.0}, sectors:{'Energy':1.0} },
+  'ENCC':  { name:'Global X Canadian Oil and Gas Equity Covered Call ETF', currency:'CAD', type:'etf',
+    geo:{'Canada':1.0}, sectors:{'Energy':1.0} },
+  'ZGLD.TO':{ name:'BMO Gold Bullion ETF (CAD)', currency:'CAD', type:'commodity', geo:{'Global':1.0}, sectors:{'Other':1.0} },
+  'ZGLD':  { name:'BMO Gold Bullion ETF (CAD)', currency:'CAD', type:'commodity', geo:{'Global':1.0}, sectors:{'Other':1.0} },
+  'ZWP.TO': { name:'BMO Europe High Dividend Covered Call ETF', currency:'CAD', type:'etf',
+    geo:{'UK':0.23,'France':0.15,'Germany':0.13,'Switzerland':0.11,'Netherlands':0.09,'Other':0.29},
+    sectors:{'Financials':0.24,'Consumer Staples':0.16,'Healthcare':0.12,'Industrials':0.11,'Utilities':0.09,'Energy':0.08,'Other':0.20} },
+  'ZWP':   { name:'BMO Europe High Dividend Covered Call ETF', currency:'CAD', type:'etf',
+    geo:{'UK':0.23,'France':0.15,'Germany':0.13,'Switzerland':0.11,'Netherlands':0.09,'Other':0.29},
+    sectors:{'Financials':0.24,'Consumer Staples':0.16,'Healthcare':0.12,'Industrials':0.11,'Utilities':0.09,'Energy':0.08,'Other':0.20} },
+  'SPPP.TO':{ name:'Sprott Physical Platinum and Palladium Trust', currency:'CAD', type:'commodity', geo:{'Global':1.0}, sectors:{'Other':1.0} },
+  'SPPP':  { name:'Sprott Physical Platinum and Palladium Trust', currency:'CAD', type:'commodity', geo:{'Global':1.0}, sectors:{'Other':1.0} },
+};
+
+// Stock database — country, sector, currency
+const STOCK_DATA = {
+  // US Tech
+  'AAPL':{'name':'Apple Inc.','country':'United States','region':'US','sector':'Technology','currency':'USD'},
+  'MSFT':{'name':'Microsoft Corp.','country':'United States','region':'US','sector':'Technology','currency':'USD'},
+  'NVDA':{'name':'NVIDIA Corp.','country':'United States','region':'US','sector':'Technology','currency':'USD'},
+  'GOOGL':{'name':'Alphabet Inc. (A)','country':'United States','region':'US','sector':'Technology','currency':'USD'},
+  'GOOG':{'name':'Alphabet Inc. (C)','country':'United States','region':'US','sector':'Technology','currency':'USD'},
+  'META':{'name':'Meta Platforms','country':'United States','region':'US','sector':'Technology','currency':'USD'},
+  'AVGO':{'name':'Broadcom Inc.','country':'United States','region':'US','sector':'Technology','currency':'USD'},
+  'AMD':{'name':'Advanced Micro Devices','country':'United States','region':'US','sector':'Technology','currency':'USD'},
+  'INTC':{'name':'Intel Corp.','country':'United States','region':'US','sector':'Technology','currency':'USD'},
+  'ORCL':{'name':'Oracle Corp.','country':'United States','region':'US','sector':'Technology','currency':'USD'},
+  'ADBE':{'name':'Adobe Inc.','country':'United States','region':'US','sector':'Technology','currency':'USD'},
+  'CRM':{'name':'Salesforce Inc.','country':'United States','region':'US','sector':'Technology','currency':'USD'},
+  'NOW':{'name':'ServiceNow Inc.','country':'United States','region':'US','sector':'Technology','currency':'USD'},
+  'INTU':{'name':'Intuit Inc.','country':'United States','region':'US','sector':'Technology','currency':'USD'},
+  'QCOM':{'name':'Qualcomm Inc.','country':'United States','region':'US','sector':'Technology','currency':'USD'},
+  'TXN':{'name':'Texas Instruments','country':'United States','region':'US','sector':'Technology','currency':'USD'},
+  // US Consumer
+  'AMZN':{'name':'Amazon.com Inc.','country':'United States','region':'US','sector':'Consumer Discretionary','currency':'USD'},
+  'TSLA':{'name':'Tesla Inc.','country':'United States','region':'US','sector':'Consumer Discretionary','currency':'USD'},
+  'HD':{'name':'Home Depot','country':'United States','region':'US','sector':'Consumer Discretionary','currency':'USD'},
+  'MCD':{'name':'McDonald\'s Corp.','country':'United States','region':'US','sector':'Consumer Discretionary','currency':'USD'},
+  'NKE':{'name':'Nike Inc.','country':'United States','region':'US','sector':'Consumer Discretionary','currency':'USD'},
+  'SBUX':{'name':'Starbucks Corp.','country':'United States','region':'US','sector':'Consumer Discretionary','currency':'USD'},
+  'BKNG':{'name':'Booking Holdings','country':'United States','region':'US','sector':'Consumer Discretionary','currency':'USD'},
+  'COST':{'name':'Costco Wholesale','country':'United States','region':'US','sector':'Consumer Staples','currency':'USD'},
+  'WMT':{'name':'Walmart Inc.','country':'United States','region':'US','sector':'Consumer Staples','currency':'USD'},
+  'PG':{'name':'Procter & Gamble','country':'United States','region':'US','sector':'Consumer Staples','currency':'USD'},
+  'KO':{'name':'Coca-Cola Co.','country':'United States','region':'US','sector':'Consumer Staples','currency':'USD'},
+  'PEP':{'name':'PepsiCo Inc.','country':'United States','region':'US','sector':'Consumer Staples','currency':'USD'},
+  // US Finance
+  'JPM':{'name':'JPMorgan Chase','country':'United States','region':'US','sector':'Financials','currency':'USD'},
+  'V':{'name':'Visa Inc.','country':'United States','region':'US','sector':'Financials','currency':'USD'},
+  'MA':{'name':'Mastercard Inc.','country':'United States','region':'US','sector':'Financials','currency':'USD'},
+  'BAC':{'name':'Bank of America','country':'United States','region':'US','sector':'Financials','currency':'USD'},
+  'WFC':{'name':'Wells Fargo','country':'United States','region':'US','sector':'Financials','currency':'USD'},
+  'GS':{'name':'Goldman Sachs','country':'United States','region':'US','sector':'Financials','currency':'USD'},
+  'MS':{'name':'Morgan Stanley','country':'United States','region':'US','sector':'Financials','currency':'USD'},
+  'BRK.B':{'name':'Berkshire Hathaway B','country':'United States','region':'US','sector':'Financials','currency':'USD'},
+  'BRK-B':{'name':'Berkshire Hathaway B','country':'United States','region':'US','sector':'Financials','currency':'USD'},
+  'PYPL':{'name':'PayPal Holdings','country':'United States','region':'US','sector':'Financials','currency':'USD'},
+  'AXP':{'name':'American Express','country':'United States','region':'US','sector':'Financials','currency':'USD'},
+  // US Healthcare
+  'UNH':{'name':'UnitedHealth Group','country':'United States','region':'US','sector':'Healthcare','currency':'USD'},
+  'LLY':{'name':'Eli Lilly & Co.','country':'United States','region':'US','sector':'Healthcare','currency':'USD'},
+  'JNJ':{'name':'Johnson & Johnson','country':'United States','region':'US','sector':'Healthcare','currency':'USD'},
+  'ABBV':{'name':'AbbVie Inc.','country':'United States','region':'US','sector':'Healthcare','currency':'USD'},
+  'MRK':{'name':'Merck & Co.','country':'United States','region':'US','sector':'Healthcare','currency':'USD'},
+  'PFE':{'name':'Pfizer Inc.','country':'United States','region':'US','sector':'Healthcare','currency':'USD'},
+  'TMO':{'name':'Thermo Fisher Scientific','country':'United States','region':'US','sector':'Healthcare','currency':'USD'},
+  'ABT':{'name':'Abbott Laboratories','country':'United States','region':'US','sector':'Healthcare','currency':'USD'},
+  // US Communication
+  'NFLX':{'name':'Netflix Inc.','country':'United States','region':'US','sector':'Communication Services','currency':'USD'},
+  'DIS':{'name':'Walt Disney Co.','country':'United States','region':'US','sector':'Communication Services','currency':'USD'},
+  'CMCSA':{'name':'Comcast Corp.','country':'United States','region':'US','sector':'Communication Services','currency':'USD'},
+  'T':{'name':'AT&T Inc.','country':'United States','region':'US','sector':'Communication Services','currency':'USD'},
+  'VZ':{'name':'Verizon Communications','country':'United States','region':'US','sector':'Communication Services','currency':'USD'},
+  // US Energy / Industrial
+  'XOM':{'name':'Exxon Mobil','country':'United States','region':'US','sector':'Energy','currency':'USD'},
+  'CVX':{'name':'Chevron Corp.','country':'United States','region':'US','sector':'Energy','currency':'USD'},
+  'BA':{'name':'Boeing Co.','country':'United States','region':'US','sector':'Industrials','currency':'USD'},
+  'CAT':{'name':'Caterpillar Inc.','country':'United States','region':'US','sector':'Industrials','currency':'USD'},
+  'DE':{'name':'Deere & Company','country':'United States','region':'US','sector':'Industrials','currency':'USD'},
+  'RTX':{'name':'RTX Corp.','country':'United States','region':'US','sector':'Industrials','currency':'USD'},
+  'GE':{'name':'GE Aerospace','country':'United States','region':'US','sector':'Industrials','currency':'USD'},
+  'UBER':{'name':'Uber Technologies','country':'United States','region':'US','sector':'Industrials','currency':'USD'},
+  // US Tech (additional)
+  'PLTR':{'name':'Palantir Technologies','country':'United States','region':'US','sector':'Technology','currency':'USD'},
+  'RDDT':{'name':'Reddit Inc.','country':'United States','region':'US','sector':'Communication Services','currency':'USD'},
+  // CDRs — Canadian Depositary Receipts trade on TSX with unique tickers
+  'ORAC':{'name':'Oracle CDR (CAD Hedged)','country':'United States','region':'US','sector':'Technology','currency':'CAD'},
+  // Canadian Stocks
+  'RY.TO':{'name':'Royal Bank of Canada','country':'Canada','region':'CA','sector':'Financials','currency':'CAD'},
+  'TD.TO':{'name':'Toronto-Dominion Bank','country':'Canada','region':'CA','sector':'Financials','currency':'CAD'},
+  'BNS.TO':{'name':'Bank of Nova Scotia','country':'Canada','region':'CA','sector':'Financials','currency':'CAD'},
+  'BMO.TO':{'name':'Bank of Montreal','country':'Canada','region':'CA','sector':'Financials','currency':'CAD'},
+  'CM.TO':{'name':'CIBC','country':'Canada','region':'CA','sector':'Financials','currency':'CAD'},
+  'NA.TO':{'name':'National Bank of Canada','country':'Canada','region':'CA','sector':'Financials','currency':'CAD'},
+  'MFC.TO':{'name':'Manulife Financial','country':'Canada','region':'CA','sector':'Financials','currency':'CAD'},
+  'SLF.TO':{'name':'Sun Life Financial','country':'Canada','region':'CA','sector':'Financials','currency':'CAD'},
+  'ENB.TO':{'name':'Enbridge Inc.','country':'Canada','region':'CA','sector':'Energy','currency':'CAD'},
+  'CNQ.TO':{'name':'Canadian Natural Resources','country':'Canada','region':'CA','sector':'Energy','currency':'CAD'},
+  'SU.TO':{'name':'Suncor Energy','country':'Canada','region':'CA','sector':'Energy','currency':'CAD'},
+  'TRP.TO':{'name':'TC Energy Corp.','country':'Canada','region':'CA','sector':'Energy','currency':'CAD'},
+  'CNR.TO':{'name':'Canadian National Railway','country':'Canada','region':'CA','sector':'Industrials','currency':'CAD'},
+  'CP.TO':{'name':'Canadian Pacific Kansas City','country':'Canada','region':'CA','sector':'Industrials','currency':'CAD'},
+  'SHOP.TO':{'name':'Shopify Inc.','country':'Canada','region':'CA','sector':'Technology','currency':'CAD'},
+  'SHOP':{'name':'Shopify Inc.','country':'Canada','region':'CA','sector':'Technology','currency':'USD'},
+  'ABX.TO':{'name':'Barrick Gold Corp.','country':'Canada','region':'CA','sector':'Materials','currency':'CAD'},
+  'WPM.TO':{'name':'Wheaton Precious Metals','country':'Canada','region':'CA','sector':'Materials','currency':'CAD'},
+  'BCE.TO':{'name':'BCE Inc.','country':'Canada','region':'CA','sector':'Communication Services','currency':'CAD'},
+  'T.TO':{'name':'TELUS Corp.','country':'Canada','region':'CA','sector':'Communication Services','currency':'CAD'},
+  'ATD.TO':{'name':'Alimentation Couche-Tard','country':'Canada','region':'CA','sector':'Consumer Staples','currency':'CAD'},
+  'L.TO':{'name':'Loblaw Companies','country':'Canada','region':'CA','sector':'Consumer Staples','currency':'CAD'},
+  'WN.TO':{'name':'George Weston Ltd.','country':'Canada','region':'CA','sector':'Consumer Staples','currency':'CAD'},
+  // ─── Additional Canadian Stocks ───
+  'BB.TO':{'name':'BlackBerry Limited','country':'Canada','region':'CA','sector':'Technology','currency':'CAD'},
+  'BB':{'name':'BlackBerry Limited','country':'Canada','region':'CA','sector':'Technology','currency':'CAD'},
+  'CAE.TO':{'name':'CAE Inc.','country':'Canada','region':'CA','sector':'Industrials','currency':'CAD'},
+  'CAE':{'name':'CAE Inc.','country':'Canada','region':'CA','sector':'Industrials','currency':'CAD'},
+  'CCO.TO':{'name':'Cameco Corp.','country':'Canada','region':'CA','sector':'Energy','currency':'CAD'},
+  'CCO':{'name':'Cameco Corp.','country':'Canada','region':'CA','sector':'Energy','currency':'CAD'},
+  'CLS.TO':{'name':'Celestica Inc.','country':'Canada','region':'CA','sector':'Technology','currency':'CAD'},
+  'CLS':{'name':'Celestica Inc.','country':'Canada','region':'CA','sector':'Technology','currency':'CAD'},
+  'ELR.TO':{'name':'Eastern Platinum Ltd','country':'Canada','region':'CA','sector':'Materials','currency':'CAD'},
+  'ELR':{'name':'Eastern Platinum Ltd','country':'Canada','region':'CA','sector':'Materials','currency':'CAD'},
+  'EMP.A':{'name':'Empire Co. Ltd (Class A)','country':'Canada','region':'CA','sector':'Consumer Staples','currency':'CAD'},
+  'ERO.TO':{'name':'Ero Copper Corp','country':'Canada','region':'CA','sector':'Materials','currency':'CAD'},
+  'ERO':{'name':'Ero Copper Corp','country':'Canada','region':'CA','sector':'Materials','currency':'CAD'},
+  'GDL.TO':{'name':'Goodfellow Inc.','country':'Canada','region':'CA','sector':'Materials','currency':'CAD'},
+  'GDL':{'name':'Goodfellow Inc.','country':'Canada','region':'CA','sector':'Materials','currency':'CAD'},
+  'GIL.TO':{'name':'Gildan Activewear Inc.','country':'Canada','region':'CA','sector':'Consumer Discretionary','currency':'CAD'},
+  'GIL':{'name':'Gildan Activewear Inc.','country':'Canada','region':'CA','sector':'Consumer Discretionary','currency':'CAD'},
+  'MAL.TO':{'name':'Magellan Aerospace Corp.','country':'Canada','region':'CA','sector':'Industrials','currency':'CAD'},
+  'MAL':{'name':'Magellan Aerospace Corp.','country':'Canada','region':'CA','sector':'Industrials','currency':'CAD'},
+  'MDNA.TO':{'name':'Medicenna Therapeutics Corp.','country':'Canada','region':'CA','sector':'Healthcare','currency':'CAD'},
+  'MDNA':{'name':'Medicenna Therapeutics Corp.','country':'Canada','region':'CA','sector':'Healthcare','currency':'CAD'},
+  'NTR.TO':{'name':'Nutrien Ltd.','country':'Canada','region':'CA','sector':'Materials','currency':'CAD'},
+  'NTR':{'name':'Nutrien Ltd.','country':'Canada','region':'CA','sector':'Materials','currency':'CAD'},
+  'NWC.TO':{'name':'North West Company Inc.','country':'Canada','region':'CA','sector':'Consumer Staples','currency':'CAD'},
+  'NWC':{'name':'North West Company Inc.','country':'Canada','region':'CA','sector':'Consumer Staples','currency':'CAD'},
+  'NWST.TO':{'name':'Northwest Copper Corp.','country':'Canada','region':'CA','sector':'Materials','currency':'CAD'},
+  'NWST':{'name':'Northwest Copper Corp.','country':'Canada','region':'CA','sector':'Materials','currency':'CAD'},
+  'QSR.TO':{'name':'Restaurant Brands International','country':'Canada','region':'CA','sector':'Consumer Discretionary','currency':'CAD'},
+  'QSR':{'name':'Restaurant Brands International','country':'Canada','region':'CA','sector':'Consumer Discretionary','currency':'CAD'},
+  'SECU.TO':{'name':'Secure Energy Services Inc.','country':'Canada','region':'CA','sector':'Energy','currency':'CAD'},
+  'SECU':{'name':'Secure Energy Services Inc.','country':'Canada','region':'CA','sector':'Energy','currency':'CAD'},
+  'SJ.TO':{'name':'Stella-Jones Inc.','country':'Canada','region':'CA','sector':'Materials','currency':'CAD'},
+  'SJ':{'name':'Stella-Jones Inc.','country':'Canada','region':'CA','sector':'Materials','currency':'CAD'},
+  'SVR.C':{'name':'Silver X Mining Corp.','country':'Canada','region':'CA','sector':'Materials','currency':'CAD'},
+  'TE.TO':{'name':'TerraVest Industries Inc.','country':'Canada','region':'CA','sector':'Industrials','currency':'CAD'},
+  'TE':{'name':'TerraVest Industries Inc.','country':'Canada','region':'CA','sector':'Industrials','currency':'CAD'},
+  'TXG.TO':{'name':'Torex Gold Resources Inc.','country':'Canada','region':'CA','sector':'Materials','currency':'CAD'},
+  'TXG':{'name':'Torex Gold Resources Inc.','country':'Canada','region':'CA','sector':'Materials','currency':'CAD'},
+  // International
+  'ASML':{'name':'ASML Holding N.V.','country':'Netherlands','region':'EU','sector':'Technology','currency':'USD'},
+  'TSM':{'name':'Taiwan Semiconductor','country':'Taiwan','region':'EM','sector':'Technology','currency':'USD'},
+  'NVO':{'name':'Novo Nordisk','country':'Denmark','region':'EU','sector':'Healthcare','currency':'USD'},
+  'SAP':{'name':'SAP SE','country':'Germany','region':'EU','sector':'Technology','currency':'USD'},
+  'TM':{'name':'Toyota Motor Corp.','country':'Japan','region':'JP','sector':'Consumer Discretionary','currency':'USD'},
+  'SONY':{'name':'Sony Group Corp.','country':'Japan','region':'JP','sector':'Consumer Discretionary','currency':'USD'},
+  'BABA':{'name':'Alibaba Group','country':'China','region':'CN','sector':'Consumer Discretionary','currency':'USD'},
+  'PDD':{'name':'PDD Holdings','country':'China','region':'CN','sector':'Consumer Discretionary','currency':'USD'},
+  'JD':{'name':'JD.com Inc.','country':'China','region':'CN','sector':'Consumer Discretionary','currency':'USD'},
+  'BIDU':{'name':'Baidu Inc.','country':'China','region':'CN','sector':'Technology','currency':'USD'},
+  'ARM':{'name':'Arm Holdings','country':'UK','region':'EU','sector':'Technology','currency':'USD'},
+  'SE':{'name':'Sea Limited','country':'Singapore','region':'EM','sector':'Technology','currency':'USD'},
+  'SPOT':{'name':'Spotify Technology','country':'Sweden','region':'EU','sector':'Communication Services','currency':'USD'},
+  'LVMH':{'name':'LVMH Moët Hennessy','country':'France','region':'EU','sector':'Consumer Discretionary','currency':'USD'},
+};
+
+// ═══════════════════════════════════════════════════════
+// SAMPLE PORTFOLIO (for demo mode)
+// ═══════════════════════════════════════════════════════
+const SAMPLE_HOLDINGS = [
+  { symbol:'XEQT.TO', name:'iShares Core Equity ETF Portfolio', quantity:300, marketValue:15090, currency:'CAD', source:'Wealthsimple (demo)' },
+  { symbol:'ZAG.TO',  name:'BMO Aggregate Bond Index ETF',      quantity:200, marketValue:4620,  currency:'CAD', source:'Wealthsimple (demo)' },
+  { symbol:'SPY',     name:'SPDR S&P 500 ETF',                  quantity:12,  marketValue:8340,  currency:'USD', source:'RBC Direct (demo)' },
+  { symbol:'QQQ',     name:'Invesco QQQ Trust',                  quantity:8,   marketValue:3960,  currency:'USD', source:'RBC Direct (demo)' },
+  { symbol:'AAPL',    name:'Apple Inc.',                         quantity:15,  marketValue:3480,  currency:'USD', source:'RBC Direct (demo)' },
+  { symbol:'NVDA',    name:'NVIDIA Corp.',                       quantity:6,   marketValue:6840,  currency:'USD', source:'RBC Direct (demo)' },
+  { symbol:'SHOP.TO', name:'Shopify Inc.',                       quantity:25,  marketValue:3125,  currency:'CAD', source:'TD Direct (demo)' },
+  { symbol:'RY.TO',   name:'Royal Bank of Canada',               quantity:12,  marketValue:2388,  currency:'CAD', source:'TD Direct (demo)' },
+  { symbol:'ASML',    name:'ASML Holding N.V.',                  quantity:2,   marketValue:1900,  currency:'USD', source:'TD Direct (demo)' },
+  { symbol:'BND',     name:'Vanguard Total Bond Market ETF',     quantity:50,  marketValue:3950,  currency:'USD', source:'TD Direct (demo)' },
+];
+
+// ═══════════════════════════════════════════════════════
+// CSV PARSING
+// ═══════════════════════════════════════════════════════
+
+// ── Header keyword detection ──────────────────────────
+const HDR_KEYWORDS = ['symbol','ticker','quantity','shares','market value','current value',
+  'price','description','security','cusip','isin','units','holding','qty'];
+
+// Scan the preamble for an account-level currency declaration before the data starts.
+// Handles: "Currency: CAD", "Account Currency,USD", "Currency  CAD", etc.
+function extractPreambleCurrency(text) {
+  const lines = text.split(/\r?\n/).slice(0, 60);
+  for (const line of lines) {
+    const m = line.match(/(?:account\s+)?currency[\s:,]+([A-Z]{3})\b/i);
+    if (m) return m[1].toUpperCase();
+  }
+  return null;
+}
+
+// Skip brokerage preamble and find the actual CSV header line.
+// Tested against: RBC, TD, BMO InvestorLine, Questrade, IBKR, Wealthsimple, Fidelity, NBDB, Desjardins.
+function findDataStart(text) {
+  const lines = text.split(/\r?\n/);
+  // IBKR Activity Statement: "Open Positions,Header,..." can be 100+ lines deep — detect first
+  for (let i = 0; i < Math.min(lines.length, 300); i++) {
+    if (/^(open positions|positions),header,/i.test(lines[i]) && /symbol/i.test(lines[i])) {
+      return lines.slice(i).join('\n');
+    }
+  }
+  // General: first line with ≥2 recognisable header keywords (250-line limit covers all known brokerages)
+  for (let i = 0; i < Math.min(lines.length, 250); i++) {
+    const lower = lines[i].toLowerCase();
+    const hits = HDR_KEYWORDS.filter(k => lower.includes(k)).length;
+    if (hits >= 2) return lines.slice(i).join('\n');
+  }
+  return text; // no preamble — use as-is
+}
+
+function detectBroker(headers) {
+  const h = headers.map(s => (s||'').toLowerCase().trim());
+  const has = (...terms) => terms.every(t => h.some(x => x.includes(t)));
+  const any = (...terms) => terms.some(t => h.some(x => x.includes(t)));
+  // IBKR Activity Statement: section-type column or has 'mult' multiplier column
+  if (h.some(x => /^(open positions|positions)$/.test(x)) || (has('mult') && has('symbol') && has('currency'))) return 'ibkr';
+  // Questrade: has both an open/buy price column AND a last/current price column
+  if (has('symbol') && any('open price','open average') && any('last price','current price','market value')) return 'questrade';
+  // RBC Direct: abbreviated "Mkt" columns; typically no currency column per file
+  if (has('symbol') && any('mkt price','mkt value') && !any('currency','ccy')) return 'rbc';
+  // TD WebBroker: "Mrkt Value" or period-delimited "Mkt. Value"
+  if (has('symbol') && any('mrkt','mkt.')) return 'td';
+  // BMO InvestorLine: per-share book cost alongside total book cost
+  if (has('symbol') && h.some(x => x.includes('book cost/share') || x.includes('book cost per share'))) return 'bmo';
+  // National Bank (NBDB): standalone "Avg Cost" column
+  if (has('symbol') && h.some(x => x === 'avg cost')) return 'nbdb';
+  // Wealthsimple: has security type + exchange/MIC columns
+  if (has('symbol') && any('security type') && any('exchange','mic')) return 'wealthsimple';
+  // Fidelity: cost basis total; USD-only, no currency column
+  if (has('symbol') && has('current value') && any('cost basis total','cost basis')) return 'fidelity';
+  // Desjardins: unit-based cost/price columns
+  if (has('symbol') && h.some(x => x === 'unit cost' || x === 'unit price')) return 'desjardins';
+  if (any('symbol','ticker','security','holding') && any('quantity','shares','units','qty')) return 'generic';
+  return 'generic';
+}
+
+function findCol(obj, ...terms) {
+  const keys = Object.keys(obj);
+  for (const t of terms) {
+    // Prefer exact (case-insensitive) match before falling back to partial match.
+    // This avoids e.g. 'name' matching 'Account Name' before the bare 'Name' column.
+    const exact = keys.find(k => k.toLowerCase().trim() === t);
+    if (exact && obj[exact] !== undefined && String(obj[exact]).trim() !== '') return obj[exact];
+    const partial = keys.find(k => k.toLowerCase().includes(t));
+    if (partial && obj[partial] !== undefined && String(obj[partial]).trim() !== '') return obj[partial];
+  }
+  return null;
+}
+
+function parseNum(v) {
+  if (v == null) return 0;
+  let s = String(v).trim();
+  // Some brokerages wrap negatives in parens: "(1,234.56)" — treat as a number (callers use Math.abs for MV)
+  const neg = s.startsWith('(') && s.endsWith(')');
+  if (neg) s = s.slice(1, -1);
+  // Strip leading/trailing 3-letter currency codes: "CAD 1,234.56" or "1,234.56 USD"
+  s = s.replace(/^[A-Z]{3}\s+/, '').replace(/\s+[A-Z]{3}$/, '');
+  // Strip currency symbols, commas, whitespace, percent signs, and stray quotes
+  s = s.replace(/[$£€¥,\s%"']/g, '');
+  const n = parseFloat(s);
+  return isNaN(n) ? 0 : n;
+  // Note: sign is preserved — callers that want magnitude should use Math.abs()
+}
+
+// Skip-list for rows that are clearly not holdings
+const SKIP_SYMBOLS = new Set(['CASH','CAD','USD','EUR','GBP','TOTAL','SUBTOTAL','N/A','NA','--','---']);
+
+function normalizeHolding(row, broker, filename, accountCurrency) {
+  // Symbol — broad column search covers all brokerage naming conventions
+  let symbol = findCol(row,
+    'symbol', 'ticker', 'stock symbol', 'security code', 'security symbol', 'cusip', 'isin', 'stock') || '';
+
+  // Name / description
+  let name = findCol(row,
+    'description', 'security name', 'security description', 'name', 'holding', 'company name', 'company') || '';
+
+  // Quantity — 'qty', 'units' covers RBC/NBDB and Desjardins
+  let qty = parseNum(findCol(row,
+    'quantity', 'shares', 'units', 'qty', '# shares', 'num shares', 'shares owned', 'number of shares'));
+
+  // Market value — note: 'value' is a last-resort fallback (covers IBKR "Value" column);
+  // comes after more specific terms so "Book Value" is never accidentally preferred
+  let mv = Math.abs(parseNum(findCol(row,
+    'market value', 'mkt value', 'current value', 'total value', 'total market value',
+    'market val', 'mkt val', 'mrkt value', 'mrkt val', 'mkt. value', 'mkt. val', 'value')));
+
+  // Cost basis — expanded to cover Avg Cost (NBDB), Avg. Price (TD alt), Unit cost (Desjardins), Open Cost (Questrade)
+  let cb = Math.abs(parseNum(findCol(row,
+    'book value', 'cost basis', 'adjusted cost base', 'acb', 'average cost', 'avg cost',
+    'book cost', 'total cost', 'avg. cost', 'avg price', 'avg. price', 'average price',
+    'unit cost', 'open cost', 'open average price', 'book cost (cad)', 'book cost (usd)')));
+
+  // Current price — 'mkt price' and 'mkt. price' cover RBC and TD dot-delimited variants
+  // Note: for Questrade, 'open price' is the BUY price — we must not pick it up here.
+  // Terms are ordered so more-specific matches like 'current price' / 'last price' win first.
+  let price = parseNum(findCol(row,
+    'current price', 'last price', 'market price', 'mkt price', 'mkt. price',
+    'price per share', 'unit price', 'close price', 'close', 'price', 'rate'));
+
+  // Currency — 'traded currency' covers some IBKR variants
+  let ccy = (findCol(row, 'currency', 'ccy', 'traded currency') || '').trim().toUpperCase();
+
+  // Fallback 1: use account-level currency extracted from preamble (covers RBC, Fidelity — no currency col)
+  if (!ccy && accountCurrency) ccy = accountCurrency;
+  // Fallback 2: guess from filename or broker context
+  if (!ccy) {
+    const ctx = ((filename||'') + (broker||'')).toLowerCase();
+    ccy = ctx.includes('usd') ? 'USD' : 'CAD';
+  }
+  // Fallback 3: Fidelity is USD-only
+  if (!ccy && broker === 'fidelity') ccy = 'USD';
+
+  // ── Symbol normalisation ──
+  symbol = symbol.trim().toUpperCase()
+    .replace(/['"]/g, '')     // strip stray quotes
+    .replace(/\s+/g, '')      // collapse internal spaces (e.g. "RY .TO" → "RY.TO")
+    // Strip IBKR currency-qualified suffixes ("/CAD", "/USD") but NOT class suffixes ("/B", "/A")
+    .replace(/\/(CAD|USD|EUR|GBP|AUD|CHF|JPY|SEK|DKK|NOK|NZD|HKD|SGD)$/, '')
+    // Strip colon-qualified exchange suffixes (e.g. "RY:TSX" → "RY")
+    .replace(/:(TSX|NYSE|NASDAQ|AMEX|ARCX|BATS|LSE|XETR)$/, '');
+
+  // ── Validation — filter out totals, cash-row stubs, empty symbols ──
+  if (!symbol || symbol.length > 18) return null;
+  if (SKIP_SYMBOLS.has(symbol)) return null;
+  if (/^(total|subtotal|grand|account|portfolio|summary|cash|fixed income)/i.test(symbol)) return null;
+  if (/^(total|subtotal|grand|account|portfolio|summary)/i.test(name)) return null;
+  // IBKR: skip option/future symbols (contain spaces, slashes, or are very long)
+  if (broker === 'ibkr' && /[ /]/.test(symbol) && symbol.length > 10) return null;
+  if (!qty && !mv && !price) return null;
+
+  if (!mv && price && qty) mv = price * qty;
+  mv = Math.abs(mv); // always use magnitude for portfolio value
+
+  // Capture exchange and security type columns when present (Wealthsimple / some other brokerages)
+  const exchange = (findCol(row, 'exchange', 'mic') || '').trim().toUpperCase();
+  const securityType = (findCol(row, 'security type', 'asset category', 'asset type') || '').trim().toUpperCase();
+
+  name = name.trim() || symbol;
+  return { symbol, name, quantity: qty, marketValue: mv, costBasis: cb, currency: ccy, exchange, securityType };
+}
+
+function parseCSVHoldings(text, filename) {
+  try {
+    // Strip UTF-8 BOM and normalise line endings
+    const clean = text.replace(/^﻿/, '').replace(/\r\n/g, '\n').trim();
+    // Extract account-level currency from preamble before we skip it (covers RBC, Fidelity — no currency column)
+    const accountCurrency = extractPreambleCurrency(clean);
+    // Skip brokerage preamble rows (account name, date, etc.) and find the real header
+    const dataText = findDataStart(clean);
+    const parsed = Papa.parse(dataText, {
+      header: true,
+      skipEmptyLines: 'greedy',
+      dynamicTyping: false,
+      transformHeader: h => h.trim().replace(/['"]/g, ''),
+    });
+    if (!parsed.data || parsed.data.length === 0) return { rows: [], error: 'No data rows found in file.' };
+    const broker = detectBroker(parsed.meta.fields || []);
+    const rows = parsed.data
+      .map(r => normalizeHolding(r, broker, filename, accountCurrency))
+      .filter(Boolean)
+      .map(h => ({ ...h, source: filename || 'CSV' }));
+    return { rows, error: rows.length === 0 ? 'File was read but no valid holdings rows could be extracted. Check the format guide below.' : null };
+  } catch(e) {
+    return { rows: [], error: 'Parse error: ' + e.message };
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// DATA ENRICHMENT
+// ═══════════════════════════════════════════════════════
+
+function enrichHolding(h) {
+  const sym = h.symbol;
+
+  // Build a list of symbol variants to try:
+  // 1. Symbol as-is  2. With .TO (for CAD securities missing the suffix)  3. Without .TO (if already has it)
+  const variants = [sym];
+  if (!sym.endsWith('.TO') && (h.currency === 'CAD' || (h.exchange||'').includes('TSX') || (h.exchange||'').includes('XTSE') || (h.exchange||'').includes('XTSX'))) {
+    variants.push(sym + '.TO');
+  }
+  if (sym.endsWith('.TO')) variants.push(sym.slice(0, -3));
+
+  for (const s of variants) {
+    if (ETF_DATA[s]) {
+      const e = ETF_DATA[s];
+      return { ...h, type: e.type || 'etf', displayName: e.name, geo: e.geo, sectors: e.sectors, topHoldings: e.topHoldings || {}, currency: h.currency || e.currency };
+    }
+    if (STOCK_DATA[s]) {
+      const st = STOCK_DATA[s];
+      return { ...h, type: 'stock', displayName: st.name, country: st.country, region: st.region, sector: st.sector, currency: h.currency || st.currency, geo: { [st.country]: 1.0 }, sectors: { [st.sector]: 1.0 } };
+    }
+  }
+
+  // Unknown — use exchange column (from CSV) to determine country, then security type to set type
+  const ccy = (h.currency || 'USD').toUpperCase();
+  const exc = (h.exchange || '').toUpperCase();
+  const csvType = (h.securityType || '').toUpperCase();
+
+  // Infer country from exchange code, then fall back to currency
+  let guessedCountry;
+  if (exc.includes('XTSE') || exc.includes('XTSX') || exc === 'TSX' || exc === 'TSX-V' || exc === 'TSXV') {
+    guessedCountry = 'Canada';
+  } else if (exc.includes('XNYS') || exc.includes('XNAS') || exc === 'NYSE' || exc === 'NASDAQ') {
+    guessedCountry = 'United States';
+  } else if (exc.includes('XLON') || exc === 'LSE') {
+    guessedCountry = 'UK';
+  } else if (exc.includes('XETR') || exc === 'XFRA') {
+    guessedCountry = 'Germany';
+  } else {
+    guessedCountry = ccy === 'CAD' ? 'Canada' : ccy === 'GBP' ? 'UK' : ccy === 'EUR' ? 'Europe' : ccy === 'JPY' ? 'Japan' : 'United States';
+  }
+
+  // Infer type from CSV security type field
+  const inferredType = csvType === 'EXCHANGE_TRADED_FUND' ? 'etf'
+    : csvType === 'EQUITY' ? 'stock'
+    : csvType === 'FIXED_INCOME' ? 'bond'
+    : 'unknown';
+
+  // For ETF-typed unknowns we have no geo breakdown — attribute entirely to inferred country
+  const geoMap = { [guessedCountry]: 1.0 };
+
+  // Try to infer a sector from the holding's own name string
+  const nameLower = (h.name || '').toLowerCase();
+  let inferredSector = 'Other';
+  if (/gold|silver|platinum|palladium|precious metal/i.test(nameLower)) inferredSector = 'Materials';
+  else if (/energy|oil|gas|petroleum|pipelin/i.test(nameLower)) inferredSector = 'Energy';
+  else if (/bank|financ|insur|trust|mortgage/i.test(nameLower)) inferredSector = 'Financials';
+  else if (/tech|software|cloud|data|cyber|semi/i.test(nameLower)) inferredSector = 'Technology';
+  else if (/health|pharma|biotech|medical|therapeut/i.test(nameLower)) inferredSector = 'Healthcare';
+  else if (/copper|mining|mineral|metal|lithium/i.test(nameLower)) inferredSector = 'Materials';
+  else if (/clean|solar|wind|renewable/i.test(nameLower)) inferredSector = 'Utilities';
+  else if (/consumer|retail|food|restaurant/i.test(nameLower)) inferredSector = 'Consumer Discretionary';
+
+  return { ...h, type: inferredType, displayName: h.name || sym, country: guessedCountry, geo: geoMap, sectors: { [inferredSector]: 1.0 }, currency: h.currency || 'USD' };
+}
+
+// ═══════════════════════════════════════════════════════
+// ANALYSIS ENGINE
+// ═══════════════════════════════════════════════════════
+
+const DEFAULT_FX = { CAD: 1.0, USD: 1.38, EUR: 1.50, GBP: 1.74, JPY: 0.0091, AUD: 0.88, CHF: 1.55, SEK: 0.13, DKK: 0.20 };
+
+function toHome(value, currency, fx) {
+  return value * (fx[currency] || fx['USD']);
+}
+
+function computeAnalysis(holdings, homeCurrency = 'CAD', fx = DEFAULT_FX) {
+  // Normalize FX so homeCurrency = 1
+  const homeRate = fx[homeCurrency] || 1;
+  const normFx = {};
+  Object.keys(fx).forEach(c => normFx[c] = fx[c] / homeRate);
+
+  const enriched = holdings.map(enrichHolding);
+
+  // Total portfolio value in home currency
+  const totalValue = enriched.reduce((sum, h) => sum + toHome(h.marketValue, h.currency, normFx), 0);
+  if (totalValue === 0) return null;
+
+  // ── Geography (look-through) ──
+  const geoMap = {};
+  enriched.forEach(h => {
+    const hvCAD = toHome(h.marketValue, h.currency, normFx);
+    const geo = h.geo || { 'Other': 1.0 };
+    Object.entries(geo).forEach(([country, weight]) => {
+      geoMap[country] = (geoMap[country] || 0) + hvCAD * weight;
+    });
+  });
+  const geography = Object.entries(geoMap)
+    .map(([label, value]) => ({ label, value, pct: value / totalValue }))
+    .sort((a, b) => b.value - a.value);
+
+  // ── Currency ──
+  const ccyMap = {};
+  enriched.forEach(h => {
+    const hvCAD = toHome(h.marketValue, h.currency, normFx);
+    ccyMap[h.currency] = (ccyMap[h.currency] || 0) + hvCAD;
+  });
+  const currencies = Object.entries(ccyMap)
+    .map(([label, value]) => ({ label, value, pct: value / totalValue }))
+    .sort((a, b) => b.value - a.value);
+
+  // ── Sectors ──
+  const sectorMap = {};
+  enriched.forEach(h => {
+    const hvCAD = toHome(h.marketValue, h.currency, normFx);
+    const secs = h.sectors || { 'Other': 1.0 };
+    Object.entries(secs).forEach(([sec, weight]) => {
+      sectorMap[sec] = (sectorMap[sec] || 0) + hvCAD * weight;
+    });
+  });
+  const sectors = Object.entries(sectorMap)
+    .map(([label, value]) => ({ label, value, pct: value / totalValue, benchmark: SECTOR_BENCHMARK[label] || 0 }))
+    .sort((a, b) => b.value - a.value);
+
+  // ── Concentration ──
+  const sortedByValue = [...enriched].sort((a, b) =>
+    toHome(b.marketValue, b.currency, normFx) - toHome(a.marketValue, a.currency, normFx)
+  );
+  const concentration = sortedByValue.map(h => ({
+    symbol: h.symbol, name: h.displayName || h.name,
+    value: toHome(h.marketValue, h.currency, normFx),
+    pct: toHome(h.marketValue, h.currency, normFx) / totalValue,
+    currency: h.currency, type: h.type || 'stock',
+    country: h.country || Object.keys(h.geo || {})[0] || 'Unknown',
+    sector: h.sector || Object.keys(h.sectors || {})[0] || 'Unknown',
+  }));
+
+  // ── Overlap (effective stock exposure across ETFs + direct) ──
+  const effectiveMap = {}; // symbol → { totalValue, sources: [] }
+  enriched.forEach(h => {
+    const hvCAD = toHome(h.marketValue, h.currency, normFx);
+    if (h.topHoldings && Object.keys(h.topHoldings).length > 0) {
+      Object.entries(h.topHoldings).forEach(([stockSym, weight]) => {
+        if (!effectiveMap[stockSym]) effectiveMap[stockSym] = { totalValue: 0, sources: [] };
+        const contrib = hvCAD * weight;
+        effectiveMap[stockSym].totalValue += contrib;
+        effectiveMap[stockSym].sources.push({ from: h.symbol, value: contrib, weight });
+      });
+    }
+    if (h.type === 'stock' || h.type === 'unknown') {
+      if (!effectiveMap[h.symbol]) effectiveMap[h.symbol] = { totalValue: 0, sources: [] };
+      effectiveMap[h.symbol].totalValue += hvCAD;
+      effectiveMap[h.symbol].sources.push({ from: 'direct', value: hvCAD, weight: 1.0 });
+    }
+  });
+
+  // Only show overlaps where stock appears in ≥2 sources and total > 1% of portfolio
+  const overlaps = Object.entries(effectiveMap)
+    .map(([sym, data]) => ({
+      symbol: sym,
+      name: STOCK_DATA[sym]?.name || sym,
+      totalValue: data.totalValue,
+      pct: data.totalValue / totalValue,
+      sources: data.sources,
+      hasDirect: data.sources.some(s => s.from === 'direct'),
+      etfCount: data.sources.filter(s => s.from !== 'direct').length,
+    }))
+    .filter(o => o.sources.length >= 2 && o.pct >= 0.005)
+    .sort((a, b) => b.totalValue - a.totalValue)
+    .slice(0, 8);
+
+  // ── Risk Flags ──
+  const flags = [];
+
+  // US concentration
+  const usPct = (geoMap['United States'] || 0) / totalValue;
+  if (usPct > 0.70) {
+    flags.push({ level: 'high', icon: '🇺🇸', title: `${(usPct*100).toFixed(0)}% US Concentration`, detail: `Over two-thirds of your portfolio is in US assets — one of the highest single-country concentrations a wealthy investor should watch. A US slowdown or policy shock hits you harder than most.` });
+  } else if (usPct > 0.55) {
+    flags.push({ level: 'medium', icon: '🇺🇸', title: `${(usPct*100).toFixed(0)}% US Exposure`, detail: `More than half your portfolio is in the US. While justified by market weight, geopolitical or dollar events could disproportionately affect your holdings.` });
+  }
+
+  // China exposure
+  const cnPct = (geoMap['China'] || 0) / totalValue;
+  if (cnPct > 0.08) {
+    flags.push({ level: 'high', icon: '🇨🇳', title: `${(cnPct*100).toFixed(0)}% China Exposure — Elevated Risk`, detail: `China carries heightened regulatory, geopolitical, and capital-control risks. Private wealth managers typically cap China at 5–8% absent a specific thesis.` });
+  } else if (cnPct > 0.04) {
+    flags.push({ level: 'medium', icon: '🇨🇳', title: `${(cnPct*100).toFixed(0)}% China Exposure`, detail: `Moderate China exposure. Be aware of ongoing tensions with the West and the risk of sudden regulatory changes affecting listed companies.` });
+  }
+
+  // Emerging markets
+  const emPct = (geoMap['Emerging Markets'] || 0) / totalValue;
+  if (emPct > 0.20) {
+    flags.push({ level: 'medium', icon: '🌏', title: `${(emPct*100).toFixed(0)}% Emerging Markets Weight`, detail: `Higher EM exposure adds growth potential but also currency volatility and political risk. Standard guidance is 10–15% for a balanced portfolio.` });
+  }
+
+  // Currency risk (non-home)
+  const homePct = (ccyMap[homeCurrency] || 0) / totalValue;
+  if (homePct < 0.25) {
+    flags.push({ level: 'high', icon: '💱', title: `${((1-homePct)*100).toFixed(0)}% Foreign Currency Exposure`, detail: `Most of your portfolio is in non-${homeCurrency} assets. Currency moves can swing your total returns by ±5–15% in a year, independent of underlying asset performance.` });
+  } else if (homePct < 0.45) {
+    flags.push({ level: 'medium', icon: '💱', title: `${((1-homePct)*100).toFixed(0)}% Foreign Currency Exposure`, detail: `Significant FX exposure. Consider whether this is intentional diversification or unintended currency risk relative to your spending currency.` });
+  }
+
+  // Tech overweight
+  const techPct = (sectorMap['Technology'] || 0) / totalValue;
+  if (techPct > 0.40) {
+    flags.push({ level: 'high', icon: '💻', title: `Tech Sector at ${(techPct*100).toFixed(0)}% — Significantly Overweight`, detail: `Tech is ${(techPct/0.28).toFixed(1)}× the global market average. A sector rotation or rate cycle shift can cause sharp drawdowns in tech-heavy portfolios. Consider whether this reflects conviction or overlap.` });
+  } else if (techPct > 0.33) {
+    flags.push({ level: 'medium', icon: '💻', title: `Tech at ${(techPct*100).toFixed(0)}% — Overweight`, detail: `Your technology exposure is ${(techPct/0.28).toFixed(1)}× the global benchmark of ~28%. Much of this may be driven by US index ETFs — the overlap is real.` });
+  }
+
+  // Concentration: top single holding
+  if (concentration.length > 0) {
+    const top = concentration[0];
+    if (top.pct > 0.20) {
+      flags.push({ level: 'high', icon: '⚠️', title: `${top.symbol} is ${(top.pct*100).toFixed(0)}% of Your Portfolio`, detail: `A single position this large creates idiosyncratic risk. A 40% drawdown in ${top.symbol} alone would reduce your portfolio by ${(top.pct*0.4*100).toFixed(0)}%. Standard guidance caps single positions at 5–10%.` });
+    } else if (top.pct > 0.12) {
+      flags.push({ level: 'medium', icon: '📌', title: `${top.symbol} is ${(top.pct*100).toFixed(0)}% — Concentrated Position`, detail: `Your largest position is material relative to the total. Monitor it actively and consider whether a trim is warranted.` });
+    }
+  }
+
+  // Overlap flag
+  if (overlaps.length > 0) {
+    const top = overlaps[0];
+    if (top.pct > 0.08) {
+      flags.push({ level: 'high', icon: '🔗', title: `Hidden Overlap: ${top.symbol} at ${(top.pct*100).toFixed(0)}% Effective Weight`, detail: `${top.symbol} appears across ${top.sources.length} positions in your portfolio. Your actual exposure is far higher than any single line item suggests — a common blind spot in ETF-heavy portfolios.` });
+    } else if (overlaps.length >= 3) {
+      flags.push({ level: 'medium', icon: '🔗', title: `ETF Overlap Detected in ${overlaps.length} Stocks`, detail: `Several stocks appear in multiple ETFs you hold. Your effective exposure to these names is higher than a simple holdings list reveals.` });
+    }
+  }
+
+  // Bond allocation check
+  const bondPct = (sectorMap['Bonds'] || 0) / totalValue;
+  if (bondPct < 0.05 && holdings.length > 3) {
+    flags.push({ level: 'medium', icon: '📊', title: `Low Fixed Income — ${(bondPct*100).toFixed(0)}% Bonds`, detail: `Your portfolio is nearly all equities. Bonds and fixed income typically provide ballast during equity drawdowns. Most private wealth advisors target 10–40% depending on time horizon.` });
+  }
+
+  // Diversification celebration
+  if (flags.filter(f=>f.level!=='good').length === 0) {
+    flags.push({ level: 'good', icon: '✅', title: 'Well-Diversified Portfolio', detail: 'No major concentration or risk flags detected. Your portfolio shows broad diversification across geographies, currencies, and sectors.' });
+  }
+
+  return { totalValue, geography, currencies, sectors, concentration, overlaps, flags, enriched, homeCurrency };
+}
+
+// ═══════════════════════════════════════════════════════
+// NEW ANALYSIS HELPERS
+// ═══════════════════════════════════════════════════════
+
+// Try to fetch live FX rates from frankfurter.app (free, CORS-ok)
+async function fetchFXRates(base = 'CAD') {
+  try {
+    const res = await Promise.race([
+      fetch(`https://api.frankfurter.app/latest?base=${base}`),
+      new Promise((_, rej) => setTimeout(() => rej('timeout'), 3500)),
+    ]);
+    if (res && res.ok) {
+      const data = await res.json();
+      // data.rates = { USD: 0.724 } means 1 CAD = 0.724 USD
+      // We need: 1 USD = X CAD → invert
+      const fx = { [base]: 1.0 };
+      Object.entries(data.rates).forEach(([c, r]) => { fx[c] = 1 / r; });
+      return { rates: fx, live: true };
+    }
+  } catch(e) {}
+  return { rates: DEFAULT_FX, live: false };
+}
+
+// Risk score: A–F grade across 4 dimensions
+function computeRiskScore(analysis) {
+  const { geography, sectors, concentration, currencies } = analysis;
+  let score = 100;
+
+  // 1. Concentration
+  const top1 = concentration[0]?.pct || 0;
+  const top3 = concentration.slice(0,3).reduce((s,h) => s + h.pct, 0);
+  const concDeduct = (top1 > 0.20 ? 25 : top1 > 0.12 ? 13 : top1 > 0.07 ? 6 : 0)
+                   + (top3 > 0.55 ? 15 : top3 > 0.40 ? 7 : 0);
+  const concScore = Math.max(0, 100 - concDeduct);
+
+  // 2. Geography
+  const topGeo = geography[0]?.pct || 0;
+  const chinaGeo = geography.find(g => g.label === 'China')?.pct || 0;
+  const geoDeduct = (topGeo > 0.85 ? 22 : topGeo > 0.70 ? 12 : topGeo > 0.55 ? 4 : 0)
+                  + (chinaGeo > 0.10 ? 10 : chinaGeo > 0.05 ? 5 : 0);
+  const geoScore = Math.max(0, 100 - geoDeduct);
+
+  // 3. Sectors
+  let sectorDeduct = 0;
+  sectors.forEach(s => {
+    if (s.benchmark > 0) {
+      const ratio = s.pct / s.benchmark;
+      if (ratio > 2.2) sectorDeduct += 10;
+      else if (ratio > 1.6) sectorDeduct += 5;
+    }
+  });
+  const sectorScore = Math.max(0, 100 - sectorDeduct);
+
+  // 4. Currency
+  const topCcy = currencies[0]?.pct || 0;
+  const ccyScore = Math.max(0, 100 - (topCcy > 0.92 ? 10 : topCcy > 0.80 ? 5 : 0));
+
+  score = Math.round(concScore * 0.35 + geoScore * 0.30 + sectorScore * 0.20 + ccyScore * 0.15);
+  score = Math.max(0, Math.min(100, score));
+  const grade = score >= 80 ? 'A' : score >= 65 ? 'B' : score >= 50 ? 'C' : score >= 35 ? 'D' : 'F';
+  const label = {A:'Well Diversified', B:'Generally Sound', C:'Some Concerns', D:'Significant Risks', F:'High Risk'}[grade];
+  return { score, grade, label, concScore, geoScore, sectorScore, ccyScore };
+}
+
+// Detect redundant ETFs (same underlying index held twice)
+function detectRedundantETFs(enriched) {
+  const GROUPS = [
+    { label:'S&P 500', tickers:['SPY','VOO','IVV','SPLG','VFV.TO','ZSP.TO','HXS.TO'] },
+    { label:'NASDAQ-100', tickers:['QQQ','QQQM','XQQ.TO','ZQQ.TO','HQU.TO'] },
+    { label:'US Total Market', tickers:['VTI','ITOT','SCHB'] },
+    { label:'Global All-Equity', tickers:['XEQT.TO','VEQT.TO'] },
+    { label:'Global 80/20', tickers:['XGRO.TO','VGRO.TO'] },
+    { label:'Canadian Market', tickers:['XIU.TO','XIC.TO','VCN.TO'] },
+    { label:'Canadian Bonds', tickers:['ZAG.TO','VAB.TO','XBB.TO'] },
+    { label:'US Aggregate Bonds', tickers:['AGG','BND'] },
+  ];
+  const syms = new Set(enriched.map(h => h.symbol));
+  return GROUPS
+    .map(g => ({ ...g, held: g.tickers.filter(t => syms.has(t)) }))
+    .filter(g => g.held.length >= 2);
+}
+
+// Export holdings to CSV download
+function exportHoldingsCSV(analysis) {
+  const { concentration, homeCurrency } = analysis;
+  const header = 'Symbol,Name,Type,Country,Sector,Currency,"Market Value","Weight %"';
+  const rows = concentration.map(h =>
+    `${h.symbol},"${h.name.replace(/"/g,'""')}",${h.type},${h.country},${h.sector},${h.currency},${h.value.toFixed(2)},${(h.pct*100).toFixed(2)}`
+  );
+  const csv = [header, ...rows].join('\n');
+  const blob = new Blob([csv], { type:'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'portfolio-risk.csv'; a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+// PDF text extraction + holdings parsing
+async function parsePDFHoldings(file) {
+  if (typeof pdfjsLib === 'undefined') return [];
+  try {
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    const buf = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+    let text = '';
+    for (let i = 1; i <= Math.min(pdf.numPages, 40); i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      text += content.items.map(item => item.str).join(' ') + '\n';
+    }
+    return extractHoldingsFromText(text, file.name);
+  } catch(e) { return []; }
+}
+
+function extractHoldingsFromText(text, source) {
+  const holdings = [];
+  const seen = new Set();
+  const allKnown = [...Object.keys(ETF_DATA), ...Object.keys(STOCK_DATA)];
+
+  // For each known ticker, search for it in the text
+  for (const ticker of allKnown) {
+    if (seen.has(ticker)) continue;
+    const escaped = ticker.replace('.', '\\.');
+    const re = new RegExp(`(?<![A-Z0-9.])${escaped}(?![A-Z0-9.])`, 'i');
+    if (!re.test(text)) continue;
+
+    // Find the surrounding chunk and look for numbers
+    const idx = text.search(re);
+    const chunk = text.slice(Math.max(0, idx - 60), idx + 120);
+    const nums = (chunk.match(/[\d,]+\.?\d*/g) || [])
+      .map(n => parseFloat(n.replace(/,/g, '')))
+      .filter(n => n > 0 && n < 1e8 && !isNaN(n));
+
+    if (nums.length >= 2) {
+      const qty = nums[0];
+      const mv = nums.find(n => n > 100) || nums[nums.length - 1];
+      const ccy = /CAD/.test(chunk) ? 'CAD' : 'USD';
+      if (mv > 0) {
+        holdings.push({ symbol: ticker, name: (ETF_DATA[ticker]||STOCK_DATA[ticker])?.name || ticker,
+          quantity: qty, marketValue: mv, costBasis: 0, currency: ccy, source });
+        seen.add(ticker);
+      }
+    }
+  }
+  return holdings;
+}
+
+// Treemap layout: binary-split algorithm
+function layoutTreemap(items, x, y, w, h) {
+  if (!items.length) return [];
+  if (items.length === 1) return [{ ...items[0], rx:x, ry:y, rw:w, rh:h }];
+  const total = items.reduce((s, i) => s + i.pct, 0);
+  if (total === 0) return [];
+  let splitIdx = 1, bestBalance = Infinity, cum = 0;
+  for (let i = 0; i < items.length - 1; i++) {
+    cum += items[i].pct;
+    const bal = Math.abs(cum / total - 0.5);
+    if (bal < bestBalance) { bestBalance = bal; splitIdx = i + 1; }
+  }
+  const L = items.slice(0, splitIdx), R = items.slice(splitIdx);
+  const lf = L.reduce((s,i) => s+i.pct, 0) / total;
+  const [lx,ly,lw,lh, rx,ry,rw,rh] = w > h
+    ? [x, y, w*lf, h,  x+w*lf, y, w*(1-lf), h]
+    : [x, y, w, h*lf,  x, y+h*lf, w, h*(1-lf)];
+  return [...layoutTreemap(L, lx,ly,lw,lh), ...layoutTreemap(R, rx,ry,rw,rh)];
+}
+
+// ═══════════════════════════════════════════════════════
+// UTILITY
+// ═══════════════════════════════════════════════════════
+
+function fmt(n, ccy='CAD') {
+  if (n >= 1e6) return (ccy === 'CAD' ? 'C$' : '$') + (n/1e6).toFixed(2) + 'M';
+  if (n >= 1e3) return (ccy === 'CAD' ? 'C$' : '$') + n.toLocaleString('en-CA',{minimumFractionDigits:0,maximumFractionDigits:0});
+  return (ccy === 'CAD' ? 'C$' : '$') + n.toFixed(2);
+}
+function pct(n) { return (n*100).toFixed(1) + '%'; }
+
+function regionTag(country) {
+  const tags = {
+    'United States':'tag-us','Canada':'tag-ca',
+    'UK':'tag-eu','Europe':'tag-eu','Netherlands':'tag-eu','Germany':'tag-eu','France':'tag-eu','Denmark':'tag-eu','Sweden':'tag-eu','Switzerland':'tag-eu',
+    'China':'tag-em','India':'tag-em','Taiwan':'tag-em','Emerging Markets':'tag-em',
+    'Japan':'tag-int','Australia':'tag-int','Other Developed':'tag-int',
+  };
+  return tags[country] || 'tag-other';
+}
+
+// ═══════════════════════════════════════════════════════
+// CHART COMPONENTS
+// ═══════════════════════════════════════════════════════
+
+function polarToXY(cx, cy, r, deg) {
+  const rad = (deg - 90) * Math.PI / 180;
+  return { x: cx + r*Math.cos(rad), y: cy + r*Math.sin(rad) };
+}
+
+function arcPath(cx, cy, r, ri, startDeg, endDeg) {
+  const s = polarToXY(cx, cy, r, startDeg);
+  const e = polarToXY(cx, cy, r, endDeg);
+  const si = polarToXY(cx, cy, ri, endDeg);
+  const ei = polarToXY(cx, cy, ri, startDeg);
+  const lg = (endDeg - startDeg) > 180 ? 1 : 0;
+  return `M${s.x} ${s.y} A${r} ${r} 0 ${lg} 1 ${e.x} ${e.y} L${si.x} ${si.y} A${ri} ${ri} 0 ${lg} 0 ${ei.x} ${ei.y} Z`;
+}
+
+function DonutChart({ data, centerLabel, centerSub, size=140 }) {
+  const cx = size/2, cy = size/2, r = size/2 - 6, ri = r * 0.58;
+  let current = 0;
+  const slices = data.filter(d => d.value > 0).map(d => {
+    const start = current;
+    const sweep = d.pct * 360;
+    current += sweep;
+    return { ...d, start, sweep };
+  });
+  return (
+    <svg width={size} height={size} style={{overflow:'visible'}}>
+      {slices.map((s, i) => (
+        <path key={i} d={arcPath(cx, cy, r, ri, s.start, s.start + s.sweep - (s.sweep > 5 ? 1.5 : 0))}
+          fill={GEO_COLORS[s.label] || '#8A8680'} opacity="0.92" />
+      ))}
+      {centerLabel && (
+        <text x={cx} y={cy - 6} textAnchor="middle" fontSize="14" fontWeight="800" fill="#111110">{centerLabel}</text>
+      )}
+      {centerSub && (
+        <text x={cx} y={cy + 10} textAnchor="middle" fontSize="9" fill="#8A8680">{centerSub}</text>
+      )}
+    </svg>
+  );
+}
+
+function SectorBars({ data }) {
+  const max = Math.max(...data.map(d => Math.max(d.pct, d.benchmark||0)), 0.01);
+  return (
+    <div className="hbar-list">
+      {data.filter(d=>d.label!=='Bonds').slice(0, 10).map((d,i) => (
+        <div key={i} className="hbar-row">
+          <div className="hbar-meta">
+            <span className="hbar-label">{d.label}</span>
+            <span className="hbar-pct" style={{color: d.pct > (d.benchmark||0)*1.5 ? 'var(--rose)' : d.pct > (d.benchmark||0)*1.2 ? 'var(--amber)' : 'var(--text-primary)'}}>{pct(d.pct)}</span>
+          </div>
+          <div className="hbar-track">
+            <div className="hbar-fill" style={{width: `${(d.pct/max)*100}%`, background: SECTOR_COLORS[d.label]||'#8A8680', opacity:0.85}} />
+            {d.benchmark > 0 && <div className="hbar-benchmark" style={{left: `${(d.benchmark/max)*100}%`}} />}
+          </div>
+        </div>
+      ))}
+      <div style={{fontSize:11,color:'var(--text-muted)',marginTop:8}}>Vertical line = global benchmark weight</div>
+    </div>
+  );
+}
+
+// SVG treemap of portfolio positions, colored by geography
+function PortfolioTreemap({ concentration }) {
+  const items = concentration.filter(h => h.pct >= 0.005).slice(0, 22);
+  if (!items.length) return null;
+  const rects = layoutTreemap(items, 0, 0, 720, 160);
+  return (
+    <div className="treemap-outer">
+      <svg viewBox="0 0 720 160" style={{width:'100%',display:'block',borderRadius:10}}>
+        {rects.map((r, i) => (
+          <g key={i}>
+            <rect x={r.rx+1} y={r.ry+1} width={Math.max(r.rw-2,0)} height={Math.max(r.rh-2,0)}
+              fill={GEO_COLORS[r.country]||'#8A8680'} rx={5} opacity={0.9}/>
+            {r.rw > 52 && r.rh > 22 &&
+              <text x={r.rx+8} y={r.ry+r.rh-8} fontSize={11} fontWeight="700" fill="white">{r.symbol}</text>}
+            {r.rw > 65 && r.rh > 38 &&
+              <text x={r.rx+8} y={r.ry+r.rh-22} fontSize={10} fill="white" opacity="0.75">{pct(r.pct)}</text>}
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+}
+
+// A–F risk grade card
+function RiskScoreCard({ rs }) {
+  const cls = `grade-${rs.grade.toLowerCase()}`;
+  const gradeDesc = { A:'Well Diversified', B:'Generally Sound', C:'Some Concerns', D:'Significant Risks', F:'High Risk' }[rs.grade];
+  return (
+    <div className="section-card fade-in" style={{marginBottom:20}}>
+      <div style={{display:'flex',alignItems:'center',gap:20,flexWrap:'wrap'}}>
+        <div className={`risk-grade-circle ${cls}`}>
+          <div className={`risk-grade-letter ${cls}`}>{rs.grade}</div>
+          <div className="risk-grade-score">{rs.score}/100</div>
+        </div>
+        <div style={{flex:1,minWidth:180}}>
+          <div style={{fontSize:16,fontWeight:700,marginBottom:6}}>{gradeDesc}</div>
+          <div style={{display:'flex',gap:18,flexWrap:'wrap'}}>
+            {[['Concentration',rs.concScore],['Geography',rs.geoScore],['Sectors',rs.sectorScore],['Currency',rs.ccyScore]].map(([lbl,val])=>(
+              <div key={lbl}>
+                <span style={{fontSize:12,color:'var(--text-muted)'}}>{lbl} </span>
+                <span style={{fontSize:13,fontWeight:700,color:val>=70?'var(--accent)':val>=50?'var(--amber)':'var(--rose)'}}>{val}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div style={{fontSize:11,color:'var(--text-muted)',maxWidth:160,lineHeight:1.55,textAlign:'right'}}>
+          Risk Intelligence Score — concentration, geography, sectors, and currency diversification.
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+// LANDING PAGE
+// ═══════════════════════════════════════════════════════
+
+function LandingPage({ onStart, onSample }) {
+  const features = [
+    { icon: '🌍', label: 'Country look-through', desc: 'See real geographic exposure inside ETFs' },
+    { icon: '🔗', label: 'ETF overlap', desc: 'Detect hidden duplication across funds' },
+    { icon: '💱', label: 'Currency risk', desc: 'CAD, USD, and multi-currency exposure' },
+    { icon: '📊', label: 'Sector analysis', desc: 'Benchmark against global market weights' },
+    { icon: '🔒', label: 'Fully private', desc: 'Runs entirely in your browser' },
+  ];
+  return (
+    <div className="landing">
+      <div className="landing-eyebrow">
+        <div className="badge-dot" />
+        Portfolio Risk Intelligence
+      </div>
+      <h1>See the risks your<br/>portfolio <em>hides</em></h1>
+      <div className="landing-rule" />
+      <p className="subtitle">
+        Drop in your brokerage CSV. Get the portfolio risk analysis that private wealth desks run for their top clients — in seconds, for free.
+      </p>
+      <div className="landing-cta">
+        <button className="btn-primary" onClick={onStart}>Analyze my portfolio →</button>
+        <button className="btn-secondary" onClick={onSample}>Try sample portfolio</button>
+      </div>
+      <div className="landing-features">
+        {features.map(({ icon, label, desc }, i) => (
+          <div key={i} className="landing-feature">
+            <div className="landing-feature-icon">{icon}</div>
+            <div className="landing-feature-label">{label}</div>
+            <div className="landing-feature-desc">{desc}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+// UPLOAD SCREEN
+// ═══════════════════════════════════════════════════════
+
+function UploadScreen({ onAnalyze, onSample }) {
+  const [files, setFiles] = useState([]);
+  const [dragging, setDragging] = useState(false);
+  const [manualText, setManualText] = useState('');
+  const [tab, setTab] = useState('file'); // 'file' | 'manual'
+  const inputRef = useRef();
+
+  const addFiles = (newFiles) => {
+    const arr = Array.from(newFiles).filter(f => /\.(csv|txt|tsv|pdf)$/i.test(f.name));
+    setFiles(prev => {
+      const names = new Set(prev.map(f=>f.name));
+      return [...prev, ...arr.filter(f=>!names.has(f.name))];
+    });
+  };
+
+  const onDrop = (e) => { e.preventDefault(); setDragging(false); addFiles(e.dataTransfer.files); };
+  const onDragOver = (e) => { e.preventDefault(); setDragging(true); };
+  const onDragLeave = () => setDragging(false);
+
+  const handleAnalyze = () => {
+    if (tab === 'manual' && manualText.trim()) {
+      onAnalyze([{ name: 'Manual Entry', text: manualText }]);
+    } else {
+      onAnalyze(files);
+    }
+  };
+
+  const canAnalyze = (tab === 'file' && files.length > 0) || (tab === 'manual' && manualText.trim().length > 10);
+
+  return (
+    <div className="screen">
+      <h2 className="screen-title">Import your holdings</h2>
+      <p className="screen-sub">Export a CSV from your brokerage and drop it here. Multiple accounts and brokerages supported.</p>
+
+      <div style={{display:'flex',gap:0,marginBottom:20,background:'var(--bg-subtle)',borderRadius:10,padding:3,border:'1px solid var(--border)'}}>
+        {[['file','📁 Upload CSV'],['manual','✏️ Paste manually']].map(([id,label])=>(
+          <button key={id} onClick={()=>setTab(id)} style={{
+            flex:1,padding:'8px 16px',fontSize:13,fontWeight:600,borderRadius:8,border:'none',cursor:'pointer',fontFamily:'inherit',
+            background: tab===id ? 'var(--surface)' : 'transparent',
+            color: tab===id ? 'var(--text-primary)' : 'var(--text-muted)',
+            boxShadow: tab===id ? '0 1px 4px rgba(0,0,0,0.08)' : 'none',
+          }}>{label}</button>
+        ))}
+      </div>
+
+      {tab === 'file' ? (<>
+        <div className={`upload-area${dragging?' drag':''}`}
+          onDrop={onDrop} onDragOver={onDragOver} onDragLeave={onDragLeave}
+          onClick={()=>inputRef.current?.click()}>
+          <input ref={inputRef} type="file" accept=".csv,.txt,.tsv,.pdf" multiple onChange={e=>addFiles(e.target.files)} />
+          <div className="drop-icon">📂</div>
+          <div className="drop-label">Drop CSV or PDF files here</div>
+          <div className="drop-sub">or <span className="drop-link">browse files</span></div>
+        </div>
+        <div className="broker-chips">
+          {['RBC Direct','Wealthsimple','TD Direct','Questrade','IBKR','BMO InvestorLine','Fidelity'].map(b=>(
+            <div key={b} className="broker-chip">{b}</div>
+          ))}
+        </div>
+        {files.length > 0 && (
+          <div className="file-list">
+            {files.map((f,i)=>(
+              <div key={i} className="file-pill">
+                <div className="file-pill-icon">📄</div>
+                <div className="file-pill-name">{f.name}</div>
+                <div className="file-pill-size">{(f.size/1024).toFixed(1)} KB</div>
+                <div className="file-pill-remove" onClick={e=>{e.stopPropagation();setFiles(prev=>prev.filter((_,j)=>j!==i))}}>✕</div>
+              </div>
+            ))}
+          </div>
+        )}
+      </>) : (
+        <div className="manual-entry" style={{width:'100%',maxWidth:580}}>
+          <textarea
+            value={manualText}
+            onChange={e=>setManualText(e.target.value)}
+            placeholder={"Symbol,Quantity,MarketValue,Currency\nAAPL,10,2300,USD\nXEQT.TO,200,10050,CAD\nSPY,5,3450,USD"}
+            rows={7}
+          />
+          <div className="manual-hint">Paste CSV with columns: Symbol, Quantity, MarketValue, Currency<br/>or any standard brokerage CSV format</div>
+        </div>
+      )}
+
+      <div className="upload-actions">
+        <button className="btn-primary" disabled={!canAnalyze} onClick={handleAnalyze}>Analyze portfolio →</button>
+        <button className="btn-secondary" onClick={onSample}>Use sample data</button>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+// PROCESSING SCREEN
+// ═══════════════════════════════════════════════════════
+
+function ProcessingScreen({ files, useSample, onDone }) {
+  const [step, setStep] = useState(0);
+  const steps = [
+    'Reading holdings', 'Fetching live FX rates',
+    'Identifying securities', 'Computing geography exposure',
+    'Detecting overlaps & risks',
+  ];
+
+  useEffect(() => {
+    let cancelled = false;
+    async function run() {
+      let allHoldings = [];
+      const parseErrors = [];
+
+      if (useSample) {
+        await new Promise(r => setTimeout(r, 500));
+        allHoldings = SAMPLE_HOLDINGS;
+      } else {
+        for (const item of files) {
+          let result;
+          try {
+            if (typeof item.text === 'string') {
+              // manual entry pseudo-file (item.text is a string, not File.prototype.text method)
+              result = parseCSVHoldings(item.text, item.name || 'Manual Entry');
+            } else if (item instanceof File) {
+              if (/\.pdf$/i.test(item.name)) {
+                const pdfRows = await parsePDFHoldings(item);
+                result = { rows: pdfRows, error: pdfRows.length === 0 ? 'No recognisable tickers found in PDF.' : null };
+              } else {
+                const text = await item.text();
+                result = parseCSVHoldings(text, item.name);
+              }
+            }
+          } catch(e) {
+            result = { rows: [], error: String(e) };
+          }
+          if (result) {
+            allHoldings = [...allHoldings, ...result.rows];
+            if (result.error) parseErrors.push({ file: item.name || '(input)', msg: result.error });
+          }
+        }
+        // If nothing parsed at all, surface the errors instead of swapping in sample data
+        if (allHoldings.length === 0) {
+          if (cancelled) return;
+          onDone({ rawHoldings: [], fxRates: DEFAULT_FX, fxLive: false, parseErrors });
+          return;
+        }
+      }
+
+      if (cancelled) return;
+      setStep(1); await new Promise(r => setTimeout(r, 300));
+      const fxResult = await fetchFXRates('CAD');
+      if (cancelled) return;
+      setStep(2); await new Promise(r => setTimeout(r, 400));
+      if (cancelled) return;
+      setStep(3); await new Promise(r => setTimeout(r, 500));
+      if (cancelled) return;
+      setStep(4); await new Promise(r => setTimeout(r, 500));
+      if (cancelled) return;
+
+      onDone({ rawHoldings: allHoldings, fxRates: fxResult.rates, fxLive: fxResult.live, parseErrors });
+    }
+    run();
+    return () => { cancelled = true; };
+  }, []);
+
+  return (
+    <div className="processing-screen">
+      <div className="processing-spinner" />
+      <div className="processing-title">Analyzing your portfolio</div>
+      <div className="processing-step">{steps[Math.min(step, steps.length-1)]}…</div>
+      <div className="processing-log">
+        {steps.map((s, i) => (
+          <div key={i} className={`log-item ${i < step ? 'done' : i === step ? 'active' : ''}`}>
+            <div className="log-dot" />
+            {i < step ? '✓ ' : ''}{s}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+// RESULTS SCREEN
+// ═══════════════════════════════════════════════════════
+
+function ParseErrorScreen({ parseErrors, onReset }) {
+  return (
+    <div className="screen" style={{maxWidth:600,margin:'0 auto'}}>
+      <div style={{fontSize:40,marginBottom:16,textAlign:'center'}}>📋</div>
+      <h2 className="screen-title" style={{textAlign:'center'}}>Couldn't read your file</h2>
+      <p className="screen-sub" style={{textAlign:'center'}}>
+        The file was uploaded but we couldn't find recognisable holding rows.
+      </p>
+
+      {parseErrors && parseErrors.length > 0 && (
+        <div style={{marginBottom:20}}>
+          {parseErrors.map((e,i) => (
+            <div key={i} style={{background:'var(--rose-light)',border:'1px solid #DDB8B8',borderRadius:10,padding:'12px 16px',marginBottom:8,fontSize:13,color:'var(--rose)'}}>
+              <strong>{e.file}:</strong> {e.msg}
+            </div>
+          ))}
+        </div>
+      )}
+
+      <div className="section-card" style={{marginBottom:20}}>
+        <div className="section-header"><div className="section-icon">💡</div><div className="section-title">How to fix this</div></div>
+        <div style={{fontSize:13,color:'var(--text-secondary)',lineHeight:1.8}}>
+          <p style={{marginBottom:12}}>Your file needs a row of column headers that includes <strong>Symbol</strong> (or Ticker) and at least one of: <strong>Quantity</strong>, <strong>Market Value</strong>, or <strong>Price</strong>.</p>
+          <p style={{marginBottom:8}}><strong>Common brokerage export steps:</strong></p>
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
+            {[
+              ['RBC Direct', 'Holdings → Export → CSV'],
+              ['Wealthsimple', 'Use the "Wealthsimple Exporter" Chrome extension'],
+              ['TD WebBroker', 'Holdings → Download → CSV'],
+              ['Questrade', 'Reports → Holdings → Export'],
+              ['IBKR', 'Reports → Activity → Positions → CSV'],
+              ['Fidelity', 'Accounts → Positions → Download CSV'],
+            ].map(([broker, steps]) => (
+              <div key={broker} style={{background:'var(--bg-subtle)',borderRadius:8,padding:'8px 12px',border:'1px solid var(--border)'}}>
+                <div style={{fontWeight:700,fontSize:12,marginBottom:2}}>{broker}</div>
+                <div style={{fontSize:11,color:'var(--text-muted)'}}>{steps}</div>
+              </div>
+            ))}
+          </div>
+          <p style={{marginTop:12,fontSize:12,color:'var(--text-muted)'}}>
+            Or use the <strong>Paste manually</strong> tab on the upload screen with this format:<br/>
+            <code style={{background:'var(--bg-subtle)',padding:'2px 6px',borderRadius:4}}>Symbol,Quantity,MarketValue,Currency</code>
+          </p>
+        </div>
+      </div>
+
+      <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
+        <button className="btn-primary" onClick={onReset}>Try again</button>
+        <button className="btn-secondary" onClick={() => onReset('sample')}>Use sample portfolio</button>
+      </div>
+    </div>
+  );
+}
+
+function ResultsScreen({ rawHoldings, fxRates, fxLive, parseErrors, onReset }) {
+  const [hc, setHc] = useState('CAD');
+  const [showAll, setShowAll] = useState(false);
+
+  // Recompute analysis whenever home currency changes
+  const data = React.useMemo(() => {
+    if (!rawHoldings || !rawHoldings.length) return null;
+    return computeAnalysis(rawHoldings, hc, fxRates || DEFAULT_FX);
+  }, [rawHoldings, hc, fxRates]);
+
+  if (!rawHoldings || rawHoldings.length === 0 || !data || data.totalValue === 0) {
+    return <ParseErrorScreen parseErrors={parseErrors} onReset={onReset} />;
+  }
+
+  const { totalValue, geography, currencies, sectors, concentration, overlaps, flags, enriched } = data;
+  const unknown = enriched.filter(h => h.type === 'unknown');
+  const topGeo = geography[0];
+  const accountSet = new Set(enriched.map(h => h.source).filter(Boolean));
+  const highFlags = flags.filter(f => f.level === 'high');
+  const medFlags  = flags.filter(f => f.level === 'medium');
+  const goodFlags = flags.filter(f => f.level === 'good');
+  const CCY_COLORS = { CAD:'#C41E3A', USD:'#2A5E3A', EUR:'#2A4A7A', GBP:'#00247D', JPY:'#BC002D', AUD:'#006DAE' };
+  const visibleHoldings = showAll ? concentration : concentration.slice(0, 8);
+
+  const rs = computeRiskScore(data);
+  const redundant = detectRedundantETFs(enriched);
+
+  // Leveraged ETF holdings
+  const leveraged = enriched.filter(h => LEVERAGED_TICKERS.has(h.symbol) || ETF_DATA[h.symbol]?.leveraged);
+
+  // Asset allocation strip: equity / bond / cash / crypto / commodity
+  const assetBuckets = {};
+  enriched.forEach(h => {
+    const t = ETF_DATA[h.symbol]?.type || h.type || 'stock';
+    const bucket = t === 'bond' ? 'Bonds' : t === 'cash' ? 'Cash' : t === 'crypto' ? 'Crypto' : t === 'commodity' ? 'Commodities' : 'Equities';
+    const normFx2 = {};
+    const homeRate2 = (fxRates||DEFAULT_FX)[hc] || 1;
+    Object.keys(fxRates||DEFAULT_FX).forEach(c => normFx2[c] = ((fxRates||DEFAULT_FX)[c]) / homeRate2);
+    const v = h.marketValue * (normFx2[h.currency] || normFx2['USD'] || 1);
+    assetBuckets[bucket] = (assetBuckets[bucket] || 0) + v;
+  });
+  const assetColors = { Equities:'#2A5E3A', Bonds:'#2A4A7A', Cash:'#8A6020', Crypto:'#9A3A8A', Commodities:'#6A5A2A' };
+  const assetTotal = Object.values(assetBuckets).reduce((s,v)=>s+v,0);
+
+  return (
+    <div className="results-screen">
+      <div className="results-container">
+
+        {/* ── Currency selector ── */}
+        <div className="ccy-selector">
+          <span>View in</span>
+          <select value={hc} onChange={e => { setHc(e.target.value); setShowAll(false); }}>
+            {['CAD','USD','EUR','GBP','AUD','CHF'].map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+          {fxLive
+            ? <span className="fx-live">✓ Live rates</span>
+            : <span style={{fontSize:11,color:'var(--text-muted)'}}>Approximate rates</span>
+          }
+        </div>
+
+        {/* ── Portfolio Hero ── */}
+        <div className="portfolio-hero fade-in">
+          <div>
+            <div className="portfolio-value">{fmt(totalValue, hc)}</div>
+            <div className="portfolio-value-label">Total Portfolio Value · {hc}</div>
+          </div>
+          <div className="portfolio-meta">
+            <div className="portfolio-meta-item">
+              <div className="val">{enriched.length}</div>
+              <div className="lbl">holdings</div>
+            </div>
+            <div className="portfolio-meta-item">
+              <div className="val">{accountSet.size}</div>
+              <div className="lbl">{accountSet.size===1?'account':'accounts'}</div>
+            </div>
+            <div className="portfolio-meta-item">
+              <div className="val">{geography.length}</div>
+              <div className="lbl">countries</div>
+            </div>
+            <div className="portfolio-meta-item" style={{textAlign:'right'}}>
+              <div className={`val grade-${rs.grade.toLowerCase()}`}>{rs.grade}</div>
+              <div className="lbl">risk grade</div>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Asset allocation strip ── */}
+        <div style={{marginBottom:20}}>
+          <div style={{display:'flex',height:10,borderRadius:5,overflow:'hidden',gap:2,marginBottom:8}}>
+            {Object.entries(assetBuckets).sort((a,b)=>b[1]-a[1]).map(([k,v])=>(
+              <div key={k} style={{flex:v/assetTotal,background:assetColors[k]||'#8A8680',borderRadius:3,transition:'flex 0.5s',minWidth:v/assetTotal>0.02?undefined:0}} />
+            ))}
+          </div>
+          <div style={{display:'flex',gap:14,flexWrap:'wrap'}}>
+            {Object.entries(assetBuckets).sort((a,b)=>b[1]-a[1]).map(([k,v])=>(
+              <div key={k} style={{display:'flex',alignItems:'center',gap:5,fontSize:12,color:'var(--text-secondary)'}}>
+                <div style={{width:8,height:8,borderRadius:'50%',background:assetColors[k]||'#8A8680'}} />
+                <span style={{fontWeight:600,color:'var(--text-primary)'}}>{pct(v/assetTotal)}</span> {k}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Risk Score Card ── */}
+        <RiskScoreCard rs={rs} />
+
+        {/* ── Quick stats ── */}
+        <div className="quick-stats fade-in">
+          {[
+            ['Largest Position', pct(concentration[0]?.pct||0)],
+            ['Top 5 Weight', pct(concentration.slice(0,5).reduce((s,h)=>s+h.pct,0))],
+            ['Countries', geography.length],
+            ['High Flags', highFlags.length || '✓ None'],
+          ].map(([lbl,val])=>(
+            <div key={lbl} className="quick-stat">
+              <div className="quick-stat-val">{val}</div>
+              <div className="quick-stat-lbl">{lbl}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* ── Leveraged + Redundant ETF warnings ── */}
+        {(leveraged.length > 0 || redundant.length > 0) && (
+          <div className="section-card fade-in">
+            <div className="section-header">
+              <div className="section-icon">⚠️</div>
+              <div className="section-title">ETF Warnings</div>
+            </div>
+            {leveraged.map((h,i) => (
+              <div key={i} className="etf-warning">
+                <span>⚡</span>
+                <div><strong>{h.symbol}</strong> is a leveraged ETF — designed for short-term trading, not long-term holding. Daily rebalancing causes volatility decay that erodes returns over time.</div>
+              </div>
+            ))}
+            {redundant.map((r,i) => (
+              <div key={i} className="etf-warning">
+                <span>🔁</span>
+                <div><strong>{r.held.join(' + ')}</strong> track the same {r.label} index. Holding both provides no additional diversification — consider consolidating.</div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ── Risk Flags ── */}
+        {flags.length > 0 && (
+          <div className="section-card fade-in">
+            <div className="section-header">
+              <div className="section-icon">⚡</div>
+              <div className="section-title">Risk Insights</div>
+            </div>
+            {highFlags.length > 0 && (<>
+              <div className="flags-section-label">High Priority</div>
+              <div className="risk-flags" style={{marginBottom: medFlags.length||goodFlags.length ? 16 : 0}}>
+                {highFlags.map((f,i)=>(
+                  <div key={i} className="risk-flag high">
+                    <div className="risk-flag-icon">{f.icon}</div>
+                    <div className="risk-flag-body">
+                      <div className="risk-flag-title">{f.title}</div>
+                      <div className="risk-flag-detail">{f.detail}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>)}
+            {medFlags.length > 0 && (<>
+              <div className="flags-section-label" style={{marginTop: highFlags.length ? 4 : 0}}>Watch</div>
+              <div className="risk-flags" style={{marginBottom: goodFlags.length ? 16 : 0}}>
+                {medFlags.map((f,i)=>(
+                  <div key={i} className="risk-flag medium">
+                    <div className="risk-flag-icon">{f.icon}</div>
+                    <div className="risk-flag-body">
+                      <div className="risk-flag-title">{f.title}</div>
+                      <div className="risk-flag-detail">{f.detail}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>)}
+            {goodFlags.map((f,i)=>(
+              <div key={i} className="risk-flag good">
+                <div className="risk-flag-icon">{f.icon}</div>
+                <div className="risk-flag-body">
+                  <div className="risk-flag-title">{f.title}</div>
+                  <div className="risk-flag-detail">{f.detail}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ── Portfolio Map (Treemap) ── */}
+        <div className="section-card fade-in">
+          <div className="section-header">
+            <div className="section-icon">🗺</div>
+            <div className="section-title">Portfolio Map</div>
+            <div className="section-subtitle">sized by weight · colored by country</div>
+          </div>
+          <PortfolioTreemap concentration={concentration} />
+          <div style={{display:'flex',gap:12,flexWrap:'wrap',marginTop:10}}>
+            {Object.entries(GEO_COLORS).filter(([k])=>geography.some(g=>g.label===k)).map(([k,c])=>(
+              <div key={k} style={{display:'flex',alignItems:'center',gap:5,fontSize:12,color:'var(--text-secondary)'}}>
+                <div style={{width:8,height:8,borderRadius:'50%',background:c}} />
+                {COUNTRY_FLAGS[k]||''} {k==='United States'?'US':k}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Two-col: Geography + Currency ── */}
+        <div className="two-col">
+          <div className="section-card" style={{margin:0}}>
+            <div className="section-header">
+              <div className="section-icon">🌍</div>
+              <div className="section-title">Geographic Exposure</div>
+            </div>
+            <div className="donut-wrap">
+              <div className="donut-svg-wrap">
+                <DonutChart data={geography.slice(0,8)}
+                  centerLabel={topGeo ? pct(topGeo.pct) : '—'}
+                  centerSub={topGeo ? (topGeo.label==='United States'?'US':topGeo.label) : ''}
+                  size={140} />
+              </div>
+              <div className="donut-legend">
+                {geography.slice(0,7).map((g,i)=>(
+                  <div key={i} className="legend-row">
+                    <div className="legend-dot" style={{background:GEO_COLORS[g.label]||'#8A8680'}} />
+                    <div className="legend-label">{COUNTRY_FLAGS[g.label]||''} {g.label==='United States'?'US':g.label}</div>
+                    <div className="legend-pct">{pct(g.pct)}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div style={{fontSize:11,color:'var(--text-muted)',marginTop:12,lineHeight:1.5}}>
+              Look-through: ETF geographic weights applied proportionally to each fund's value.
+            </div>
+          </div>
+
+          <div className="section-card" style={{margin:0}}>
+            <div className="section-header">
+              <div className="section-icon">💱</div>
+              <div className="section-title">Currency Exposure</div>
+            </div>
+            <div className="currency-list">
+              {currencies.map((c,i)=>(
+                <div key={i} className="currency-row">
+                  <div className="currency-code" style={{color:CCY_COLORS[c.label]||'var(--text-primary)'}}>{c.label}</div>
+                  <div className="currency-bar-wrap">
+                    <div className="currency-bar-track">
+                      <div className="currency-bar-fill" style={{width:`${c.pct*100}%`,background:CCY_COLORS[c.label]||'#8A8680',opacity:0.85}} />
+                    </div>
+                  </div>
+                  <div className="currency-pct">{pct(c.pct)}</div>
+                  <div className="currency-value">{fmt(c.value,hc)}</div>
+                </div>
+              ))}
+            </div>
+            <div style={{fontSize:11,color:'var(--text-muted)',marginTop:12,lineHeight:1.5}}>
+              Based on each holding's trading currency. Switching home currency above re-converts all values.
+            </div>
+          </div>
+        </div>
+
+        {/* ── Sector Concentration ── */}
+        <div className="section-card fade-in">
+          <div className="section-header">
+            <div className="section-icon">📊</div>
+            <div className="section-title">Sector Concentration</div>
+            <div className="section-subtitle">vs global benchmark</div>
+          </div>
+          <SectorBars data={sectors} />
+        </div>
+
+        {/* ── Overlap Analysis ── */}
+        {overlaps.length > 0 && (
+          <div className="section-card fade-in">
+            <div className="section-header">
+              <div className="section-icon">🔗</div>
+              <div className="section-title">Effective Overlap</div>
+              <div className="section-subtitle">look-through positions</div>
+            </div>
+            <p style={{fontSize:13,color:'var(--text-secondary)',marginBottom:16,lineHeight:1.5}}>
+              These stocks appear across multiple positions — direct holdings plus their weight inside ETFs. Your <em>effective</em> exposure is the total across all channels.
+            </p>
+            <div className="overlap-list">
+              {overlaps.map((o,i)=>(
+                <div key={i} className="overlap-row">
+                  <div className="overlap-symbol">{o.symbol}</div>
+                  <div className="overlap-body">
+                    <div style={{fontSize:12,fontWeight:600,color:'var(--text-secondary)'}}>{o.name}</div>
+                    <div className="overlap-bar-track">
+                      <div className="overlap-bar-fill" style={{width:`${Math.min(o.pct*500,100)}%`}} />
+                    </div>
+                    <div className="overlap-sources">
+                      {o.sources.map(s => s.from==='direct'
+                        ? `Direct (${pct(s.value/totalValue)})`
+                        : `${s.from} (${pct(s.weight)})`
+                      ).join(' · ')}
+                    </div>
+                  </div>
+                  <div className="overlap-pct">{pct(o.pct)}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── Holdings Table ── */}
+        <div className="section-card fade-in">
+          <div className="section-header">
+            <div className="section-icon">📋</div>
+            <div className="section-title">All Holdings</div>
+            <div style={{marginLeft:'auto',display:'flex',gap:10,alignItems:'center'}}>
+              <div className="section-subtitle">{concentration.length} positions</div>
+              <button className="btn-export" onClick={() => exportHoldingsCSV({...data, homeCurrency:hc})}>
+                ↓ Export CSV
+              </button>
+            </div>
+          </div>
+          <table className="holdings-table">
+            <thead>
+              <tr>
+                <th>Security</th>
+                <th>Type</th>
+                <th style={{textAlign:'center'}}>Country</th>
+                <th>Sector</th>
+                <th style={{textAlign:'right'}}>Value ({hc})</th>
+                <th style={{textAlign:'right'}}>Weight</th>
+              </tr>
+            </thead>
+            <tbody>
+              {visibleHoldings.map((h,i)=>(
+                <tr key={i}>
+                  <td>
+                    <div className="holding-symbol">{h.symbol}</div>
+                    <div className="holding-name">{h.name.length>34 ? h.name.slice(0,32)+'…' : h.name}</div>
+                  </td>
+                  <td><span style={{fontSize:11,color:'var(--text-muted)',textTransform:'uppercase',letterSpacing:'0.04em'}}>{h.type}</span></td>
+                  <td style={{textAlign:'center'}}>
+                    <span className={`holding-tag ${regionTag(h.country)}`}>
+                      {COUNTRY_FLAGS[h.country]||''} {h.country==='United States'?'US':h.country}
+                    </span>
+                  </td>
+                  <td><span style={{fontSize:12,color:'var(--text-secondary)'}}>{h.sector}</span></td>
+                  <td style={{textAlign:'right'}}><span className="holding-value">{fmt(h.value,hc)}</span></td>
+                  <td style={{textAlign:'right'}}><span className="holding-weight">{pct(h.pct)}</span></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {concentration.length > 8 && (
+            <button className="btn-secondary" onClick={()=>setShowAll(!showAll)} style={{marginTop:14,width:'100%',fontSize:13}}>
+              {showAll ? 'Show less' : `Show all ${concentration.length} holdings`}
+            </button>
+          )}
+          {unknown.length > 0 && (
+            <div className="parse-note" style={{marginTop:12}}>
+              ⚠️ {unknown.length} ticker{unknown.length>1?'s':''} ({unknown.map(h=>h.symbol).join(', ')}) not in database — geography estimated from currency. Verify ticker symbols use standard exchange formats (e.g. RY.TO not RY).
+            </div>
+          )}
+        </div>
+
+        <div style={{textAlign:'center',paddingBottom:40}}>
+          <div className="reset-link" onClick={() => onReset()}>← Analyze a different portfolio</div>
+          <div style={{fontSize:11,color:'var(--text-muted)',marginTop:16,lineHeight:1.7}}>
+            All analysis runs entirely in your browser — no data is sent anywhere.<br/>
+            {fxLive ? 'FX rates fetched live from frankfurter.app.' : 'Using approximate FX rates — connect to internet for live rates.'}<br/>
+            ETF holdings data as of early 2026.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+// TOP NAV
+// ═══════════════════════════════════════════════════════
+
+function TopNav({ onHome, showHome }) {
+  return (
+    <nav className="top-nav">
+      <div className="nav-brand" onClick={showHome ? onHome : undefined}>
+        <div className="nav-brand-dot" />
+        Portfolio Risk Intelligence
+      </div>
+      <div className="nav-tag">🔒 Local only</div>
+    </nav>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+// APP
+// ═══════════════════════════════════════════════════════
+
+function App() {
+  const [screen, setScreen] = useState('landing');
+  const [files, setFiles]   = useState([]);
+  const [useSample, setUseSample] = useState(false);
+  const [result, setResult] = useState(null);
+
+  const goHome = () => { setScreen('landing'); setFiles([]); setUseSample(false); setResult(null); };
+  const goSample = () => { setUseSample(true); setFiles([]); setScreen('processing'); };
+  const goAnalyze = (f) => { setFiles(f); setUseSample(false); setScreen('processing'); };
+  const goResults = (r) => { setResult(r); setScreen('results'); };
+
+  // From ParseErrorScreen the user can either go back ("try again" → upload) or load sample
+  const handleResultsReset = (opt) => {
+    if (opt === 'sample') goSample();
+    else { setScreen('upload'); setResult(null); }
+  };
+
+  return (
+    <div>
+      <TopNav onHome={goHome} showHome={screen !== 'landing'} />
+      {screen === 'landing'    && <LandingPage onStart={()=>setScreen('upload')} onSample={goSample} />}
+      {screen === 'upload'     && <UploadScreen onAnalyze={goAnalyze} onSample={goSample} />}
+      {screen === 'processing' && <ProcessingScreen files={files} useSample={useSample} onDone={goResults} />}
+      {screen === 'results'    && <ResultsScreen
+        rawHoldings={result?.rawHoldings}
+        fxRates={result?.fxRates}
+        fxLive={result?.fxLive}
+        parseErrors={result?.parseErrors}
+        onReset={handleResultsReset}
+      />}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
