@@ -216,13 +216,7 @@ export default function Proof() {
 
         {/* Transition into the Proof half — visually a chapter break, not a sub-label */}
         <div className="max-w-2xl mx-auto mt-12 mb-14">
-          <div className="flex items-center gap-4 mb-6">
-            <span className="h-px flex-1 bg-gradient-to-r from-transparent via-highlight/40 to-highlight/40" />
-            <span className="text-[10px] tracking-[0.3em] uppercase text-highlight/70 font-heading">
-              Part II
-            </span>
-            <span className="h-px flex-1 bg-gradient-to-l from-transparent via-highlight/40 to-highlight/40" />
-          </div>
+          <div className="h-px w-full bg-gradient-to-r from-transparent via-highlight/40 to-transparent mb-8" />
           <h3 className="text-3xl sm:text-4xl font-heading font-medium text-foreground leading-tight mb-4">
             {content.proof.proofIntro.label}
           </h3>
