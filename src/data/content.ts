@@ -91,8 +91,8 @@ export const content = {
       body: "A coffee, a seat, a purchase request. Simple on top, full of coordination, data tradeoffs, and misaligned incentives underneath.\n\nThe companies look different. The problem is the same.",
     },
     proofIntro: {
-      label: "Proof · patterns",
-      body: "Same problem, different surface. Off the clock, the feedback gets faster.",
+      label: "Off the clock",
+      body: "Four places the same systems show up — band, ultras, experiments, travel.",
     },
     stories: [
       {

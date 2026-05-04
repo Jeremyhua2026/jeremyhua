@@ -214,13 +214,19 @@ export default function Proof() {
           </div>
         </div>
 
-        {/* Transition into the Proof half */}
-        <div className="max-w-2xl mx-auto mt-4 mb-12">
-          <div className="divider-accent mb-8" />
-          <span className="text-[10px] tracking-[0.2em] uppercase text-highlight font-heading">
+        {/* Transition into the Proof half — visually a chapter break, not a sub-label */}
+        <div className="max-w-2xl mx-auto mt-12 mb-14">
+          <div className="flex items-center gap-4 mb-6">
+            <span className="h-px flex-1 bg-gradient-to-r from-transparent via-highlight/40 to-highlight/40" />
+            <span className="text-[10px] tracking-[0.3em] uppercase text-highlight/70 font-heading">
+              Part II
+            </span>
+            <span className="h-px flex-1 bg-gradient-to-l from-transparent via-highlight/40 to-highlight/40" />
+          </div>
+          <h3 className="text-3xl sm:text-4xl font-heading font-medium text-foreground leading-tight mb-4">
             {content.proof.proofIntro.label}
-          </span>
-          <p className="text-base text-foreground/80 leading-relaxed mt-3 max-w-xl">
+          </h3>
+          <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">
             {content.proof.proofIntro.body}
           </p>
         </div>
